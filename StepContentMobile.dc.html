@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/alk-design-system-ae29057b-7f9b-48de-879c-d9b3e407c6e5/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/alk-design-system-ae29057b-7f9b-48de-879c-d9b3e407c6e5/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/alk-design-system-ae29057b-7f9b-48de-879c-d9b3e407c6e5/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/alk-design-system-ae29057b-7f9b-48de-879c-d9b3e407c6e5/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/alk-design-system-ae29057b-7f9b-48de-879c-d9b3e407c6e5/styles.css">
+  <script src="_ds/alk-design-system-ae29057b-7f9b-48de-879c-d9b3e407c6e5/_ds_bundle.js"></script>
+</helmet>
+<div style="{{ rootStyle }}">
+
+  <sc-if value="{{ showProfileUpdated }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;gap:10px;align-items:flex-start;background:var(--alk-space,#F2F5FF);border-left:4px solid var(--alk-blue-label,#3252B5);padding:14px 18px;margin-bottom:24px">
+      <x-import component-from-global-scope="ALKDesignSystem_ae2905.Icon" name="information-circle" size="18" style="color:var(--alk-blue-label,#3252B5);flex-shrink:0;margin-top:2px" hint-size="18px,18px"></x-import>
+      <p style="font:13.5px/1.6 var(--font-form);color:var(--alk-alumni,#162447);margin:0">Dane w Twoim profilu zostały zaktualizowane. Wysłany wcześniej formularz zawiera poprzednie dane — aby go zaktualizować, skontaktuj się z Biurem Rekrutacji: rekrutacja@kozminski.edu.pl · 22 519 21 88.</p>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showStudia }}" hint-placeholder-val="{{ true }}">
+    <div>
+      <h2 style="font:600 22px/1.3 var(--font-ui);color:var(--alk-deep-waters);margin:0 0 4px">Twoje studia</h2>
+      <p style="font:14px/1.5 var(--font-ui);color:var(--text-muted);margin:0 0 28px">Nabór odbywa się na podstawie wskazanego wcześniej kierunku. Poniżej znajdziesz szczegóły swojego zgłoszenia.</p>
+
+      <div>
+        <div>
+          <div>
+            <div style="background:var(--alk-surface-subtle,#F8F9FB);border-radius:6px;padding:20px 24px;display:flex;flex-direction:column;gap:10px;position:relative">
+              <button type="button" onClick="{{ openEditModal }}" style="position:absolute;top:16px;right:20px;background:none;border:none;cursor:pointer;font:600 12px var(--font-ui);color:var(--alk-blue-label,#3252B5);letter-spacing:0.04em;text-transform:uppercase;padding:4px 6px">Edytuj</button>
+              <div style="display:flex;gap:6px"><span style="font:500 14px var(--font-form);color:var(--text-muted);width:100px;flex-shrink:0">Kierunek</span><span style="font:600 14px var(--font-form);color:var(--alk-deep-waters)">{{ kierunek }}</span></div>
+              <div style="display:flex;gap:6px"><span style="font:500 14px var(--font-form);color:var(--text-muted);width:100px;flex-shrink:0">Poziom</span><span style="font:600 14px var(--font-form);color:var(--alk-deep-waters)">{{ poziom }}</span></div>
+              <div style="display:flex;gap:6px"><span style="font:500 14px var(--font-form);color:var(--text-muted);width:100px;flex-shrink:0">Język</span><span style="font:600 14px var(--font-form);color:var(--alk-deep-waters)">{{ jezyk }}</span></div>
+              <div style="display:flex;gap:6px"><span style="font:500 14px var(--font-form);color:var(--text-muted);width:100px;flex-shrink:0">Forma</span><span style="font:600 14px var(--font-form);color:var(--alk-deep-waters)">{{ forma }}</span></div>
+            </div>
+          </div>
+
+          <div style="margin-top:24px">
+            <div style="display:flex;gap:10px;margin:0 0 20px">
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Icon" name="information-circle" size="18" style="color:var(--alk-blue-label,#3252B5);flex-shrink:0;margin-top:2px" hint-size="18px,18px"></x-import>
+              <p style="font:13.5px/1.6 var(--font-form);color:var(--text-muted);margin:0">Wskaż język obcy, którego chcesz uczyć się w trakcie studiów, oraz swój obecny poziom zaawansowania. Na tej podstawie przydzielimy Cię do właściwej grupy lektoratowej. <a href="#" style="color:var(--alk-blue-label,#3252B5);font-weight:600;text-decoration:none">Więcej informacji o lektoratach →</a></p>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:20px">
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Wybierz język" placeholder="Wybierz" options="{{ zajeciaJezykoweOptions }}" value="{{ zajeciaJezykowe }}" onChange="{{ setZajeciaJezykowe }}" hint-size="100%,64px"></x-import>
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Wybierz poziom języka jaki posiadasz" placeholder="Wybierz" options="{{ poziomJezykaOptions }}" value="{{ poziomJezyka }}" onChange="{{ setPoziomJezyka }}" hint-size="100%,64px"></x-import>
+            </div>
+          </div>
+
+          <div style="margin-top:24px">
+          <div style="background:var(--alk-space,#F2F5FF);border-left:4px solid var(--accent-warm,#B4865E);border-radius:6px;padding:24px 28px">
+            <div style="font:600 12px var(--font-ui);color:var(--accent-warm,#91653F);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px">Drugi i trzeci wybór studiów</div>
+            <div style="display:flex;gap:10px;margin:0 0 18px">
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Icon" name="information-circle" size="18" style="color:var(--alk-blue-label,#3252B5);flex-shrink:0;margin-top:2px" hint-size="18px,18px"></x-import>
+              <p style="font:14px/1.6 var(--font-form);color:var(--text-primary);margin:0">Jeżeli chcesz dodać kolejny kierunek studiów, możesz wskazać maksymalnie dwa dodatkowe kierunki. Jeśli nie zostaniesz zakwalifikowany na kierunek pierwszego wyboru, Twoja rekrutacja zostanie automatycznie rozpatrzona na kolejnych wybranych kierunkach.</p>
+            </div>
+            <div style="display:flex;gap:40px;flex-wrap:wrap">
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Checkbox" label="Dodaj kierunek drugiego wyboru" checked="{{ drugiKierunekEnabled }}" onChange="{{ setDrugiKierunekEnabled }}" hint-size="auto,24px"></x-import>
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Checkbox" label="Dodaj kierunek trzeciego wyboru" checked="{{ trzeciKierunekEnabled }}" onChange="{{ setTrzeciKierunekEnabled }}" disabled="{{ trzeciDisabled }}" hint-size="auto,24px"></x-import>
+            </div>
+          </div>
+
+          <sc-if value="{{ drugiKierunekEnabled }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:20px;margin-top:20px;padding:20px 24px;background:var(--alk-surface-subtle,#F8F9FB);border-radius:6px">
+              <div style="font:600 12px var(--font-ui);color:var(--text-muted);letter-spacing:0.04em;text-transform:uppercase">Kierunek drugiego wyboru</div>
+              <div style="display:flex;flex-direction:column;gap:20px">
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Język" required="{{ true }}" placeholder="Wybierz" options="{{ jezykOptions }}" value="{{ drugiJezyk }}" onChange="{{ setDrugiJezyk }}" hint-size="100%,64px"></x-import>
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Kierunek" required="{{ true }}" placeholder="Wybierz" options="{{ kierunekOptions }}" value="{{ drugiKierunek }}" onChange="{{ setDrugiKierunek }}" hint-size="100%,64px"></x-import>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ trzeciKierunekEnabled }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:20px;margin-top:20px;padding:20px 24px;background:var(--alk-surface-subtle,#F8F9FB);border-radius:6px">
+              <div style="font:600 12px var(--font-ui);color:var(--text-muted);letter-spacing:0.04em;text-transform:uppercase">Kierunek trzeciego wyboru</div>
+              <div style="display:flex;flex-direction:column;gap:20px">
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Język" required="{{ true }}" placeholder="Wybierz" options="{{ jezykOptions }}" value="{{ trzeciJezyk }}" onChange="{{ setTrzeciJezyk }}" hint-size="100%,64px"></x-import>
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Kierunek" required="{{ true }}" placeholder="Wybierz" options="{{ kierunekOptions }}" value="{{ trzeciKierunek }}" onChange="{{ setTrzeciKierunek }}" hint-size="100%,64px"></x-import>
+              </div>
+            </div>
+          </sc-if>
+          </div>
+
+          <sc-if value="{{ editModalOpen }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ closeEditModal }}" onKeyDown="{{ onEditModalKey }}" tabindex="-1" style="position:fixed;inset:0;background:rgba(3,9,40,0.55);display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;z-index:100">
+              <div onClick="{{ stopProp }}" role="dialog" aria-modal="true" aria-labelledby="edit-modal-title" style="background:#fff;max-width:400px;width:100%;box-sizing:border-box;padding:28px 24px;box-shadow:0 12px 40px rgba(3,9,40,0.25)">
+                <h3 id="edit-modal-title" style="font:600 18px/1.35 var(--font-ui);color:var(--alk-deep-waters);margin:0 0 12px">Zmiana kierunku pierwszego wyboru</h3>
+                <p style="font:14px/1.65 var(--font-form);color:var(--text-primary);margin:0 0 8px">Zmiana kierunku pierwszego wyboru spowoduje <strong>zamknięcie tej rekrutacji</strong> i otwarcie nowej, w której będzie można wybrać nowy kierunek.</p>
+                <p style="font:13px/1.6 var(--font-form);color:var(--text-muted);margin:0 0 28px">Wszystkie dane wprowadzone w tym formularzu zostaną zapisane, a formularz wróci do strony startowej.</p>
+                <div style="display:flex;flex-direction:column;gap:12px">
+                  <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="primary" size="small" showIcon="{{ false }}" fullWidth="{{ true }}" autoFocus="{{ true }}" onClick="{{ confirmEditKierunek }}" hint-size="100%,48px">ZAMKNIJ I ROZPOCZNIJ NOWĄ</x-import>
+                  <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="secondary" size="small" showIcon="{{ false }}" fullWidth="{{ true }}" onClick="{{ closeEditModal }}" hint-size="100%,48px">ANULUJ</x-import>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showOsobowe }}" hint-placeholder-val="{{ false }}">
+    <div style="{{ sectionCardStyle }}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px">
+        <div>
+          <h2 style="font:600 22px/1.3 var(--font-ui);color:var(--alk-deep-waters);margin:0 0 4px">Informacje podstawowe</h2>
+          <p style="font:14px/1.5 var(--font-ui);color:var(--text-muted);margin:0 0 28px">Uzupełnij dane osobowe, kontaktowe, adres oraz dokument tożsamości.</p>
+        </div>
+        <sc-if value="{{ osoboweLockAvailable }}" hint-placeholder-val="{{ false }}">
+          <sc-if value="{{ osoboweEditing }}" hint-placeholder-val="{{ false }}">
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="primary" size="small" showIcon="{{ false }}" onClick="{{ toggleEditOsobowe }}" hint-size="auto,48px">ZAPISZ</x-import>
+          </sc-if>
+          <sc-if value="{{ osoboweNotEditing }}" hint-placeholder-val="{{ true }}">
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="secondary" size="small" showIcon="{{ false }}" onClick="{{ toggleEditOsobowe }}" hint-size="auto,48px">EDYTUJ</x-import>
+          </sc-if>
+        </sc-if>
+      </div>
+      <div style="{{ osoboweLockStyle }}">
+
+      <div style="display:flex;flex-direction:column;gap:20px;padding-bottom:32px;margin-bottom:32px;border-bottom:1px solid var(--alk-border-subtle,#eee)">
+        <div style="{{ hlDane }}" onFocus="{{ focusDane }}" onClick="{{ focusDane }}">
+          <h3 style="font:600 13px/1.4 var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--alk-blue-label,#3252B5);margin:0 0 20px">Dane osobowe</h3>
+          <div style="display:flex;flex-direction:column;gap:20px;margin-bottom:16px">
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Imię" required="{{ true }}" placeholder="Jan" value="{{ imie }}" onChange="{{ setImie }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Drugie imię" placeholder="(opcjonalnie)" value="{{ drugieImie }}" onChange="{{ setDrugieImie }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Nazwisko" required="{{ true }}" placeholder="Kowalski" value="{{ nazwisko }}" onChange="{{ setNazwisko }}" hint-size="100%,64px"></x-import>
+          </div>
+          <div style="max-width:none;margin-bottom:16px">
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Obywatelstwo" required="{{ true }}" options="{{ obywatelstwoOptions }}" value="{{ obywatelstwo }}" onChange="{{ setObywatelstwo }}" hint-size="100%,64px"></x-import>
+          </div>
+          <sc-if value="{{ isPolish }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex-direction:column;gap:20px;margin-bottom:16px">
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Numer PESEL" required="{{ true }}" placeholder="00000000000" value="{{ pesel }}" onChange="{{ setPesel }}" hint-size="100%,64px"></x-import>
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Data urodzenia" required="{{ true }}" type="date" value="{{ dataUrodzenia }}" onChange="{{ setDataUrodzenia }}" hint-size="100%,64px"></x-import>
+            </div>
+          </sc-if>
+          <x-import component-from-global-scope="ALKDesignSystem_ae2905.Checkbox" label="Posiadam drugie obywatelstwo" checked="{{ posiadamDrugieObywatelstwo }}" onChange="{{ setPosiadamDrugieObywatelstwo }}" hint-size="auto,24px"></x-import>
+          <sc-if value="{{ posiadamDrugieObywatelstwo }}" hint-placeholder-val="{{ false }}">
+            <div style="max-width:none;margin-top:16px">
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Kraj drugiego obywatelstwa" required="{{ true }}" placeholder="Wybierz" options="{{ krajObywatelstwoOptions }}" value="{{ drugieObywatelstwoKraj }}" onChange="{{ setDrugieObywatelstwoKraj }}" hint-size="100%,64px"></x-import>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:20px;padding-bottom:32px;margin-bottom:32px;border-bottom:1px solid var(--alk-border-subtle,#eee)">
+        <div style="{{ hlKontakt }}" onFocus="{{ focusKontakt }}" onClick="{{ focusKontakt }}">
+          <h3 style="font:600 13px/1.4 var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--alk-blue-label,#3252B5);margin:0 0 20px">Dane kontaktowe</h3>
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Adres e-mail" required="{{ true }}" type="email" disabled="{{ true }}" message="Uzupełniony automatycznie podczas zakładania konta" value="{{ email }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Telefon" required="{{ true }}" type="tel" placeholder="+48 600 000 000" value="{{ telefon }}" onChange="{{ setTelefon }}" hint-size="100%,64px"></x-import>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:20px;padding-bottom:32px;margin-bottom:32px;border-bottom:1px solid var(--alk-border-subtle,#eee)">
+        <div style="{{ hlAdres }}" onFocus="{{ focusAdres }}" onClick="{{ focusAdres }}">
+          <h3 style="font:600 13px/1.4 var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--alk-blue-label,#3252B5);margin:0 0 20px">Adres zamieszkania</h3>
+          <div style="max-width:none;margin-bottom:16px">
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Kraj" required="{{ true }}" placeholder="Wybierz kraj" options="{{ krajOptions }}" value="{{ kraj }}" onChange="{{ setKraj }}" hint-size="100%,64px"></x-import>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:20px;margin-bottom:16px">
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Kod pocztowy" required="{{ true }}" placeholder="03-301" value="{{ kodPocztowy }}" onChange="{{ setKodPocztowy }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Miasto" required="{{ true }}" placeholder="Warszawa" value="{{ miasto }}" onChange="{{ setMiasto }}" hint-size="100%,64px"></x-import>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:20px;margin-bottom:16px">
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Ulica" required="{{ true }}" placeholder="ul. Jagiellońska" value="{{ ulica }}" onChange="{{ setUlica }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Nr domu" required="{{ true }}" placeholder="57" value="{{ nrDomu }}" onChange="{{ setNrDomu }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Nr mieszkania" placeholder="12" value="{{ nrMieszkania }}" onChange="{{ setNrMieszkania }}" hint-size="100%,64px"></x-import>
+          </div>
+          <x-import component-from-global-scope="ALKDesignSystem_ae2905.Checkbox" label="Dane korespondencyjne są różne od miejsca zamieszkania" checked="{{ korespondencyjneInne }}" onChange="{{ setKorespondencyjneInne }}" hint-size="auto,24px"></x-import>
+          <sc-if value="{{ korespondencyjneInne }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:16px;padding:16px 20px;background:var(--alk-surface-subtle,#F8F9FB);border-radius:6px">
+              <div style="max-width:none;margin-bottom:16px">
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Kraj" required="{{ true }}" placeholder="Wybierz kraj" options="{{ krajOptions }}" value="{{ korKraj }}" onChange="{{ setKorKraj }}" hint-size="100%,64px"></x-import>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:20px;margin-bottom:16px">
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Kod pocztowy" required="{{ true }}" placeholder="03-301" value="{{ korKodPocztowy }}" onChange="{{ setKorKodPocztowy }}" hint-size="100%,64px"></x-import>
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Miasto" required="{{ true }}" placeholder="Warszawa" value="{{ korMiasto }}" onChange="{{ setKorMiasto }}" hint-size="100%,64px"></x-import>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:20px">
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Ulica" required="{{ true }}" placeholder="ul. Jagiellońska" value="{{ korUlica }}" onChange="{{ setKorUlica }}" hint-size="100%,64px"></x-import>
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Nr domu" required="{{ true }}" placeholder="57" value="{{ korNrDomu }}" onChange="{{ setKorNrDomu }}" hint-size="100%,64px"></x-import>
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Nr mieszkania" placeholder="12" value="{{ korNrMieszkania }}" onChange="{{ setKorNrMieszkania }}" hint-size="100%,64px"></x-import>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+
+      <div>
+        <div style="{{ hlDokument }}" onFocus="{{ focusDokument }}" onClick="{{ focusDokument }}">
+          <h3 style="font:600 13px/1.4 var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--alk-blue-label,#3252B5);margin:0 0 20px">Dokument tożsamości</h3>
+          <div style="margin-bottom:16px;max-width:none">
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Radio.Group" dc-props="{{ radioGroupProps }}" options="{{ rodzajDokumentuTozOptions }}" value="{{ rodzajDokumentuToz }}" onChange="{{ setRodzajDokumentuToz }}" hint-size="100%,32px"></x-import>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:20px;margin-bottom:16px">
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Seria i numer dokumentu" required="{{ true }}" placeholder="ABC 123456" value="{{ seriaNumerDokumentu }}" onChange="{{ setSeriaNumerDokumentu }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Kraj wydania" required="{{ true }}" placeholder="Polska" value="{{ krajWydaniaDok }}" onChange="{{ setKrajWydaniaDok }}" hint-size="100%,64px"></x-import>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Data wydania" required="{{ true }}" type="date" value="{{ dataWydaniaDok }}" onChange="{{ setDataWydaniaDok }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Miejsce urodzenia — kraj" required="{{ true }}" placeholder="Polska" value="{{ miejsceUrodzeniaKraj }}" onChange="{{ setMiejsceUrodzeniaKraj }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Miejsce urodzenia — miasto" required="{{ true }}" placeholder="Warszawa" value="{{ miejsceUrodzeniaMiasto }}" onChange="{{ setMiejsceUrodzeniaMiasto }}" hint-size="100%,64px"></x-import>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:24px;padding-top:24px;border-top:1px solid var(--alk-border-subtle,#eee)">
+        <div style="{{ hlZdjecie }}" onFocus="{{ focusZdjecie }}" onClick="{{ focusZdjecie }}">
+          <h3 style="font:600 13px/1.4 var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--alk-blue-label,#3252B5);margin:0 0 20px">Zdjęcie do dokumentów</h3>
+          <p style="font:13px/1.6 var(--font-form);color:var(--text-muted);margin:0 0 14px">Aktualne zdjęcie jak do dowodu osobistego: en face (na wprost), jednolite jasne tło, twarz zajmuje 70–80% kadru, bez nakrycia głowy i ciemnych okularów. Format JPG lub PNG, min. 500 × 625 px, proporcje 35:45. <span style="color:#F73B3B">*</span></p>
+          <label style="display:inline-flex;align-items:center;gap:10px;padding:0 14px;height:38px;width:fit-content;border-radius:6px;box-shadow:inset 0 0 0 1px var(--alk-border,#D8D8DA);cursor:pointer;background:#fff">
+            <input type="file" accept="image/jpeg,image/png" style="display:none" onChange="{{ setZdjecie }}">
+            <span style="font:600 13px var(--font-ui);color:var(--alk-blue-label,#3252B5)">Wybierz plik</span>
+            <span style="font:13px var(--font-form);color:var(--text-muted)">{{ zdjecieFileLabel }}</span>
+          </label>
+          <sc-if value="{{ hasZdjeciePreview }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:flex-start;gap:14px;margin-top:16px">
+              <div style="width:113px;height:145px;border-radius:6px;overflow:hidden;box-shadow:inset 0 0 0 1px var(--alk-border,#D8D8DA);background:var(--alk-space,#F2F5FF);flex-shrink:0">
+                <img src="{{ zdjecieUrl }}" alt="Podgląd zdjęcia do dokumentów" style="width:100%;height:100%;object-fit:cover;display:block">
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <span style="font:600 13px var(--font-ui);color:var(--alk-deep-waters,#030928)">Podgląd zdjęcia</span>
+                <span style="font:12.5px var(--font-form);color:var(--text-muted);word-break:break-all">{{ zdjecieFileLabel }}</span>
+                <button type="button" onClick="{{ removeZdjecie }}" style="background:none;border:none;cursor:pointer;padding:0;font:600 12px var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:#A00332;text-align:left">Usuń zdjęcie</button>
+              </div>
+            </div>
+          </sc-if>
+          <div style="display:flex;gap:16px;margin-top:18px;flex-wrap:wrap">
+            <sc-for list="{{ zdjeciePrzyklady }}" as="ex" hint-placeholder-count="4">
+              <div style="width:104px;display:flex;flex-direction:column;gap:6px">
+                <div style="{{ ex.frameStyle }}">
+                  <div style="{{ ex.headStyle }}"></div>
+                  <div style="{{ ex.bodyStyle }}"></div>
+                </div>
+                <div style="display:flex;gap:5px;align-items:flex-start">
+                  <span style="{{ ex.markStyle }}">{{ ex.mark }}</span>
+                  <span style="font:11.5px/1.4 var(--font-form);color:var(--text-muted)">{{ ex.label }}</span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showWyksztalcenie }}" hint-placeholder-val="{{ false }}">
+    <div style="{{ sectionCardStyle }}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px">
+        <div>
+          <h2 style="font:600 22px/1.3 var(--font-ui);color:var(--alk-deep-waters);margin:0 0 4px">Wykształcenie</h2>
+          <p style="font:14px/1.5 var(--font-ui);color:var(--text-muted);margin:0 0 28px">Wskaż rodzaj dokumentu uprawniającego do podjęcia studiów.</p>
+        </div>
+        <sc-if value="{{ osoboweLockAvailable }}" hint-placeholder-val="{{ false }}">
+          <sc-if value="{{ wyksztEditing }}" hint-placeholder-val="{{ false }}">
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="primary" size="small" showIcon="{{ false }}" onClick="{{ toggleEditWykszt }}" hint-size="auto,48px">ZAPISZ</x-import>
+          </sc-if>
+          <sc-if value="{{ wyksztNotEditing }}" hint-placeholder-val="{{ true }}">
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="secondary" size="small" showIcon="{{ false }}" onClick="{{ toggleEditWykszt }}" hint-size="auto,48px">EDYTUJ</x-import>
+          </sc-if>
+        </sc-if>
+      </div>
+      <div style="{{ wyksztLockStyle }}">
+      <h3 style="font:600 17px/1.35 var(--font-ui);color:var(--alk-deep-waters);margin:0 0 20px">Świadectwo maturalne</h3>
+
+      <div style="margin-bottom:32px;padding-bottom:32px;border-bottom:1px solid var(--alk-border-subtle,#eee)">
+        <div style="{{ hlTyp }}" onFocus="{{ focusTyp }}" onClick="{{ focusTyp }}">
+          <h3 style="font:600 13px/1.4 var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--alk-blue-label,#3252B5);margin:0 0 20px">Typ świadectwa</h3>
+          <div style="max-width:none">
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Radio.Group" dc-props="{{ radioGroupProps }}" options="{{ swiadectwoOptions }}" value="{{ rodzajSwiadectwa }}" onChange="{{ setRodzajSwiadectwa }}" hint-size="100%,32px"></x-import>
+          </div>
+          <sc-if value="{{ isMatura }}" hint-placeholder-val="{{ true }}">
+            <div style="margin-top:18px;padding-top:18px;border-top:1px solid var(--alk-border-subtle,#eee)">
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Checkbox" label="Oczekuję na wyniki matury" checked="{{ oczekujeWyniki }}" onChange="{{ setOczekujeWyniki }}" hint-size="auto,24px"></x-import>
+              <sc-if value="{{ oczekujeWyniki }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;gap:10px;align-items:flex-start;margin-top:14px;background:var(--alk-space,#F2F5FF);border-left:4px solid var(--accent-warm,#B4865E);padding:12px 16px;border-radius:0 6px 6px 0">
+                  <x-import component-from-global-scope="ALKDesignSystem_ae2905.Icon" name="information-circle" size="18" style="color:var(--accent-warm,#91653F);flex-shrink:0;margin-top:2px" hint-size="18px,18px"></x-import>
+                  <p style="font:13px/1.6 var(--font-form);color:var(--alk-alumni,#162447);margin:0">Zaznacz, jeśli nie masz jeszcze wyników matury. Możesz teraz opłacić i zapisać formularz — wyniki uzupełnisz, gdy tylko je otrzymasz.</p>
+                </div>
+              </sc-if>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+
+      <div style="margin-bottom:32px;padding-bottom:32px;border-bottom:1px solid var(--alk-border-subtle,#eee)">
+        <div style="{{ hlDaneSwiad }}" onFocus="{{ focusDaneSwiad }}" onClick="{{ focusDaneSwiad }}">
+          <h3 style="font:600 13px/1.4 var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--alk-blue-label,#3252B5);margin:0 0 20px">Dane świadectwa</h3>
+          <sc-if value="{{ isMatura }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex-direction:column;gap:20px">
+              <div style="max-width:none">
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Rodzaj matury" required="{{ true }}" options="{{ rodzajMaturyOptions }}" value="{{ rodzajMatury }}" onChange="{{ setRodzajMatury }}" hint-size="100%,64px"></x-import>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:20px">
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Nazwa szkoły średniej" required="{{ true }}" placeholder="Wybierz szkołę" options="{{ szkolaOptions }}" value="{{ nazwaSzkolyPolska }}" onChange="{{ setNazwaSzkolyPolska }}" hint-size="100%,64px"></x-import>
+              </div>
+              <sc-if value="{{ szkolaInna }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:20px;max-width:none">
+                  <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Wpisz nazwę szkoły" required="{{ true }}" placeholder="Pełna nazwa szkoły średniej" value="{{ nazwaSzkolyInna }}" onChange="{{ setNazwaSzkolyInna }}" hint-size="100%,64px"></x-import>
+                  <x-import component-from-global-scope="ALKDesignSystem_ae2905.InputTextArea" label="Podaj adres szkoły" required="{{ true }}" placeholder="Ulica i numer, kod pocztowy, miejscowość, kraj" value="{{ szkolaInnaAdres }}" onChange="{{ setSzkolaInnaAdres }}" hint-size="100%,90px"></x-import>
+                </div>
+              </sc-if>
+              <sc-if value="{{ certFieldsUnlocked }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex;flex-direction:column;gap:20px">
+                  <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Okręgowa Komisja Egzaminacyjna" required="{{ true }}" options="{{ okeOptions }}" value="{{ okregowaKomisja }}" onChange="{{ setOkregowaKomisja }}" hint-size="100%,64px"></x-import>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:20px">
+                  <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Data otrzymania świadectwa" required="{{ true }}" type="date" value="{{ dataSwiadectwaPolska }}" onChange="{{ setDataSwiadectwaPolska }}" hint-size="100%,64px"></x-import>
+                  <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Numer świadectwa" required="{{ true }}" placeholder="M/123456/26" value="{{ numerSwiadectwa }}" onChange="{{ setNumerSwiadectwa }}" hint-size="100%,64px"></x-import>
+                </div>
+              </sc-if>
+              <sc-if value="{{ showWynikiLocked }}" hint-placeholder-val="{{ false }}">
+                <div style="background:#FFF7E8;border-radius:6px;padding:16px 18px;display:flex;gap:10px;align-items:flex-start">
+                  <x-import component-from-global-scope="ALKDesignSystem_ae2905.Icon" name="clock" size="18" style="color:var(--accent-warm,#91653F);flex-shrink:0;margin-top:1px" hint-size="18px,18px"></x-import>
+                  <p style="font:13.5px/1.6 var(--font-form);color:var(--text-primary);margin:0"><strong>Okręgowa Komisja Egzaminacyjna</strong>, <strong>data otrzymania</strong> i <strong>numer świadectwa</strong> uzupełnisz po otrzymaniu wyników matury.</p>
+                </div>
+              </sc-if>
+            </div>
+          </sc-if>
+          <sc-if value="{{ isForeignCert }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:20px">
+              <div style="max-width:none">
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Typ matury" required="{{ true }}" options="{{ typMaturyZagrOptions }}" value="{{ typMaturyZagr }}" onChange="{{ setTypMaturyZagr }}" hint-size="100%,64px"></x-import>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:20px">
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Nazwa szkoły średniej" required="{{ true }}" placeholder="Pełna nazwa szkoły" value="{{ nazwaSzkolyZagr }}" onChange="{{ setNazwaSzkolyZagr }}" hint-size="100%,64px"></x-import>
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Numer dokumentu" required="{{ true }}" placeholder="Numer ze świadectwa" value="{{ numerDokumentuZagr }}" onChange="{{ setNumerDokumentuZagr }}" hint-size="100%,64px"></x-import>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:20px">
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Data otrzymania świadectwa" required="{{ true }}" type="date" value="{{ dataSwiadectwaZagr }}" onChange="{{ setDataSwiadectwaZagr }}" hint-size="100%,64px"></x-import>
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Kraj wydania świadectwa" required="{{ true }}" placeholder="np. Niemcy" value="{{ krajWydania2 }}" onChange="{{ setKrajWydania2 }}" hint-size="100%,64px"></x-import>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+
+      <div style="margin-bottom:32px;padding-bottom:32px;border-bottom:1px solid var(--alk-border-subtle,#eee)">
+        <div style="{{ hlWynikiSw }}" onFocus="{{ focusWynikiSw }}" onClick="{{ focusWynikiSw }}">
+          <h3 style="font:600 13px/1.4 var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--alk-blue-label,#3252B5);margin:0 0 20px">Wyniki uzyskane na świadectwie</h3>
+          <sc-if value="{{ showWynikiLocked }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#FFF7E8;border-radius:6px;padding:20px;display:flex;gap:12px;align-items:flex-start">
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Icon" name="clock" size="20" style="color:var(--accent-warm,#91653F);flex-shrink:0;margin-top:1px" hint-size="20px,20px"></x-import>
+              <div>
+                <p style="font:600 14px/1.5 var(--font-ui);color:var(--alk-alumni,#162447);margin:0 0 4px">Oczekujesz na wyniki matury</p>
+                <p style="font:13.5px/1.6 var(--font-form);color:var(--text-muted);margin:0">Pola wyników uzupełnisz po otrzymaniu wyników — wrócisz tutaj z widoku „Oczekiwanie na wyniki matur” po dokonaniu opłaty.</p>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ noRodzajMatury }}" hint-placeholder-val="{{ false }}">
+            <div style="background:var(--alk-surface-subtle,#F8F9FB);border-radius:6px;padding:32px;display:flex;align-items:center;justify-content:center;min-height:120px">
+              <span style="font:14px/1.6 var(--font-form);color:var(--text-muted);text-align:center">Najpierw wybierz <strong>rodzaj matury</strong> w sekcji „Dane świadectwa" powyżej — pola wyników pojawią się automatycznie.</span>
+            </div>
+          </sc-if>
+          <sc-if value="{{ isNowaMatura }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:20px;align-items:start">
+              <div style="background:var(--alk-surface-subtle,#F8F9FB);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:14px">
+                <div style="font:600 12px var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--text-muted)">Poziom podstawowy</div>
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Język polski — wynik (%)" required="{{ true }}" placeholder="np. 78" value="{{ maturaPodstPolski }}" onChange="{{ setMaturaPodstPolski }}" hint-size="100%,64px"></x-import>
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Matematyka — wynik (%)" required="{{ true }}" placeholder="np. 84" value="{{ maturaPodstMatematyka }}" onChange="{{ setMaturaPodstMatematyka }}" hint-size="100%,64px"></x-import>
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Język nowożytny — wynik (%)" required="{{ true }}" placeholder="np. 92" value="{{ maturaPodstJezyk }}" onChange="{{ setMaturaPodstJezyk }}" hint-size="100%,64px"></x-import>
+              </div>
+              <div style="background:var(--alk-surface-subtle,#F8F9FB);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:14px">
+                <div style="font:600 12px var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--text-muted)">Poziom rozszerzony</div>
+                <sc-for list="{{ maturaRozsz }}" as="r" hint-placeholder-count="1">
+                  <div style="display:flex;flex-direction:column;gap:10px;padding-bottom:12px;border-bottom:1px dashed var(--alk-border,#D8D8DA)">
+                    <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Przedmiot" placeholder="Wybierz" options="{{ przedmiotyOptions }}" value="{{ r.przedmiot }}" onChange="{{ r.setPrzedmiot }}" hint-size="100%,64px"></x-import>
+                    <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Wynik (%)" placeholder="np. 70" value="{{ r.wynik }}" onChange="{{ r.setWynik }}" hint-size="100%,64px"></x-import>
+                    <button type="button" onClick="{{ r.onRemove }}" style="background:none;border:none;cursor:pointer;font:600 12px var(--font-ui);color:#B42318;text-align:left;padding:0;align-self:flex-start">Usuń</button>
+                  </div>
+                </sc-for>
+                <button type="button" onClick="{{ addMaturaRozsz }}" style="background:none;border:none;cursor:pointer;font:600 12.5px var(--font-ui);color:var(--alk-blue-label,#3252B5);text-align:left;padding:0">+ Dodaj kolejny przedmiot</button>
+              </div>
+              <div style="background:var(--alk-surface-subtle,#F8F9FB);border-radius:6px;padding:16px;display:flex;flex-direction:column;gap:14px">
+                <div style="font:600 12px var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--text-muted)">Poziom dwujęzyczny</div>
+                <sc-for list="{{ maturaDwuj }}" as="r" hint-placeholder-count="1">
+                  <div style="display:flex;flex-direction:column;gap:10px;padding-bottom:12px;border-bottom:1px dashed var(--alk-border,#D8D8DA)">
+                    <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Przedmiot" placeholder="Wybierz" options="{{ przedmiotyOptions }}" value="{{ r.przedmiot }}" onChange="{{ r.setPrzedmiot }}" hint-size="100%,64px"></x-import>
+                    <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Wynik (%)" placeholder="np. 70" value="{{ r.wynik }}" onChange="{{ r.setWynik }}" hint-size="100%,64px"></x-import>
+                    <button type="button" onClick="{{ r.onRemove }}" style="background:none;border:none;cursor:pointer;font:600 12px var(--font-ui);color:#B42318;text-align:left;padding:0;align-self:flex-start">Usuń</button>
+                  </div>
+                </sc-for>
+                <button type="button" onClick="{{ addMaturaDwuj }}" style="background:none;border:none;cursor:pointer;font:600 12.5px var(--font-ui);color:var(--alk-blue-label,#3252B5);text-align:left;padding:0">+ Dodaj kolejny przedmiot</button>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ notNowaMatura }}" hint-placeholder-val="{{ false }}">
+            <p style="font:14px/1.6 var(--font-form);color:var(--text-primary);margin:0 0 16px">Wskaż <strong>trzy przedmioty z najlepszymi wynikami</strong> uzyskanymi na świadectwie, wraz z poziomem egzaminu.</p>
+            <div style="display:flex;flex-direction:column;gap:18px">
+              <sc-for list="{{ maturaWybor }}" as="r" hint-placeholder-count="3">
+                <div style="display:flex;flex-direction:column;gap:16px;padding-bottom:18px;border-bottom:1px solid var(--alk-border-subtle,#eee)">
+                  <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Przedmiot" required="{{ true }}" placeholder="Wybierz" options="{{ przedmiotyOptions }}" value="{{ r.przedmiot }}" onChange="{{ r.setPrzedmiot }}" hint-size="100%,64px"></x-import>
+                  <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Poziom" required="{{ true }}" placeholder="Wybierz" options="{{ poziomEgzaminuOptions }}" value="{{ r.poziom }}" onChange="{{ r.setPoziom }}" hint-size="100%,64px"></x-import>
+                  <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Wynik" required="{{ true }}" placeholder="np. 85%" value="{{ r.wynik }}" onChange="{{ r.setWynik }}" hint-size="100%,64px"></x-import>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+
+      <div>
+        <div style="{{ hlDokumentyWy }}" onFocus="{{ focusDokumentyWy }}" onClick="{{ focusDokumentyWy }}">
+          <h3 style="font:600 13px/1.4 var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--alk-blue-label,#3252B5);margin:0 0 20px">Dokumenty</h3>
+          <sc-if value="{{ showWynikiLocked }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#FFF7E8;border-radius:6px;padding:16px 18px;display:flex;gap:10px;align-items:flex-start">
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Icon" name="clock" size="18" style="color:var(--accent-warm,#91653F);flex-shrink:0;margin-top:1px" hint-size="18px,18px"></x-import>
+              <p style="font:13.5px/1.6 var(--font-form);color:var(--text-primary);margin:0">Świadectwo dołączysz po otrzymaniu wyników matury — po dokonaniu opłaty wrócisz tutaj, aby uzupełnić dokumenty.</p>
+            </div>
+          </sc-if>
+          <sc-if value="{{ isMaturaDocs }}" hint-placeholder-val="{{ true }}">
+            <div style="display:flex;flex-direction:column;gap:20px">
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <span style="font:500 14px var(--font-form);color:var(--text-primary)">Świadectwo dojrzałości</span>
+                <label style="display:inline-flex;align-items:center;gap:10px;padding:0 14px;height:38px;width:fit-content;border-radius:6px;box-shadow:inset 0 0 0 1px var(--alk-border,#D8D8DA);cursor:pointer;background:#fff">
+                  <input type="file" accept="image/*,application/pdf" style="display:none" onChange="{{ setSwiadectwoZalaczone }}">
+                  <span style="font:600 13px var(--font-ui);color:var(--alk-blue-label,#3252B5)">Wybierz plik</span>
+                  <span style="font:13px var(--font-form);color:var(--text-muted)">{{ swiadectwoFileLabel }}</span>
+                </label>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ isForeignDocs }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:20px">
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <span style="font:500 14px var(--font-form);color:var(--text-primary)">Tłumaczenie świadectwa</span>
+                <label style="display:inline-flex;align-items:center;gap:10px;padding:0 14px;height:38px;width:fit-content;border-radius:6px;box-shadow:inset 0 0 0 1px var(--alk-border,#D8D8DA);cursor:pointer;background:#fff">
+                  <input type="file" accept="image/*,application/pdf" style="display:none" onChange="{{ setTlumaczenieZalaczone }}">
+                  <span style="font:600 13px var(--font-ui);color:var(--alk-blue-label,#3252B5)">Wybierz plik</span>
+                  <span style="font:13px var(--font-form);color:var(--text-muted)">{{ tlumaczenieFileLabel }}</span>
+                </label>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <span style="font:500 14px var(--font-form);color:var(--text-primary)">Transkrypt ocen</span>
+                <label style="display:inline-flex;align-items:center;gap:10px;padding:0 14px;height:38px;width:fit-content;border-radius:6px;box-shadow:inset 0 0 0 1px var(--alk-border,#D8D8DA);cursor:pointer;background:#fff">
+                  <input type="file" accept="image/*,application/pdf" style="display:none" onChange="{{ setTranskryptZalaczone }}">
+                  <span style="font:600 13px var(--font-ui);color:var(--alk-blue-label,#3252B5)">Wybierz plik</span>
+                  <span style="font:13px var(--font-form);color:var(--text-muted)">{{ transkryptFileLabel }}</span>
+                </label>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <span style="font:500 14px var(--font-form);color:var(--text-primary)">Tłumaczenie transkryptu</span>
+                <label style="display:inline-flex;align-items:center;gap:10px;padding:0 14px;height:38px;width:fit-content;border-radius:6px;box-shadow:inset 0 0 0 1px var(--alk-border,#D8D8DA);cursor:pointer;background:#fff">
+                  <input type="file" accept="image/*,application/pdf" style="display:none" onChange="{{ setTlumaczenieTranskryptuZalaczone }}">
+                  <span style="font:600 13px var(--font-ui);color:var(--alk-blue-label,#3252B5)">Wybierz plik</span>
+                  <span style="font:13px var(--font-form);color:var(--text-muted)">{{ tlumaczenieTranskryptuFileLabel }}</span>
+                </label>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+
+      <sc-if value="{{ osoboweLockAvailable }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-bottom:28px;padding-top:28px;padding-bottom:28px;border-top:2px solid var(--alk-border,#D8D8DA);border-bottom:2px solid var(--alk-border,#D8D8DA)">
+        <h3 style="font:600 17px/1.35 var(--font-ui);color:var(--alk-deep-waters);margin:0 0 16px">Dyplom ukończenia studiów wyższych</h3>
+        <sc-if value="{{ dyplomBrak }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;align-items:center;gap:20px">
+            <span style="font:14px/1.5 var(--font-form);color:var(--text-muted)">Brak</span>
+            <sc-if value="{{ wyksztCanAdd }}" hint-placeholder-val="{{ false }}">
+              <button type="button" onClick="{{ addDyplom }}" style="background:none;border:none;cursor:pointer;font:600 12.5px var(--font-ui);color:var(--alk-blue-label,#3252B5);padding:0">+ Dodaj dyplom</button>
+            </sc-if>
+          </div>
+        </sc-if>
+        <sc-if value="{{ dyplomDodany }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <div style="display:flex;flex-direction:column;gap:20px">
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Nazwa uczelni" required="{{ true }}" placeholder="Pełna nazwa uczelni" value="{{ dyplomUczelnia }}" onChange="{{ setDyplomUczelnia }}" hint-size="100%,64px"></x-import>
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Kierunek studiów" required="{{ true }}" placeholder="np. Zarządzanie" value="{{ dyplomKierunek }}" onChange="{{ setDyplomKierunek }}" hint-size="100%,64px"></x-import>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:20px">
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Numer dyplomu" required="{{ true }}" placeholder="Numer z dyplomu" value="{{ dyplomNumer }}" onChange="{{ setDyplomNumer }}" hint-size="100%,64px"></x-import>
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Data wydania dyplomu" required="{{ true }}" type="date" value="{{ dyplomData }}" onChange="{{ setDyplomData }}" hint-size="100%,64px"></x-import>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <span style="font:600 12px var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--text-muted)">Dokumenty</span>
+              <span style="font:500 14px var(--font-form);color:var(--text-primary)">Dyplom ukończenia studiów (skan)</span>
+              <label style="display:inline-flex;align-items:center;gap:10px;padding:0 14px;height:38px;width:fit-content;border-radius:6px;box-shadow:inset 0 0 0 1px var(--alk-border,#D8D8DA);cursor:pointer;background:#fff">
+                <input type="file" accept="image/*,application/pdf" style="display:none" onChange="{{ setDyplomPlik }}">
+                <span style="font:600 13px var(--font-ui);color:var(--alk-blue-label,#3252B5)">Wybierz plik</span>
+                <span style="font:13px var(--font-form);color:var(--text-muted)">{{ dyplomPlikLabel }}</span>
+              </label>
+            </div>
+            <sc-if value="{{ wyksztCanAdd }}" hint-placeholder-val="{{ false }}">
+              <button type="button" onClick="{{ removeDyplom }}" style="background:none;border:none;cursor:pointer;font:600 12.5px var(--font-ui);color:#B42318;text-align:left;padding:0">Usuń dyplom</button>
+            </sc-if>
+          </div>
+        </sc-if>
+      </div>
+
+      <div>
+        <h3 style="font:600 17px/1.35 var(--font-ui);color:var(--alk-deep-waters);margin:0 0 16px">Świadectwo ukończenia studiów podyplomowych</h3>
+        <sc-if value="{{ podyplBrak }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;align-items:center;gap:20px">
+            <span style="font:14px/1.5 var(--font-form);color:var(--text-muted)">Brak</span>
+            <sc-if value="{{ wyksztCanAdd }}" hint-placeholder-val="{{ false }}">
+              <button type="button" onClick="{{ addPodypl }}" style="background:none;border:none;cursor:pointer;font:600 12.5px var(--font-ui);color:var(--alk-blue-label,#3252B5);padding:0">+ Dodaj świadectwo</button>
+            </sc-if>
+          </div>
+        </sc-if>
+        <sc-if value="{{ podyplDodany }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <div style="display:flex;flex-direction:column;gap:20px">
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Nazwa uczelni" required="{{ true }}" placeholder="Pełna nazwa uczelni" value="{{ podyplUczelnia }}" onChange="{{ setPodyplUczelnia }}" hint-size="100%,64px"></x-import>
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Nazwa studiów podyplomowych" required="{{ true }}" placeholder="np. Analityka biznesowa" value="{{ podyplNazwa }}" onChange="{{ setPodyplNazwa }}" hint-size="100%,64px"></x-import>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:20px">
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Numer świadectwa" required="{{ true }}" placeholder="Numer ze świadectwa" value="{{ podyplNumer }}" onChange="{{ setPodyplNumer }}" hint-size="100%,64px"></x-import>
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Data wydania świadectwa" required="{{ true }}" type="date" value="{{ podyplData }}" onChange="{{ setPodyplData }}" hint-size="100%,64px"></x-import>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <span style="font:600 12px var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--text-muted)">Dokumenty</span>
+              <span style="font:500 14px var(--font-form);color:var(--text-primary)">Świadectwo ukończenia studiów podyplomowych (skan)</span>
+              <label style="display:inline-flex;align-items:center;gap:10px;padding:0 14px;height:38px;width:fit-content;border-radius:6px;box-shadow:inset 0 0 0 1px var(--alk-border,#D8D8DA);cursor:pointer;background:#fff">
+                <input type="file" accept="image/*,application/pdf" style="display:none" onChange="{{ setPodyplPlik }}">
+                <span style="font:600 13px var(--font-ui);color:var(--alk-blue-label,#3252B5)">Wybierz plik</span>
+                <span style="font:13px var(--font-form);color:var(--text-muted)">{{ podyplPlikLabel }}</span>
+              </label>
+            </div>
+            <sc-if value="{{ wyksztCanAdd }}" hint-placeholder-val="{{ false }}">
+              <button type="button" onClick="{{ removePodypl }}" style="background:none;border:none;cursor:pointer;font:600 12.5px var(--font-ui);color:#B42318;text-align:left;padding:0">Usuń świadectwo</button>
+            </sc-if>
+          </div>
+        </sc-if>
+      </div>
+      </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showOsiagniecia }}" hint-placeholder-val="{{ false }}">
+    <div style="{{ sectionCardStyle }}">
+      <h2 style="font:600 22px/1.3 var(--font-ui);color:var(--alk-deep-waters);margin:0 0 4px">Osiągnięcia i dokumenty dodatkowe</h2>
+      <sc-if value="{{ isForeignCert }}" hint-placeholder-val="{{ false }}">
+        <div style="margin:20px 0 28px;padding:20px 24px;background:var(--alk-surface-subtle,#F8F9FB);border-radius:6px;display:flex;flex-direction:column;gap:10px">
+          <span style="font:600 13px var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--alk-blue-label,#3252B5)">Wymagany dokument <span style="color:#F73B3B">*</span></span>
+          <span style="font:500 14px/1.5 var(--font-form);color:var(--text-primary)">Certyfikat potwierdzający znajomość języka angielskiego</span>
+          <span style="font:13px/1.6 var(--font-form);color:var(--text-muted)">Przy maturze zagranicznej wymagamy certyfikatu (np. IELTS, TOEFL, Cambridge) lub innego dokumentu potwierdzającego znajomość języka angielskiego.</span>
+          <label style="display:inline-flex;align-items:center;gap:10px;padding:0 14px;height:38px;width:fit-content;border-radius:6px;box-shadow:inset 0 0 0 1px var(--alk-border,#D8D8DA);cursor:pointer;background:#fff">
+            <input type="file" accept="image/*,application/pdf" style="display:none" onChange="{{ setCertEnglish }}">
+            <span style="font:600 13px var(--font-ui);color:var(--alk-blue-label,#3252B5)">Wybierz plik</span>
+            <span style="font:13px var(--font-form);color:var(--text-muted)">{{ certEnglishLabel }}</span>
+          </label>
+        </div>
+      </sc-if>
+      <p style="font:14px/1.5 var(--font-ui);color:var(--text-muted);margin:0 0 28px">Ta sekcja jest opcjonalna — możesz dodać dowolną liczbę wpisów: zarówno osiągnięć, jak i innych dokumentów, które chcesz dołączyć do zgłoszenia.</p>
+
+      <div style="margin-bottom:28px">
+        <x-import component-from-global-scope="ALKDesignSystem_ae2905.InputTextArea" label="Opis (opcjonalnie)" placeholder="Krótko opisz swoje osiągnięcia lub załączone dokumenty…" value="{{ achievementsNote }}" onChange="{{ setAchievementsNote }}" hint-size="100%,100px"></x-import>
+      </div>
+
+      <sc-for list="{{ achievements }}" as="ach" hint-placeholder-count="0">
+        <div style="background:var(--alk-surface-subtle,#F8F9FB);border-radius:6px;padding:20px 24px;margin-bottom:16px;position:relative">
+          <button type="button" onClick="{{ ach.onRemove }}" style="position:absolute;top:16px;right:16px;background:none;border:none;cursor:pointer;color:var(--text-muted);font:13px var(--font-ui)">Usuń</button>
+          <div style="max-width:none;margin-bottom:16px">
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Rodzaj wpisu" placeholder="Wybierz" options="{{ achTypOptions }}" value="{{ ach.typ }}" onChange="{{ ach.setTyp }}" hint-size="100%,64px"></x-import>
+          </div>
+
+          <sc-if value="{{ ach.showCert }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:20px">
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Język" options="{{ achJezykOptions }}" value="{{ ach.jezyk }}" onChange="{{ ach.setJezyk }}" hint-size="100%,64px"></x-import>
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Poziom" options="{{ certPoziomOptions }}" value="{{ ach.poziom }}" onChange="{{ ach.setPoziom }}" hint-size="100%,64px"></x-import>
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Wynik" placeholder="np. C1 / finalista" value="{{ ach.wynik }}" onChange="{{ ach.setWynik }}" hint-size="100%,64px"></x-import>
+            </div>
+          </sc-if>
+          <sc-if value="{{ ach.showOlimp }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:20px">
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Przedmiot" placeholder="np. Matematyka" value="{{ ach.przedmiot }}" onChange="{{ ach.setPrzedmiot }}" hint-size="100%,64px"></x-import>
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Poziom" options="{{ olimpPoziomOptions }}" value="{{ ach.poziom }}" onChange="{{ ach.setPoziom }}" hint-size="100%,64px"></x-import>
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Wynik" placeholder="np. C1 / finalista" value="{{ ach.wynik }}" onChange="{{ ach.setWynik }}" hint-size="100%,64px"></x-import>
+            </div>
+          </sc-if>
+          <sc-if value="{{ ach.showSport }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:20px">
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Dziedzina sportu" placeholder="np. Pływanie" value="{{ ach.dziedzina }}" onChange="{{ ach.setDziedzina }}" hint-size="100%,64px"></x-import>
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Nazwa zawodów" placeholder="np. Mistrzostwa Polski Juniorów" value="{{ ach.zawody }}" onChange="{{ ach.setZawody }}" hint-size="100%,64px"></x-import>
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Miejsce" placeholder="np. 1. miejsce" value="{{ ach.miejsce }}" onChange="{{ ach.setMiejsce }}" hint-size="100%,64px"></x-import>
+            </div>
+          </sc-if>
+          <sc-if value="{{ ach.showInne }}" hint-placeholder-val="{{ false }}">
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.InputTextArea" label="Opis" placeholder="Opisz osiągnięcie lub dołączany dokument…" value="{{ ach.opis }}" onChange="{{ ach.setOpis }}" hint-size="100%,90px"></x-import>
+          </sc-if>
+
+          <div style="display:flex;flex-direction:column;gap:6px;margin-top:16px">
+            <span style="font:500 14px var(--font-form);color:var(--text-primary)">Dokument (potwierdzenie lub załącznik)</span>
+            <label style="display:inline-flex;align-items:center;gap:10px;padding:0 14px;height:38px;width:fit-content;border-radius:6px;box-shadow:inset 0 0 0 1px var(--alk-border,#D8D8DA);cursor:pointer;background:#fff">
+              <input type="file" accept="image/*,application/pdf" style="display:none" onChange="{{ ach.setPlik }}">
+              <span style="font:600 13px var(--font-ui);color:var(--alk-blue-label,#3252B5)">Wybierz plik</span>
+              <span style="font:13px var(--font-form);color:var(--text-muted)">{{ ach.plikLabel }}</span>
+            </label>
+          </div>
+        </div>
+      </sc-for>
+
+      <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="secondary" size="small" showIcon="{{ false }}" onClick="{{ addAchievement }}" hint-size="auto,48px">+ DODAJ WPIS</x-import>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showDodatkowe }}" hint-placeholder-val="{{ false }}">
+    <div>
+      <h2 style="font:600 22px/1.3 var(--font-ui);color:var(--alk-deep-waters);margin:0 0 4px">Informacje dodatkowe</h2>
+      <p style="font:14px/1.5 var(--font-ui);color:var(--text-muted);margin:0 0 28px">Pomóż nam lepiej zrozumieć, jak trafiłeś/aś do nas.</p>
+
+      <div style="display:flex;flex-direction:column;gap:24px;max-width:none">
+        <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Skąd po raz pierwszy dowiedziałeś się o Uczelni?" options="{{ zrodloInfoOptions }}" value="{{ zrodloInfo }}" onChange="{{ setZrodloInfo }}" hint-size="100%,64px"></x-import>
+        <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Co było głównym czynnikiem, który Cię przekonał?" options="{{ czynnikDecyzyjnyOptions }}" value="{{ czynnikDecyzyjny }}" onChange="{{ setCzynnikDecyzyjny }}" hint-size="100%,64px"></x-import>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showPodsumowanie }}" hint-placeholder-val="{{ false }}">
+    <div>
+      <h2 style="font:600 22px/1.3 var(--font-ui);color:var(--alk-deep-waters);margin:0 0 4px">Podsumowanie</h2>
+      <p style="font:14px/1.5 var(--font-ui);color:var(--text-muted);margin:0 0 28px">Sprawdź wprowadzone dane przed przejściem do płatności. Kliknij nagłówek sekcji, aby ją rozwinąć, lub „Edytuj”, aby wrócić do danego kroku.</p>
+
+      <sc-for list="{{ summarySections }}" as="sec" hint-placeholder-count="5">
+        <div style="border:1px solid var(--alk-border-subtle,#eee);border-radius:6px;margin-bottom:12px;overflow:hidden">
+          <div onClick="{{ sec.onToggle }}" style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;cursor:pointer;background:var(--alk-surface-subtle,#F8F9FB)">
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="font-size:11px;color:var(--text-muted)">{{ sec.chevron }}</span>
+              <span style="font:600 15px var(--font-ui);color:var(--alk-deep-waters)">{{ sec.label }}</span>
+            </div>
+            <a href="#" onClick="{{ sec.onEdit }}" style="font:600 12px var(--font-ui);letter-spacing:0.02em;color:var(--alk-blue-label,#3252B5);text-decoration:none">EDYTUJ</a>
+          </div>
+          <sc-if value="{{ sec.expanded }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:16px 18px;display:flex;flex-direction:column;gap:10px">
+              <sc-for list="{{ sec.rows }}" as="row" hint-placeholder-count="4">
+                <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:baseline">
+                  <span style="font:500 13px var(--font-form);color:var(--text-muted)">{{ row.label }}:</span>
+                  <span style="font:600 13px var(--font-form);color:var(--text-primary)">{{ row.value }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+      </sc-for>
+
+      <sc-if value="{{ hasMissing }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:28px;padding:18px 20px;background:#FEF3F2;border-radius:6px">
+          <h3 style="font:600 13px/1.4 var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:#B42318;margin:0 0 12px">Brakujące pola</h3>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ missingFieldsList }}" as="miss" hint-placeholder-count="3">
+              <a href="#" onClick="{{ miss.onJump }}" style="font:13px var(--font-form);color:#B42318;text-decoration:underline;text-underline-offset:2px">{{ miss.label }}</a>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ allComplete }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:28px;padding:18px 20px;background:#ECFDF3;border-radius:6px">
+          <span style="font:600 14px var(--font-form);color:#17B530">Wszystkie wymagane pola zostały uzupełnione.</span>
+        </div>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showPlatnosc }}" hint-placeholder-val="{{ false }}">
+    <div>
+      <h2 style="font:600 22px/1.3 var(--font-ui);color:var(--alk-deep-waters);margin:0 0 4px">Płatność</h2>
+      <p style="font:14px/1.5 var(--font-ui);color:var(--text-muted);margin:0 0 28px">Ostatni krok — opłać rekrutację, aby przesłać zgłoszenie do rozpatrzenia.</p>
+      <sc-if value="{{ isPaid }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;gap:10px;align-items:center;background:#ECFDF3;border-radius:6px;padding:14px 18px;margin:0 0 24px">
+          <span style="font:700 16px var(--font-ui);color:#17B530">✓</span>
+          <span style="font:600 14px var(--font-form);color:#17B530">Opłata rekrutacyjna 85,00 zł została opłacona.</span>
+        </div>
+      </sc-if>
+
+      <div style="padding:20px 24px;background:var(--alk-surface-subtle,#F8F9FB);border-radius:6px;margin-bottom:28px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px">
+          <span style="font:500 14px var(--font-form);color:var(--text-primary)">Opłata rekrutacyjna</span>
+          <span style="font:700 22px var(--font-ui);color:var(--alk-deep-waters)">85,00 zł</span>
+        </div>
+        <p style="font:13px/1.5 var(--font-form);color:var(--text-muted);margin:0">Do opłaty rekrutacyjnej może zostać doliczona opłata od transakcji w wysokości 2,90 zł, w zależności od wybranej metody płatności.</p>
+      </div>
+
+      <div style="margin-bottom:28px">
+        <h3 style="font:600 13px/1.4 var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--alk-blue-label,#3252B5);margin:0 0 20px">Metoda płatności</h3>
+        <div style="{{ platnoscMetodaWrapStyle }}">
+          <x-import component-from-global-scope="ALKDesignSystem_ae2905.Radio.Group" options="{{ platnoscOptions }}" value="{{ platnoscMetoda }}" onChange="{{ setPlatnoscMetodaSafe }}" hint-size="100%,140px"></x-import>
+        </div>
+        <sc-if value="{{ resultsPaid }}" hint-placeholder-val="{{ false }}">
+          <p style="font:13px/1.5 var(--font-form);color:var(--text-muted);margin:12px 0 0">Metoda płatności została już wybrana przy opłacie i nie można jej zmienić.</p>
+        </sc-if>
+      </div>
+      <sc-if value="{{ platnoscPrzelew }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-bottom:28px;padding:20px 24px;background:var(--alk-space,#F2F5FF);border-radius:6px;max-width:none;display:flex;flex-direction:column;gap:12px">
+          <div style="font:600 12px var(--font-ui);letter-spacing:0.06em;text-transform:uppercase;color:var(--alk-alumni,#162447)">Dane do przelewu</div>
+          <div style="display:flex;gap:6px"><span style="font:500 13.5px var(--font-form);color:var(--text-muted);width:130px;flex-shrink:0">Odbiorca</span><span style="font:600 13.5px var(--font-form);color:var(--alk-deep-waters)">Akademia Leona Koźmińskiego, ul. Jagiellońska 57/59, 03-301 Warszawa</span></div>
+          <div style="display:flex;gap:6px"><span style="font:500 13.5px var(--font-form);color:var(--text-muted);width:130px;flex-shrink:0">Numer konta</span><span style="font:600 13.5px var(--font-form);color:var(--alk-deep-waters)">PL 61 1090 1014 0000 0712 1981 2874</span></div>
+          <div style="display:flex;gap:6px"><span style="font:500 13.5px var(--font-form);color:var(--text-muted);width:130px;flex-shrink:0">Kwota</span><span style="font:600 13.5px var(--font-form);color:var(--alk-deep-waters)">85,00 zł</span></div>
+          <div style="display:flex;gap:6px"><span style="font:500 13.5px var(--font-form);color:var(--text-muted);width:130px;flex-shrink:0">Tytuł przelewu</span><span style="font:600 13.5px var(--font-form);color:var(--alk-deep-waters)">{{ przelewTytul }}</span></div>
+          <p style="font:12.5px/1.6 var(--font-form);color:var(--alk-alumni,#162447);margin:4px 0 0">Zgłoszenie prześlemy do Biura Rekrutacji po kliknięciu „Wyślij zgłoszenie". Rozpatrzymy je po zaksięgowaniu wpłaty (zwykle 1–2 dni robocze).</p>
+        </div>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showStepMissing }}" hint-placeholder-val="{{ false }}">
+    <div style="display:flex;gap:12px;align-items:flex-start;background:var(--alk-space,#F2F5FF);border:1px solid var(--alk-blue-label,#3252B5);border-radius:8px;padding:16px 20px;margin-top:32px">
+      <x-import component-from-global-scope="ALKDesignSystem_ae2905.Icon" name="information-circle" size="20" style="color:var(--alk-blue-label,#3252B5);flex-shrink:0;margin-top:1px" hint-size="20px,20px"></x-import>
+      <div style="flex:1">
+        <p style="font:600 14px/1.5 var(--font-ui);color:var(--alk-alumni,#162447);margin:0 0 8px">Ten krok nie jest jeszcze kompletny — możesz przejść dalej i wrócić tu później.</p>
+        <p style="font:13px/1.5 var(--font-form);color:var(--text-muted);margin:0 0 8px">Do uzupełnienia pozostały wymagane pola:</p>
+        <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:3px 24px">
+          <sc-for list="{{ stepMissing }}" as="m" hint-placeholder-count="3">
+            <li style="font:13px/1.5 var(--font-form);color:var(--alk-alumni,#162447)">{{ m }}</li>
+          </sc-for>
+        </ul>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showFooter }}" hint-placeholder-val="{{ true }}">
+  <div style="pointer-events:auto;display:flex;flex-direction:column;gap:12px;margin-top:40px;padding-top:24px;border-top:1px solid var(--alk-border-subtle,#eee)">
+    <sc-if value="{{ resultsPaidStep2 }}" hint-placeholder-val="{{ false }}">
+      <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="primary" size="small" showIcon="{{ false }}" onClick="{{ submitCompleted }}" hint-size="100%,48px">PRZEŚLIJ UZUPEŁNIONY FORMULARZ</x-import>
+    </sc-if>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+    <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="secondary" size="small" showIcon="{{ false }}" disabled="{{ isFirstStep }}" onClick="{{ goPrev }}" hint-size="auto,48px">WSTECZ</x-import>
+    <sc-if value="{{ isLastBuiltStep }}" hint-placeholder-val="{{ false }}">
+      <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="secondary" size="small" disabled="{{ true }}" showIcon="{{ false }}" hint-size="auto,48px">KOLEJNE ETAPY — WKRÓTCE</x-import>
+    </sc-if>
+    <sc-if value="{{ showPay }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <sc-if value="{{ platnoscPrzelew }}" hint-placeholder-val="{{ false }}">
+          <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="primary" size="small" showIcon="{{ false }}" onClick="{{ onPay }}" hint-size="auto,48px">WYŚLIJ ZGŁOSZENIE</x-import>
+        </sc-if>
+        <sc-if value="{{ platnoscNiePrzelew }}" hint-placeholder-val="{{ true }}">
+          <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="primary" size="small" showIcon="{{ false }}" onClick="{{ onPay }}" hint-size="auto,48px">ZAPŁAĆ 85,00 ZŁ</x-import>
+        </sc-if>
+      </div>
+    </sc-if>
+    <sc-if value="{{ showSubmitFinal }}" hint-placeholder-val="{{ false }}">
+      <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="primary" size="small" showIcon="{{ false }}" onClick="{{ submitCompleted }}" hint-size="auto,48px">PRZEŚLIJ UZUPEŁNIONY FORMULARZ</x-import>
+    </sc-if>
+    <sc-if value="{{ showNext }}" hint-placeholder-val="{{ true }}">
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+        <sc-if value="{{ showCompleteWarning }}" hint-placeholder-val="{{ false }}">
+          <span style="font:600 12.5px var(--font-form);color:#B42318">Uzupełnij wszystkie wymagane pola, aby przejść do płatności.</span>
+        </sc-if>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="{{ nextWrapStyle }}">
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="primary" size="small" onClick="{{ attemptNext }}" hint-size="auto,48px">DALEJ</x-import>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+    </div>
+  </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { showCompleteWarning: false, editModalOpen: false, nazwaSzkolyInna: '', editOsobowe: false, editWykszt: false, szkolaInnaAdres: '' };
+
+  renderVals() {
+    const p = this.props;
+    const activeMain = p.activeMain;
+    const activeSub = p.activeSub;
+    const pm = !!p.profileMode;
+    const wynikiLocked = p.oczekujeWyniki && !p.resultsPaid;
+    const hl = (main, sub) => (!pm && activeMain === main && activeSub === sub)
+      ? { boxShadow: 'inset 0 0 0 2px var(--alk-blue-label, #2C71F6)', borderRadius: 6, padding: 16, margin: -16 }
+      : { padding: 0 };
+
+    return {
+      rootStyle: { maxWidth: p.maxWidth || '680px', fontFamily: 'var(--font-form)', ...(p.readOnly ? { pointerEvents: 'none', opacity: 0.75, filter: 'grayscale(0.6)' } : {}) },
+      radioRowStyle: { flexDirection: 'row', gap: 28, flexWrap: 'wrap' },
+      radioGroupProps: { style: { flexDirection: 'row', gap: 28, flexWrap: 'wrap' } },
+      showStudia: activeMain === 0 && !pm,
+      showStepMissing: !pm && !!p.showStepMissing && Array.isArray(p.stepMissing) && p.stepMissing.length > 0,
+      stepMissing: p.stepMissing || [],
+      showProfileUpdated: !pm && !!p.showProfileUpdatedInfo,
+      showFooter: !pm,
+      isPaid: !!p.readOnly || !!p.resultsPaid,
+      sectionCardStyle: pm ? { background: '#fff', boxShadow: '0 12px 40px rgba(3,9,40,0.06)', padding: '32px 36px', marginBottom: '24px' } : {},
+      osoboweLockAvailable: pm,
+      osoboweEditing: this.state.editOsobowe,
+      osoboweNotEditing: !this.state.editOsobowe,
+      toggleEditOsobowe: () => this.setState({ editOsobowe: !this.state.editOsobowe }),
+      osoboweLockStyle: pm && !this.state.editOsobowe ? { pointerEvents: 'none', opacity: 0.55 } : {},
+      wyksztEditing: this.state.editWykszt,
+      wyksztNotEditing: !this.state.editWykszt,
+      toggleEditWykszt: () => this.setState({ editWykszt: !this.state.editWykszt }),
+      wyksztLockStyle: pm && !this.state.editWykszt ? { pointerEvents: 'none', opacity: 0.55 } : {},
+      wyksztCanAdd: !pm || this.state.editWykszt,
+      dyplomBrak: !(p.dyplom && p.dyplom.dodany),
+      dyplomDodany: !!(p.dyplom && p.dyplom.dodany),
+      dyplomUczelnia: p.dyplom && p.dyplom.uczelnia, dyplomKierunek: p.dyplom && p.dyplom.kierunek, dyplomNumer: p.dyplom && p.dyplom.numer, dyplomData: p.dyplom && p.dyplom.data,
+      addDyplom: () => p.setDyplom && p.setDyplom('dodany', true),
+      removeDyplom: () => p.setDyplom && p.setDyplom('dodany', false),
+      setDyplomUczelnia: e => p.setDyplom('uczelnia', e.target.value),
+      setDyplomKierunek: e => p.setDyplom('kierunek', e.target.value),
+      setDyplomNumer: e => p.setDyplom('numer', e.target.value),
+      setDyplomData: e => p.setDyplom('data', e.target.value),
+      setDyplomPlik: e => p.setDyplom('plik', (e.target.files && e.target.files[0] && e.target.files[0].name) || ''),
+      dyplomPlikLabel: (p.dyplom && p.dyplom.plik) || 'Nie wybrano pliku (PDF, JPG, PNG)',
+      podyplBrak: !(p.podypl && p.podypl.dodany),
+      podyplDodany: !!(p.podypl && p.podypl.dodany),
+      podyplUczelnia: p.podypl && p.podypl.uczelnia, podyplNazwa: p.podypl && p.podypl.nazwa, podyplNumer: p.podypl && p.podypl.numer, podyplData: p.podypl && p.podypl.data,
+      addPodypl: () => p.setPodypl && p.setPodypl('dodany', true),
+      removePodypl: () => p.setPodypl && p.setPodypl('dodany', false),
+      setPodyplUczelnia: e => p.setPodypl('uczelnia', e.target.value),
+      setPodyplNazwa: e => p.setPodypl('nazwa', e.target.value),
+      setPodyplNumer: e => p.setPodypl('numer', e.target.value),
+      setPodyplData: e => p.setPodypl('data', e.target.value),
+      setPodyplPlik: e => p.setPodypl('plik', (e.target.files && e.target.files[0] && e.target.files[0].name) || ''),
+      podyplPlikLabel: (p.podypl && p.podypl.plik) || 'Nie wybrano pliku (PDF, JPG, PNG)',
+      hlStudiaWybor: hl(0, 0), hlStudiaJezyk: hl(0, 1),
+      focusStudiaWybor: () => p.setActiveSub && p.setActiveSub(0),
+      focusStudiaJezyk: () => p.setActiveSub && p.setActiveSub(1),
+      trzeciDisabled: !p.drugiKierunekEnabled,
+      poziomJezyka: p.poziomJezyka, setPoziomJezyka: p.setPoziomJezyka,
+      poziomJezykaOptions: ['A1 — początkujący', 'A2 — podstawowy', 'B1 — średnio zaawansowany', 'B2 — wyższy średni', 'C1 — zaawansowany', 'C2 — biegły'],
+      showOsobowe: activeMain === 1 || pm,
+      showWyksztalcenie: activeMain === 2 || pm,
+      showOsiagniecia: activeMain === 3 || pm,
+      showDodatkowe: activeMain === 4 && !pm,
+      showPodsumowanie: activeMain === 5 && !pm,
+      showPlatnosc: activeMain === 6 && !pm,
+      isFirstStep: activeMain === 0,
+      isLastBuiltStep: false,
+      showNext: activeMain < 6 && !pm,
+      showPay: activeMain === 6 && !pm && !p.resultsPaid,
+      showSubmitFinal: !pm && !!p.resultsPaid && activeMain === 6,
+      resultsPaidStep2: !pm && !!p.resultsPaid && activeMain === 2,
+      nextDisabled: activeMain === 5 && !p.allComplete,
+      nextWrapStyle: (activeMain === 5 && !p.allComplete) ? { opacity: 0.5, cursor: 'not-allowed' } : { opacity: 1, cursor: 'pointer' },
+      showCompleteWarning: this.state.showCompleteWarning && activeMain === 5 && !p.allComplete,
+      goPrev: p.goPrev,
+      goNext: p.goNext,
+      onPay: p.onPay,
+      setZdjecie: p.setZdjecie,
+      zdjecieFileLabel: p.zdjecie || 'Nie wybrano pliku',
+      zdjecieUrl: p.zdjecieUrl,
+      hasZdjeciePreview: !!p.zdjecieUrl,
+      removeZdjecie: p.removeZdjecie,
+      zdjeciePrzyklady: [
+        { ok: true, label: 'Poprawne — na wprost, jasne jednolite tło', v: 'ok' },
+        { ok: false, label: 'Twarz z boku (profil)', v: 'profil' },
+        { ok: false, label: 'Niejednolite tło z otoczeniem', v: 'tlo' },
+        { ok: false, label: 'Twarz zbyt mała w kadrze', v: 'daleko' },
+      ].map(ex => ({
+        ...ex,
+        mark: ex.ok ? '✓' : '✕',
+        markStyle: { font: '700 12px var(--font-ui)', color: ex.ok ? '#17B530' : '#F73B3B', flexShrink: 0 },
+        frameStyle: {
+          width: '104px', height: '134px', borderRadius: '4px', position: 'relative', overflow: 'hidden',
+          boxShadow: ex.ok ? 'inset 0 0 0 2px #17B530' : 'inset 0 0 0 1px #D8D8DA',
+          background: ex.v === 'tlo' ? 'repeating-linear-gradient(45deg,#c9cfdd 0 12px,#aab3c8 12px 24px)' : '#EDF0F7',
+        },
+        headStyle: ex.v === 'profil'
+          ? { position: 'absolute', left: '34px', top: '28px', width: '38px', height: '52px', borderRadius: '50% 50% 42% 58% / 56% 52% 44% 48%', background: '#8d94a8', boxShadow: '-14px 5px 0 -10px #8d94a8' }
+          : ex.v === 'daleko'
+          ? { position: 'absolute', left: '50%', top: '52px', transform: 'translateX(-50%)', width: '22px', height: '26px', borderRadius: '50%', background: '#8d94a8' }
+          : { position: 'absolute', left: '50%', top: '26px', transform: 'translateX(-50%)', width: '44px', height: '52px', borderRadius: '50%', background: '#8d94a8' },
+        bodyStyle: ex.v === 'daleko'
+          ? { position: 'absolute', left: '50%', bottom: '32px', transform: 'translateX(-50%)', width: '44px', height: '24px', borderRadius: '50% 50% 0 0', background: '#8d94a8' }
+          : ex.v === 'profil'
+          ? { position: 'absolute', left: '44%', bottom: '-18px', transform: 'translateX(-50%)', width: '86px', height: '52px', borderRadius: '60% 40% 0 0', background: '#8d94a8' }
+          : { position: 'absolute', left: '50%', bottom: '-18px', transform: 'translateX(-50%)', width: '86px', height: '52px', borderRadius: '50% 50% 0 0', background: '#8d94a8' },
+      })),
+      attemptNext: () => {
+        if (activeMain === 5 && !p.allComplete) { this.setState({ showCompleteWarning: true }); }
+        else { this.setState({ showCompleteWarning: false }); p.goNext && p.goNext(); }
+      },
+      setActiveSub: p.setActiveSub,
+
+      editModalOpen: this.state.editModalOpen,
+      openEditModal: () => this.setState({ editModalOpen: true }),
+      closeEditModal: () => this.setState({ editModalOpen: false }),
+      onEditModalKey: e => { if (e.key === 'Escape') this.setState({ editModalOpen: false }); },
+      stopProp: e => e.stopPropagation(),
+      confirmEditKierunek: () => { this.setState({ editModalOpen: false }); p.resetRecruitment && p.resetRecruitment(); },
+
+      nrDomu: p.nrDomu, setNrDomu: p.setNrDomu,
+      nrMieszkania: p.nrMieszkania, setNrMieszkania: p.setNrMieszkania,
+      korNrDomu: p.korNrDomu, setKorNrDomu: p.setKorNrDomu,
+      korNrMieszkania: p.korNrMieszkania, setKorNrMieszkania: p.setKorNrMieszkania,
+
+      hlDane: hl(1, 0), hlKontakt: hl(1, 1), hlAdres: hl(1, 2), hlDokument: hl(1, 3), hlZdjecie: hl(1, 4),
+      focusZdjecie: () => p.setActiveSub && p.setActiveSub(4),
+      hlTyp: hl(2, 0), hlDaneSwiad: hl(2, 1), hlWynikiSw: hl(2, 2), hlDokumentyWy: hl(2, 3),
+      focusDane: () => p.setActiveSub && p.setActiveSub(0),
+      focusKontakt: () => p.setActiveSub && p.setActiveSub(1),
+      focusAdres: () => p.setActiveSub && p.setActiveSub(2),
+      focusDokument: () => p.setActiveSub && p.setActiveSub(3),
+      focusTyp: () => p.setActiveSub && p.setActiveSub(0),
+      focusDaneSwiad: () => p.setActiveSub && p.setActiveSub(1),
+      focusWynikiSw: () => p.setActiveSub && p.setActiveSub(2),
+      focusDokumentyWy: () => p.setActiveSub && p.setActiveSub(3),
+
+      isNowaMatura: p.rodzajMatury === 'Nowa matura od 2005' && !wynikiLocked,
+      notNowaMatura: !!p.rodzajMatury && p.rodzajMatury !== 'Nowa matura od 2005' && !wynikiLocked,
+      noRodzajMatury: !p.rodzajMatury && !wynikiLocked,
+      showWynikiLocked: wynikiLocked,
+      certFieldsUnlocked: !wynikiLocked,
+      isMaturaDocs: p.isMatura && !wynikiLocked,
+      isForeignDocs: p.isForeignCert && !wynikiLocked,
+      przedmiotyOptions: ['Język polski', 'Matematyka', 'Język angielski', 'Język niemiecki', 'Język francuski', 'Język hiszpański', 'Biologia', 'Chemia', 'Fizyka', 'Geografia', 'Historia', 'Informatyka', 'Wiedza o społeczeństwie'],
+      poziomEgzaminuOptions: ['Podstawowy', 'Rozszerzony', 'Dwujęzyczny'],
+      maturaPodstPolski: (p.maturaPodst || {}).polski, setMaturaPodstPolski: p.setMaturaPodstPolski,
+      maturaPodstMatematyka: (p.maturaPodst || {}).matematyka, setMaturaPodstMatematyka: p.setMaturaPodstMatematyka,
+      maturaPodstJezyk: (p.maturaPodst || {}).jezyk, setMaturaPodstJezyk: p.setMaturaPodstJezyk,
+      maturaRozsz: p.maturaRozsz || [], addMaturaRozsz: p.addMaturaRozsz,
+      maturaDwuj: p.maturaDwuj || [], addMaturaDwuj: p.addMaturaDwuj,
+      maturaWybor: p.maturaWybor || [],
+
+      wojewodztwaOptions: ['dolnośląskie','kujawsko-pomorskie','lubelskie','lubuskie','łódzkie','małopolskie','mazowieckie','opolskie','podkarpackie','podlaskie','pomorskie','śląskie','świętokrzyskie','warmińsko-mazurskie','wielkopolskie','zachodniopomorskie'],
+      jezykOptions: ['Zajęcia w języku polskim', 'Zajęcia w języku angielskim'],
+      poziomOptions: ['Studia I stopnia', 'Studia II stopnia', 'Jednolite studia magisterskie'],
+      kierunekOptions: ['Informatyka', 'Finanse i rachunkowość', 'Zarządzanie', 'Prawo', 'Psychologia', 'Zarządzanie i socjologia w biznesie i mediach'],
+      formaOptions: ['stacjonarne', 'niestacjonarne'],
+      zakresOptions: ['Data Science', 'Cyberbezpieczeństwo', 'Sztuczna inteligencja', 'Bez specjalizacji'],
+      obywatelstwoOptions: ['Polskie', 'Inne'],
+      rodzajDokumentuTozOptions: ['Dowód osobisty', 'Paszport'],
+      swiadectwoOptions: [{ value: 'matura', label: 'Polska matura' }, { value: 'zagraniczne', label: 'Świadectwo zagraniczne' }],
+      okeOptions: ['OKE Warszawa', 'OKE Kraków', 'OKE Wrocław', 'OKE Gdańsk', 'OKE Łódź'],
+      rodzajMaturyOptions: ['Nowa matura od 2005', 'Matura od 1991', 'Matura do 1991'],
+      typMaturyZagrOptions: ['Matura Europejska EB', 'Matura międzynarodowa IB', 'Matura zagraniczna'],
+      isForeignCert: !p.isMatura,
+      setCertEnglish: e => p.setCertEnglish && p.setCertEnglish((e.target.files && e.target.files[0] && e.target.files[0].name) || ''),
+      certEnglishLabel: p.certEnglish || 'Nie wybrano pliku (PDF, JPG, PNG)',
+
+      jezyk: p.jezyk, poziom: p.poziom, kierunek: p.kierunek, forma: p.forma, zakres: p.zakres,
+      setJezyk: p.setJezyk, setPoziom: p.setPoziom, setKierunek: p.setKierunek, setForma: p.setForma, setZakres: p.setZakres,
+
+      drugiKierunekEnabled: p.drugiKierunekEnabled, setDrugiKierunekEnabled: p.setDrugiKierunekEnabled,
+      drugiPoziom: p.drugiPoziom, setDrugiPoziom: p.setDrugiPoziom,
+      drugiJezyk: p.drugiJezyk, setDrugiJezyk: p.setDrugiJezyk,
+      drugiKierunek: p.drugiKierunek, setDrugiKierunek: p.setDrugiKierunek,
+      zajeciaJezykowe: p.zajeciaJezykowe, setZajeciaJezykowe: p.setZajeciaJezykowe,
+      drugiZajeciaJezykowe: p.drugiZajeciaJezykowe, setDrugiZajeciaJezykowe: p.setDrugiZajeciaJezykowe,
+      trzeciKierunekEnabled: p.trzeciKierunekEnabled, setTrzeciKierunekEnabled: p.setTrzeciKierunekEnabled,
+      trzeciPoziom: p.trzeciPoziom, setTrzeciPoziom: p.setTrzeciPoziom,
+      trzeciJezyk: p.trzeciJezyk, setTrzeciJezyk: p.setTrzeciJezyk,
+      trzeciKierunek: p.trzeciKierunek, setTrzeciKierunek: p.setTrzeciKierunek,
+      trzeciZajeciaJezykowe: p.trzeciZajeciaJezykowe, setTrzeciZajeciaJezykowe: p.setTrzeciZajeciaJezykowe,
+      zajeciaJezykoweOptions: ['Angielski', 'Niemiecki', 'Francuski', 'Hiszpański', 'Włoski', 'Rosyjski', 'Chiński', 'Brak dodatkowych zajęć językowych'],
+
+      imie: p.imie, drugieImie: p.drugieImie, nazwisko: p.nazwisko, email: p.email, telefon: p.telefon,
+      obywatelstwo: p.obywatelstwo, isPolish: p.isPolish, posiadamDrugieObywatelstwo: p.posiadamDrugieObywatelstwo,
+      drugieObywatelstwoKraj: p.drugieObywatelstwoKraj, setDrugieObywatelstwoKraj: p.setDrugieObywatelstwoKraj,
+      krajObywatelstwoOptions: ['Niemcy', 'Ukraina', 'Wielka Brytania', 'Stany Zjednoczone', 'Francja', 'Włochy', 'Hiszpania', 'Inny'],
+      pesel: p.pesel, dataUrodzenia: p.dataUrodzenia,
+      ulica: p.ulica, kodPocztowy: p.kodPocztowy, miasto: p.miasto, wojewodztwo: p.wojewodztwo, kraj: p.kraj,
+      krajOptions: ['Polska', 'Niemcy', 'Ukraina', 'Wielka Brytania', 'Stany Zjednoczone', 'Francja', 'Włochy', 'Hiszpania', 'Inny'],
+      korespondencyjneInne: p.korespondencyjneInne,
+      korUlica: p.korUlica, korKodPocztowy: p.korKodPocztowy, korMiasto: p.korMiasto, korWojewodztwo: p.korWojewodztwo, korKraj: p.korKraj,
+      rodzajDokumentuToz: p.rodzajDokumentuToz, seriaNumerDokumentu: p.seriaNumerDokumentu,
+      krajWydaniaDok: p.krajWydaniaDok, dataWydaniaDok: p.dataWydaniaDok,
+      miejsceUrodzeniaKraj: p.miejsceUrodzeniaKraj, miejsceUrodzeniaMiasto: p.miejsceUrodzeniaMiasto,
+      setImie: p.setImie, setDrugieImie: p.setDrugieImie, setNazwisko: p.setNazwisko, setEmail: p.setEmail, setTelefon: p.setTelefon,
+      setObywatelstwo: p.setObywatelstwo, setPosiadamDrugieObywatelstwo: p.setPosiadamDrugieObywatelstwo,
+      setDrugieObywatelstwoKraj: p.setDrugieObywatelstwoKraj,
+      setPesel: p.setPesel, setDataUrodzenia: p.setDataUrodzenia,
+      setUlica: p.setUlica, setKodPocztowy: p.setKodPocztowy, setMiasto: p.setMiasto, setWojewodztwo: p.setWojewodztwo, setKraj: p.setKraj,
+      setKorespondencyjneInne: p.setKorespondencyjneInne,
+      setKorUlica: p.setKorUlica, setKorKodPocztowy: p.setKorKodPocztowy, setKorMiasto: p.setKorMiasto, setKorWojewodztwo: p.setKorWojewodztwo, setKorKraj: p.setKorKraj,
+      setRodzajDokumentuToz: p.setRodzajDokumentuToz, setSeriaNumerDokumentu: p.setSeriaNumerDokumentu,
+      setKrajWydaniaDok: p.setKrajWydaniaDok, setDataWydaniaDok: p.setDataWydaniaDok,
+      setMiejsceUrodzeniaKraj: p.setMiejsceUrodzeniaKraj, setMiejsceUrodzeniaMiasto: p.setMiejsceUrodzeniaMiasto,
+
+      rodzajSwiadectwa: p.rodzajSwiadectwa, isMatura: p.isMatura, setRodzajSwiadectwa: p.setRodzajSwiadectwa,
+      oczekujeWyniki: !!p.oczekujeWyniki, setOczekujeWyniki: p.setOczekujeWyniki, resultsPaid: !!p.resultsPaid, submitCompleted: p.submitCompleted,
+      nazwaSzkolyPolska: p.nazwaSzkolyPolska, setNazwaSzkolyPolska: p.setNazwaSzkolyPolska,
+      szkolaOptions: ['XIV LO im. Stanisława Staszica w Warszawie', 'II LO im. Stefana Batorego w Warszawie', 'V LO im. Augusta Witkowskiego w Krakowie', 'III LO im. Marynarki Wojennej RP w Gdyni', 'I LO im. Mikołaja Kopernika w Łodzi', 'XIII LO w Szczecinie', 'Inne'],
+      szkolaInna: p.nazwaSzkolyPolska === 'Inne',
+      nazwaSzkolyInna: this.state.nazwaSzkolyInna,
+      setNazwaSzkolyInna: e => this.setState({ nazwaSzkolyInna: e && e.target ? e.target.value : e }),
+      szkolaInnaAdres: this.state.szkolaInnaAdres,
+      setSzkolaInnaAdres: e => this.setState({ szkolaInnaAdres: e && e.target ? e.target.value : e }),
+      dataSwiadectwaPolska: p.dataSwiadectwaPolska, setDataSwiadectwaPolska: p.setDataSwiadectwaPolska,
+      rodzajMatury: p.rodzajMatury, setRodzajMatury: p.setRodzajMatury,
+      typMaturyZagr: p.typMaturyZagr, setTypMaturyZagr: p.setTypMaturyZagr,
+      nazwaSzkolyZagr: p.nazwaSzkolyZagr, setNazwaSzkolyZagr: p.setNazwaSzkolyZagr,
+      numerDokumentuZagr: p.numerDokumentuZagr, setNumerDokumentuZagr: p.setNumerDokumentuZagr,
+      dataSwiadectwaZagr: p.dataSwiadectwaZagr, setDataSwiadectwaZagr: p.setDataSwiadectwaZagr,
+      okregowaKomisja: p.okregowaKomisja, numerSwiadectwa: p.numerSwiadectwa, swiadectwoZalaczone: p.swiadectwoZalaczone,
+      swiadectwoFileLabel: p.swiadectwoZalaczone || 'Brak pliku — dodaj zdjęcie lub PDF',
+      tlumaczenieFileLabel: p.tlumaczenieZalaczone || 'Brak pliku — dodaj zdjęcie lub PDF',
+      transkryptFileLabel: p.transkryptZalaczone || 'Brak pliku — dodaj zdjęcie lub PDF',
+      tlumaczenieTranskryptuFileLabel: p.tlumaczenieTranskryptuZalaczone || 'Brak pliku — dodaj zdjęcie lub PDF',
+      setOkregowaKomisja: p.setOkregowaKomisja, setNumerSwiadectwa: p.setNumerSwiadectwa, setSwiadectwoZalaczone: p.setSwiadectwoZalaczone,
+      krajWydania2: p.krajWydania2, setKrajWydania2: p.setKrajWydania2,
+      tlumaczenieZalaczone: p.tlumaczenieZalaczone, transkryptZalaczone: p.transkryptZalaczone, tlumaczenieTranskryptuZalaczone: p.tlumaczenieTranskryptuZalaczone,
+      setTlumaczenieZalaczone: p.setTlumaczenieZalaczone, setTranskryptZalaczone: p.setTranskryptZalaczone, setTlumaczenieTranskryptuZalaczone: p.setTlumaczenieTranskryptuZalaczone,
+
+      achievementsNote: p.achievementsNote, setAchievementsNote: p.setAchievementsNote,
+      addAchievement: p.addAchievement, achievements: p.achievements,
+      achTypOptions: ['Certyfikat językowy', 'Olimpiada przedmiotowa', 'Osiągnięcie sportowe', 'Inny dokument'],
+      certPoziomOptions: ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'],
+      olimpPoziomOptions: ['Szkolne', 'Okręgowe', 'Wojewódzkie', 'Ogólnopolskie', 'Międzynarodowe'],
+      achJezykOptions: ['Angielski', 'Niemiecki', 'Francuski', 'Hiszpański', 'Włoski', 'Rosyjski', 'Chiński', 'Inny'],
+
+      zrodloInfo: p.zrodloInfo, setZrodloInfo: p.setZrodloInfo,
+      czynnikDecyzyjny: p.czynnikDecyzyjny, setCzynnikDecyzyjny: p.setCzynnikDecyzyjny,
+      zrodloInfoOptions: ['Strona internetowa uczelni', 'Media społecznościowe (Instagram, Facebook, TikTok)', 'Wyszukiwarka internetowa (Google)', 'Targi edukacyjne', 'Polecenie znajomego lub rodziny', 'Polecenie nauczyciela lub doradcy zawodowego', 'Reklama online', 'Reklama zewnętrzna (billboard, plakat)', 'Artykuł lub wzmianka w prasie/internecie', 'Absolwent uczelni', 'Inne'],
+      czynnikDecyzyjnyOptions: ['Ranking i renoma uczelni', 'Program studiów i specjalizacje', 'Kadra wykładowców', 'Lokalizacja uczelni', 'Wysokość czesnego i opcje finansowania', 'Możliwości praktyk i staży', 'Perspektywy zatrudnienia po studiach', 'Atmosfera i opinie studentów', 'Współpraca z zagranicznymi uczelniami', 'Elastyczna forma studiów (stacjonarne/niestacjonarne)', 'Inne'],
+
+      summarySections: p.summarySections, missingFieldsList: p.missingFieldsList, allComplete: p.allComplete,
+      hasMissing: (p.missingFieldsList || []).length > 0,
+
+      platnoscMetoda: p.platnoscMetoda, setPlatnoscMetoda: p.setPlatnoscMetoda,
+      setPlatnoscMetodaSafe: p.resultsPaid ? (() => {}) : p.setPlatnoscMetoda,
+      platnoscMetodaWrapStyle: p.resultsPaid ? { maxWidth: 'none', opacity: 0.5, pointerEvents: 'none', filter: 'grayscale(1)' } : { maxWidth: 'none' },
+      platnoscPrzelew: p.platnoscMetoda === 'przelew',
+      platnoscNiePrzelew: p.platnoscMetoda !== 'przelew',
+      przelewTytul: ['Opłata rekrutacyjna', p.appNumber, [p.imie, p.nazwisko].filter(Boolean).join(' ')].filter(Boolean).join(' — '),
+      platnoscOptions: [
+        { value: 'online', label: 'Płatność online (karta płatnicza)' },
+        { value: 'blik', label: 'BLIK' },
+        { value: 'przelew', label: 'Przelew tradycyjny' },
+      ],
+    };
+  }
+}
+
+</script>
+</body>
+</html>

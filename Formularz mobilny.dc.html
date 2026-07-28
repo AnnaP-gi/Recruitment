@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="_ds/alk-design-system-ae29057b-7f9b-48de-879c-d9b3e407c6e5/tokens/fonts.css">
+  <link rel="stylesheet" href="_ds/alk-design-system-ae29057b-7f9b-48de-879c-d9b3e407c6e5/tokens/colors.css">
+  <link rel="stylesheet" href="_ds/alk-design-system-ae29057b-7f9b-48de-879c-d9b3e407c6e5/tokens/typography.css">
+  <link rel="stylesheet" href="_ds/alk-design-system-ae29057b-7f9b-48de-879c-d9b3e407c6e5/tokens/spacing.css">
+  <link rel="stylesheet" href="_ds/alk-design-system-ae29057b-7f9b-48de-879c-d9b3e407c6e5/styles.css">
+  <script src="_ds/alk-design-system-ae29057b-7f9b-48de-879c-d9b3e407c6e5/_ds_bundle.js"></script>
+</helmet>
+
+<div style="width:430px;height:900px;margin:0 auto;background:#F8F9FB;font-family:var(--font-ui);display:flex;flex-direction:column;position:relative;overflow:hidden">
+
+  <div style="height:54px;background:var(--alk-deep-waters,#030928);display:flex;align-items:center;justify-content:space-between;padding:0 18px;flex-shrink:0;z-index:60">
+    <div onClick="{{ goHome }}" style="display:flex;align-items:center;gap:8px;cursor:pointer">
+      <div style="font:800 13px/1 var(--font-ui);color:#fff;letter-spacing:0.02em">KOŹMIŃSKI</div>
+      <div style="width:1px;height:16px;background:rgba(255,255,255,0.2)"></div>
+      <div style="font:700 8px/1.15 var(--font-ui);color:var(--accent-warm,#B4865E)">EDUCATION<br>that MATTERS</div>
+    </div>
+    <div style="position:relative">
+      <button type="button" aria-label="Menu użytkownika" aria-haspopup="menu" aria-expanded="{{ userMenuOpen }}" onClick="{{ toggleUserMenu }}" style="width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.15);border:none;cursor:pointer;color:#fff;font:600 11px var(--font-ui)">JK</button>
+      <sc-if value="{{ userMenuOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;top:40px;right:0;background:#fff;box-shadow:0 12px 40px rgba(3,9,40,0.18);min-width:180px;z-index:300;display:flex;flex-direction:column;padding:6px 0;border-radius:8px">
+          <button type="button" onClick="{{ openProfil }}" style="background:none;border:none;cursor:pointer;text-align:left;padding:12px 18px;font:500 14px var(--font-form);color:var(--text-primary)">Mój profil</button>
+          <button type="button" onClick="{{ wyloguj }}" style="background:none;border:none;cursor:pointer;text-align:left;padding:12px 18px;font:500 14px var(--font-form);color:var(--text-primary)">Wyloguj</button>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+
+  <sc-if value="{{ showStart }}" hint-placeholder-val="{{ true }}">
+    <div data-step-scroll="1" style="flex:1;overflow-y:auto;background:#F8F9FB">
+      <div style="background:var(--alk-deep-waters,#030928);padding:24px 20px 30px">
+        <div style="font:600 11px var(--font-ui);color:var(--accent-warm,#B4865E);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:10px">Rekrutacja 2026/2027</div>
+        <h1 style="font:600 23px/1.25 var(--font-ui);color:#fff;margin:0 0 10px">Rozpocznij rekrutację na studia</h1>
+        <p style="font:14px/1.6 var(--font-form);color:rgba(255,255,255,0.75);margin:0">Sprawdź wybrane studia, przygotuj dokumenty i wypełnij formularz. Zajmie Ci to około 15 minut.</p>
+      </div>
+      <div style="padding:18px 16px 28px;display:flex;flex-direction:column;gap:16px">
+        <div style="background:#fff;box-shadow:0 12px 40px rgba(3,9,40,0.06);padding:20px 18px;border-radius:10px">
+          <h2 style="font:600 12px var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--alk-blue-label,#3252B5);margin:0 0 6px">Wybrane studia</h2>
+          <p style="font:13.5px/1.6 var(--font-form);color:var(--text-muted);margin:0 0 16px">Poniższe pola uzupełniliśmy na podstawie Twojego wyboru na stronie uczelni.</p>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Poziom studiów" required="{{ true }}" options="{{ startPoziomOptions }}" value="{{ poziom }}" onChange="{{ setPoziom }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Forma studiów" required="{{ true }}" options="{{ startFormaOptions }}" value="{{ forma }}" onChange="{{ setForma }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Język studiów" required="{{ true }}" options="{{ startJezykOptions }}" value="{{ jezyk }}" onChange="{{ setJezyk }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Kierunek" required="{{ true }}" options="{{ startKierunekOptions }}" value="{{ kierunek }}" onChange="{{ setKierunek }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Preferowany zakres studiów" options="{{ startZakresOptions }}" value="{{ zakres }}" onChange="{{ setZakres }}" hint-size="100%,64px"></x-import>
+          </div>
+        </div>
+        <div style="background:#fff;box-shadow:0 12px 40px rgba(3,9,40,0.06);padding:20px 18px;border-radius:10px">
+          <h2 style="font:600 12px var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--alk-blue-label,#3252B5);margin:0 0 6px">Przygotuj dokumenty</h2>
+          <p style="font:13.5px/1.6 var(--font-form);color:var(--text-muted);margin:0 0 14px">Do wypełnienia formularza będą Ci potrzebne:</p>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <span style="width:22px;height:22px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--alk-space,#F2F5FF);color:var(--alk-alumni,#162447);font:700 12px var(--font-ui)">✓</span>
+              <div><div style="font:600 14px var(--font-form);color:var(--text-primary)">Świadectwo dojrzałości</div><div style="font:13px/1.5 var(--font-form);color:var(--text-muted)">skan lub wyraźne zdjęcie (PDF, JPG)</div></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start">
+              <span style="width:22px;height:22px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--alk-space,#F2F5FF);color:var(--alk-alumni,#162447);font:700 12px var(--font-ui)">✓</span>
+              <div><div style="font:600 14px var(--font-form);color:var(--text-primary)">Dowód osobisty lub paszport</div><div style="font:13px/1.5 var(--font-form);color:var(--text-muted)">do uzupełnienia danych i numeru dokumentu</div></div>
+            </div>
+          </div>
+        </div>
+        <div style="background:#fff;box-shadow:0 12px 40px rgba(3,9,40,0.06);padding:20px 18px;border-radius:10px">
+          <h2 style="font:600 12px var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--alk-blue-label,#3252B5);margin:0 0 6px">Jak wygląda rekrutacja</h2>
+          <div style="display:flex;flex-direction:column;gap:0;margin-top:6px">
+            <sc-for list="{{ startProcessSteps }}" as="ps" hint-placeholder-count="4">
+              <div style="display:flex;gap:14px">
+                <div style="display:flex;flex-direction:column;align-items:center;flex-shrink:0">
+                  <span style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--alk-alumni,#162447);color:#fff;font:700 13px var(--font-ui)">{{ ps.nr }}</span>
+                  <sc-if value="{{ ps.hasLine }}" hint-placeholder-val="{{ true }}"><div style="width:2px;flex:1;min-height:18px;background:var(--alk-border-subtle,#e2e2e6)"></div></sc-if>
+                </div>
+                <div style="padding-bottom:18px"><div style="font:600 14px var(--font-form);color:var(--text-primary);padding-top:4px">{{ ps.title }}</div><div style="font:13px/1.5 var(--font-form);color:var(--text-muted);margin-top:2px">{{ ps.desc }}</div></div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" onClick="{{ startRekrutacje }}" size="large" hint-size="100%,52px">Rozpocznij rekrutację</x-import>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showHome }}" hint-placeholder-val="{{ false }}">
+    <div data-step-scroll="1" style="flex:1;overflow-y:auto;background:var(--alk-space,#F2F5FF)">
+      <div style="padding:22px 16px 28px">
+        <h1 style="font:700 22px/1.3 var(--font-ui);color:#1a1a1a;margin:0 0 6px">Witaj w systemie rekrutacyjnym</h1>
+        <p style="font:500 15px/1.5 var(--font-ui);color:#1a1a1a;margin:0 0 20px">Tutaj znajdziesz swoje aplikacje, sprawdzisz ich status oraz dokonasz edycji danych.</p>
+        <button type="button" style="width:100%;background:var(--accent-warm,#B4865E);color:#fff;border:none;padding:16px;cursor:pointer;font:600 14px var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;margin-bottom:24px;border-radius:8px" onClick="{{ startNewApplication }}">Nowa aplikacja</button>
+        <sc-if value="{{ homeNoApp }}" hint-placeholder-val="{{ false }}">
+          <div style="background:#fff;box-shadow:0 12px 40px rgba(3,9,40,0.06);padding:20px 18px;border-radius:10px;font:15px/1.6 var(--font-form);color:var(--text-muted)">Nie masz jeszcze żadnej aplikacji. Kliknij „Nowa aplikacja", aby rozpocząć rekrutację.</div>
+        </sc-if>
+        <sc-if value="{{ homeHasApp }}" hint-placeholder-val="{{ true }}">
+          <div style="background:#fff;box-shadow:0 12px 40px rgba(3,9,40,0.06);padding:20px 18px;border-radius:10px;padding:0;overflow:hidden">
+            <div style="height:150px;background:linear-gradient(rgba(3,9,40,0.55),rgba(3,9,40,0.75)),var(--alk-alumni,#162447);display:flex;align-items:flex-end;padding:20px">
+              <div style="font:700 19px/1.35 var(--font-ui);color:#fff;text-transform:uppercase">{{ homeCardTitle }}</div>
+            </div>
+            <div style="padding:18px">
+              <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:16px">
+                <div style="font:14px var(--font-form);color:var(--text-primary)">Numer aplikacji: <strong>{{ appNumber }}</strong></div>
+                <div style="box-shadow:inset 0 0 0 1px #D8D8DA;padding:10px 16px;font:600 13px var(--font-ui);color:var(--text-primary);align-self:flex-start;border-radius:6px">{{ homeStatusLabel }}</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:18px">
+                <sc-for list="{{ homeMeta }}" as="m" hint-placeholder-count="3">
+                  <div style="display:flex;align-items:center;gap:8px">
+                    <span style="color:var(--alk-blue-label,#3252B5)"><x-import component-from-global-scope="ALKDesignSystem_ae2905.Icon" name="{{ m.icon }}" size="{{ 18 }}" hint-size="18px,18px"></x-import></span>
+                    <span style="font:600 14px var(--font-form);color:#1a1a1a">{{ m.label }}</span>
+                  </div>
+                </sc-for>
+              </div>
+              <sc-if value="{{ resultsPaid }}" hint-placeholder-val="{{ false }}">
+                <button type="button" onClick="{{ resumeForm }}" style="width:100%;background:var(--accent-warm,#B4865E);color:#fff;border:none;padding:15px;cursor:pointer;font:700 13px var(--font-ui);letter-spacing:0.03em;text-transform:uppercase;border-radius:6px;margin-bottom:10px">Uzupełnij formularz</button>
+              </sc-if>
+              <button type="button" onClick="{{ openPreviewFromHome }}" style="width:100%;display:flex;align-items:center;justify-content:center;gap:10px;background:var(--alk-deep-waters,#030928);color:#fff;border:none;padding:15px;cursor:pointer;font:700 13px var(--font-ui);letter-spacing:0.03em;text-transform:uppercase;border-radius:6px">Podgląd <span style="font-size:15px">⊙</span></button>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showDone }}" hint-placeholder-val="{{ false }}">
+    <div data-step-scroll="1" style="flex:1;overflow-y:auto;background:#F8F9FB">
+      <div style="padding:20px 16px 28px;display:flex;flex-direction:column;gap:16px">
+        <div style="background:#fff;box-shadow:0 12px 40px rgba(3,9,40,0.06);padding:20px 18px;border-radius:10px;text-align:center">
+          <div style="width:52px;height:52px;border-radius:50%;background:#17B530;color:#fff;display:flex;align-items:center;justify-content:center;font:700 24px var(--font-ui);margin:0 auto 16px">✓</div>
+          <h1 style="font:600 21px/1.3 var(--font-ui);color:var(--alk-deep-waters,#030928);margin:0 0 10px">Dziękujemy! Formularz został wysłany</h1>
+          <sc-if value="{{ doneOnline }}" hint-placeholder-val="{{ true }}"><p style="font:14px/1.6 var(--font-form);color:var(--text-primary);margin:0">Opłata 85,00 zł została zaksięgowana, a zgłoszenie <strong>{{ appNumber }}</strong> trafiło do Biura Rekrutacji.</p></sc-if>
+          <sc-if value="{{ donePrzelew }}" hint-placeholder-val="{{ false }}"><p style="font:14px/1.6 var(--font-form);color:var(--text-primary);margin:0">Zgłoszenie <strong>{{ appNumber }}</strong> trafiło do Biura Rekrutacji. <strong>Czekamy na potwierdzenie płatności</strong> przelewem — rozpatrzymy je po zaksięgowaniu wpłaty.</p></sc-if>
+        </div>
+        <sc-if value="{{ donePrzelew }}" hint-placeholder-val="{{ false }}">
+          <div style="background:#fff;box-shadow:0 12px 40px rgba(3,9,40,0.06);padding:20px 18px;border-radius:10px">
+            <h2 style="font:600 12px var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--alk-blue-label,#3252B5);margin:0 0 14px">Dane do przelewu</h2>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;flex-direction:column;gap:2px"><span style="font:500 12px var(--font-form);color:var(--text-muted)">Odbiorca</span><span style="font:600 13.5px var(--font-form);color:var(--alk-deep-waters)">Akademia Leona Koźmińskiego, ul. Jagiellońska 57/59, 03-301 Warszawa</span></div>
+              <div style="display:flex;flex-direction:column;gap:2px"><span style="font:500 12px var(--font-form);color:var(--text-muted)">Numer konta</span><span style="font:600 13.5px var(--font-form);color:var(--alk-deep-waters)">PL 61 1090 1014 0000 0712 1981 2874</span></div>
+              <div style="display:flex;flex-direction:column;gap:2px"><span style="font:500 12px var(--font-form);color:var(--text-muted)">Kwota</span><span style="font:600 13.5px var(--font-form);color:var(--alk-deep-waters)">85,00 zł</span></div>
+              <div style="display:flex;flex-direction:column;gap:2px"><span style="font:500 12px var(--font-form);color:var(--text-muted)">Tytuł przelewu</span><span style="font:600 13.5px var(--font-form);color:var(--alk-deep-waters)">{{ przelewTytul }}</span></div>
+            </div>
+            <p style="font:12.5px/1.6 var(--font-form);color:var(--text-muted);margin:14px 0 0">Po zaksięgowaniu wpłaty (zwykle 1–2 dni robocze) otrzymasz potwierdzenie e-mailem.</p>
+          </div>
+        </sc-if>
+        <div style="background:#fff;box-shadow:0 12px 40px rgba(3,9,40,0.06);padding:20px 18px;border-radius:10px">
+          <h2 style="font:600 12px var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--alk-blue-label,#3252B5);margin:0 0 6px">Co dalej?</h2>
+          <p style="font:14px/1.7 var(--font-form);color:var(--text-primary);margin:0">Prosimy czekać na wyniki rekrutacji — o decyzji poinformujemy Cię <strong>drogą mailową</strong>. Po przyjęciu skontaktujemy się w sprawie dokończenia procedur i podpisania umowy.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="secondary" size="small" showIcon="{{ false }}" onClick="{{ openPreview }}" hint-size="100%,48px">PODGLĄD FORMULARZA</x-import>
+          <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="primary" size="small" showIcon="{{ false }}" onClick="{{ goHome }}" hint-size="100%,48px">MOJE REKRUTACJE</x-import>
+        </div>
+        <div style="background:var(--alk-space,#F2F5FF);padding:16px 18px;display:flex;gap:12px;align-items:flex-start;border-radius:8px">
+          <span style="font:700 15px var(--font-ui);color:var(--alk-alumni,#162447);flex-shrink:0">i</span>
+          <p style="font:13px/1.6 var(--font-form);color:var(--alk-alumni,#162447);margin:0">Przesłanego formularza nie można już edytować samodzielnie. Aby wprowadzić zmiany, skontaktuj się z Biurem Rekrutacji: rekrutacja@kozminski.edu.pl · 22 519 21 88.</p>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showAwaiting }}" hint-placeholder-val="{{ false }}">
+    <div data-step-scroll="1" style="flex:1;overflow-y:auto;background:#F8F9FB">
+      <div style="padding:20px 16px 28px;display:flex;flex-direction:column;gap:16px">
+        <div style="background:#fff;box-shadow:0 12px 40px rgba(3,9,40,0.06);padding:20px 18px;border-radius:10px;text-align:center">
+          <div style="width:52px;height:52px;border-radius:50%;background:var(--accent-warm,#B4865E);display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Icon" name="clock" size="28" style="color:#fff" hint-size="28px,28px"></x-import>
+          </div>
+          <h1 style="font:600 21px/1.3 var(--font-ui);color:var(--alk-deep-waters,#030928);margin:0 0 10px">Oczekiwanie na wyniki matur</h1>
+          <p style="font:14px/1.6 var(--font-form);color:var(--text-primary);margin:0 0 6px">Opłata 85,00 zł została zaksięgowana, a formularz <strong>{{ appNumber }}</strong> został zapisany. Rekrutacja pozostaje aktywna.</p>
+          <p style="font:14px/1.6 var(--font-form);color:var(--text-muted);margin:0">Gdy otrzymasz wyniki matury, wróć do formularza, uzupełnij sekcję „Wyniki uzyskane na świadectwie” i prześlij uzupełniony formularz.</p>
+        </div>
+        <div style="background:#fff;box-shadow:0 12px 40px rgba(3,9,40,0.06);padding:20px 18px;border-radius:10px">
+          <h2 style="font:600 12px var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--alk-blue-label,#3252B5);margin:0 0 14px">Co dalej?</h2>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;gap:12px;align-items:flex-start"><span style="width:24px;height:24px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--alk-alumni,#162447);color:#fff;font:700 12px var(--font-ui)">1</span><p style="font:13.5px/1.6 var(--font-form);color:var(--text-primary);margin:0">Poczekaj na ogłoszenie wyników matury.</p></div>
+            <div style="display:flex;gap:12px;align-items:flex-start"><span style="width:24px;height:24px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--alk-alumni,#162447);color:#fff;font:700 12px var(--font-ui)">2</span><p style="font:13.5px/1.6 var(--font-form);color:var(--text-primary);margin:0">Wróć przyciskiem <strong>„Uzupełnij formularz”</strong> i wpisz wyniki w kroku <strong>Wykształcenie</strong>.</p></div>
+            <div style="display:flex;gap:12px;align-items:flex-start"><span style="width:24px;height:24px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--alk-alumni,#162447);color:#fff;font:700 12px var(--font-ui)">3</span><p style="font:13.5px/1.6 var(--font-form);color:var(--text-primary);margin:0">Kliknij <strong>„Prześlij uzupełniony formularz”</strong> — opłata jest już dokonana.</p></div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="primary" size="small" showIcon="{{ false }}" onClick="{{ resumeForm }}" hint-size="100%,48px">UZUPEŁNIJ FORMULARZ</x-import>
+          <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="secondary" size="small" showIcon="{{ false }}" onClick="{{ goMojeRekrutacje }}" hint-size="100%,48px">MOJE REKRUTACJE</x-import>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showProfil }}" hint-placeholder-val="{{ false }}">
+    <div data-step-scroll="1" style="flex:1;overflow-y:auto;background:var(--alk-space,#F2F5FF)">
+      <div style="padding:20px 16px 32px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+          <h1 style="font:700 22px/1.3 var(--font-ui);color:#1a1a1a;margin:0">Mój profil</h1>
+          <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="secondary" size="small" showIcon="{{ false }}" onClick="{{ closeProfil }}" hint-size="auto,44px">WRÓĆ</x-import>
+        </div>
+        <p style="font:13.5px/1.6 var(--font-form);color:var(--text-muted);margin:0 0 18px">Dane zapisane na podstawie Twoich formularzy. Nowe aplikacje uzupełnią się nimi automatycznie.</p>
+        <dc-import name="StepContentMobile" profile-mode="{{ true }}" active-main="{{ activeMain }}" active-sub="{{ activeSub }}" zdjecie="{{ zdjecie }}" set-zdjecie="{{ setZdjecie }}" zdjecie-url="{{ zdjecieUrl }}" remove-zdjecie="{{ removeZdjecie }}" max-width="100%"
+            imie="{{ imie }}" drugie-imie="{{ drugieImie }}" nazwisko="{{ nazwisko }}" email="{{ email }}" telefon="{{ telefon }}"
+            obywatelstwo="{{ obywatelstwo }}" is-polish="{{ isPolish }}" posiadam-drugie-obywatelstwo="{{ posiadamDrugieObywatelstwo }}" drugie-obywatelstwo-kraj="{{ drugieObywatelstwoKraj }}" pesel="{{ pesel }}" data-urodzenia="{{ dataUrodzenia }}"
+            ulica="{{ ulica }}" nr-domu="{{ nrDomu }}" nr-mieszkania="{{ nrMieszkania }}" kod-pocztowy="{{ kodPocztowy }}" miasto="{{ miasto }}" wojewodztwo="{{ wojewodztwo }}" kraj="{{ kraj }}"
+            korespondencyjne-inne="{{ korespondencyjneInne }}" kor-ulica="{{ korUlica }}" kor-nr-domu="{{ korNrDomu }}" kor-nr-mieszkania="{{ korNrMieszkania }}" kor-kod-pocztowy="{{ korKodPocztowy }}" kor-miasto="{{ korMiasto }}" kor-wojewodztwo="{{ korWojewodztwo }}" kor-kraj="{{ korKraj }}"
+            rodzaj-dokumentu-toz="{{ rodzajDokumentuToz }}" seria-numer-dokumentu="{{ seriaNumerDokumentu }}" kraj-wydania-dok="{{ krajWydaniaDok }}" data-wydania-dok="{{ dataWydaniaDok }}"
+            miejsce-urodzenia-kraj="{{ miejsceUrodzeniaKraj }}" miejsce-urodzenia-miasto="{{ miejsceUrodzeniaMiasto }}"
+            set-imie="{{ setImie }}" set-drugie-imie="{{ setDrugieImie }}" set-nazwisko="{{ setNazwisko }}" set-email="{{ setEmail }}" set-telefon="{{ setTelefon }}"
+            set-obywatelstwo="{{ setObywatelstwo }}" set-posiadam-drugie-obywatelstwo="{{ setPosiadamDrugieObywatelstwo }}" set-drugie-obywatelstwo-kraj="{{ setDrugieObywatelstwoKraj }}" set-pesel="{{ setPesel }}" set-data-urodzenia="{{ setDataUrodzenia }}"
+            set-ulica="{{ setUlica }}" set-nr-domu="{{ setNrDomu }}" set-nr-mieszkania="{{ setNrMieszkania }}" set-kod-pocztowy="{{ setKodPocztowy }}" set-miasto="{{ setMiasto }}" set-wojewodztwo="{{ setWojewodztwo }}" set-kraj="{{ setKraj }}"
+            set-korespondencyjne-inne="{{ setKorespondencyjneInne }}" set-kor-ulica="{{ setKorUlica }}" set-kor-nr-domu="{{ setKorNrDomu }}" set-kor-nr-mieszkania="{{ setKorNrMieszkania }}" set-kor-kod-pocztowy="{{ setKorKodPocztowy }}" set-kor-miasto="{{ setKorMiasto }}" set-kor-wojewodztwo="{{ setKorWojewodztwo }}" set-kor-kraj="{{ setKorKraj }}"
+            set-rodzaj-dokumentu-toz="{{ setRodzajDokumentuToz }}" set-seria-numer-dokumentu="{{ setSeriaNumerDokumentu }}" set-kraj-wydania-dok="{{ setKrajWydaniaDok }}" set-data-wydania-dok="{{ setDataWydaniaDok }}"
+            set-miejsce-urodzenia-kraj="{{ setMiejsceUrodzeniaKraj }}" set-miejsce-urodzenia-miasto="{{ setMiejsceUrodzeniaMiasto }}"
+            rodzaj-swiadectwa="{{ rodzajSwiadectwa }}" is-matura="{{ isMatura }}" set-rodzaj-swiadectwa="{{ setRodzajSwiadectwa }}" oczekuje-wyniki="{{ oczekujeWyniki }}" set-oczekuje-wyniki="{{ setOczekujeWyniki }}" results-paid="{{ resultsPaid }}" submit-completed="{{ submitCompleted }}"
+            nazwa-szkoly-polska="{{ nazwaSzkolyPolska }}" set-nazwa-szkoly-polska="{{ setNazwaSzkolyPolska }}"
+            data-swiadectwa-polska="{{ dataSwiadectwaPolska }}" set-data-swiadectwa-polska="{{ setDataSwiadectwaPolska }}"
+            rodzaj-matury="{{ rodzajMatury }}" set-rodzaj-matury="{{ setRodzajMatury }}"
+            okregowa-komisja="{{ okregowaKomisja }}" numer-swiadectwa="{{ numerSwiadectwa }}" swiadectwo-zalaczone="{{ swiadectwoZalaczone }}"
+            set-okregowa-komisja="{{ setOkregowaKomisja }}" set-numer-swiadectwa="{{ setNumerSwiadectwa }}" set-swiadectwo-zalaczone="{{ setSwiadectwoZalaczone }}" dyplom="{{ dyplom }}" set-dyplom="{{ setDyplom }}" podypl="{{ podypl }}" set-podypl="{{ setPodypl }}" cert-english="{{ certEnglish }}" set-cert-english="{{ setCertEnglish }}"
+            kraj-wydania2="{{ krajWydania2 }}" set-kraj-wydania2="{{ setKrajWydania2 }}"
+            typ-matury-zagr="{{ typMaturyZagr }}" set-typ-matury-zagr="{{ setTypMaturyZagr }}"
+            nazwa-szkoly-zagr="{{ nazwaSzkolyZagr }}" set-nazwa-szkoly-zagr="{{ setNazwaSzkolyZagr }}"
+            numer-dokumentu-zagr="{{ numerDokumentuZagr }}" set-numer-dokumentu-zagr="{{ setNumerDokumentuZagr }}"
+            data-swiadectwa-zagr="{{ dataSwiadectwaZagr }}" set-data-swiadectwa-zagr="{{ setDataSwiadectwaZagr }}"
+            tlumaczenie-zalaczone="{{ tlumaczenieZalaczone }}" transkrypt-zalaczone="{{ transkryptZalaczone }}" tlumaczenie-transkryptu-zalaczone="{{ tlumaczenieTranskryptuZalaczone }}"
+            set-tlumaczenie-zalaczone="{{ setTlumaczenieZalaczone }}" set-transkrypt-zalaczone="{{ setTranskryptZalaczone }}" set-tlumaczenie-transkryptu-zalaczone="{{ setTlumaczenieTranskryptuZalaczone }}"
+            achievements-note="{{ achievementsNote }}" set-achievements-note="{{ setAchievementsNote }}" add-achievement="{{ addAchievement }}" achievements="{{ achievements }}"
+            matura-podst="{{ maturaPodst }}" set-matura-podst-polski="{{ setMaturaPodstPolski }}" set-matura-podst-matematyka="{{ setMaturaPodstMatematyka }}" set-matura-podst-jezyk="{{ setMaturaPodstJezyk }}"
+            matura-rozsz="{{ maturaRozsz }}" add-matura-rozsz="{{ addMaturaRozsz }}" matura-dwuj="{{ maturaDwuj }}" add-matura-dwuj="{{ addMaturaDwuj }}" matura-wybor="{{ maturaWybor }}"
+            hint-size="100%,900px"></dc-import>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ showFormMobile }}" hint-placeholder-val="{{ false }}">
+    <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative">
+      <div style="background:#fff;border-bottom:1px solid var(--alk-border-subtle,#eee);flex-shrink:0;z-index:40;position:relative">
+        <button type="button" onClick="{{ toggleMobileNav }}" style="width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;background:none;border:none;cursor:pointer;padding:12px 16px 10px;text-align:left">
+          <div>
+            <div style="font:600 11px var(--font-ui);color:var(--text-muted);letter-spacing:0.04em;text-transform:uppercase">Krok {{ stepNumberLabel }} z 7</div>
+            <div style="font:700 15px var(--font-ui);color:var(--alk-deep-waters);margin-top:2px">{{ activeSectionLabel }}</div>
+          </div>
+          <span style="display:flex;align-items:center;gap:6px;font:700 12px var(--font-ui);color:#fff;background:var(--alk-blue-label,#3252B5);padding:8px 13px;border-radius:6px;letter-spacing:0.08em;text-transform:uppercase">Kroki <span style="font-size:9px">{{ navChevron }}</span></span>
+        </button>
+        <div style="height:3px;background:var(--alk-border-subtle,#eef0f5)"><div style="height:3px;background:var(--accent-warm,#B4865E);width:{{ progressPct }}"></div></div>
+        <sc-if value="{{ mobileNavOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;top:100%;left:0;right:0;background:#fff;box-shadow:0 18px 44px rgba(3,9,40,0.22);max-height:660px;overflow-y:auto;padding:8px 12px 14px;border-radius:0 0 14px 14px;z-index:41">
+            <div style="font:700 11px var(--font-ui);color:var(--text-muted);letter-spacing:0.08em;text-transform:uppercase;padding:8px 6px 6px">Kroki rekrutacji</div>
+            <sc-for list="{{ mainSections }}" as="sec" hint-placeholder-count="7">
+              <div onClick="{{ sec.mobileRowClick }}" style="{{ sec.mobileRowStyle }}">
+                <span style="{{ sec.mobileNumStyle }}">{{ sec.number }}</span>
+                <span style="font:600 14px var(--font-ui);color:var(--alk-deep-waters)">{{ sec.label }}</span>
+                <sc-if value="{{ sec.hasSubsteps }}" hint-placeholder-val="{{ false }}"><span style="{{ sec.mobileChevronStyle }}">{{ sec.chevron }}</span></sc-if>
+                <span style="flex:1"></span>
+                <span style="{{ sec.mobileIconStyle }}">{{ sec.statusIcon }}</span>
+              </div>
+              <sc-if value="{{ sec.showSubsteps }}" hint-placeholder-val="{{ false }}">
+                <sc-for list="{{ sec.substepsRendered }}" as="sub" hint-placeholder-count="0">
+                  <div onClick="{{ sub.onSelect }}" style="{{ sub.mobileSubRowStyle }}">
+                    <span style="flex:1">{{ sub.label }}</span>
+                    <span style="{{ sub.mobileSubMarkStyle }}">{{ sub.mobileSubMark }}</span>
+                  </div>
+                </sc-for>
+              </sc-if>
+            </sc-for>
+            <div style="margin-top:6px;padding:12px 6px 4px;border-top:1px solid var(--alk-border-subtle,#eef0f5)">
+              <button type="button" onClick="{{ openCancelModal }}" style="background:none;border:none;cursor:pointer;padding:8px 0;font:600 12px var(--font-ui);letter-spacing:0.08em;text-transform:uppercase;color:#A00332" style-hover="opacity:0.7">Anuluj aplikację</button>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+      <sc-if value="{{ mobileNavOpen }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ closeMobileNav }}" style="position:absolute;inset:0;z-index:35;background:rgba(3,9,40,0.4)"></div>
+      </sc-if>
+      <div data-step-scroll="1" style="flex:1;overflow-y:auto;padding:18px 16px 28px">
+        <dc-import name="StepContentMobile" active-main="{{ activeMain }}" active-sub="{{ activeSub }}" step-missing="{{ stepMissing }}" show-step-missing="{{ showStepMissing }}" go-prev="{{ goPrev }}" go-next="{{ goNext }}" on-pay="{{ onPay }}" reset-recruitment="{{ resetRecruitment }}" read-only="{{ previewMode }}" zdjecie="{{ zdjecie }}" set-zdjecie="{{ setZdjecie }}" zdjecie-url="{{ zdjecieUrl }}" remove-zdjecie="{{ removeZdjecie }}" set-active-sub="{{ setActiveSub }}" max-width="100%"
+            jezyk="{{ jezyk }}" poziom="{{ poziom }}" kierunek="{{ kierunek }}" forma="{{ forma }}" zakres="{{ zakres }}"
+            set-jezyk="{{ setJezyk }}" set-poziom="{{ setPoziom }}" set-kierunek="{{ setKierunek }}" set-forma="{{ setForma }}" set-zakres="{{ setZakres }}"
+            drugi-kierunek-enabled="{{ drugiKierunekEnabled }}" set-drugi-kierunek-enabled="{{ setDrugiKierunekEnabled }}"
+            drugi-poziom="{{ drugiPoziom }}" set-drugi-poziom="{{ setDrugiPoziom }}"
+            drugi-jezyk="{{ drugiJezyk }}" set-drugi-jezyk="{{ setDrugiJezyk }}"
+            drugi-kierunek="{{ drugiKierunekWybor }}" set-drugi-kierunek="{{ setDrugiKierunekWybor }}"
+            zajecia-jezykowe="{{ zajeciaJezykowe }}" set-zajecia-jezykowe="{{ setZajeciaJezykowe }}" poziom-jezyka="{{ poziomJezyka }}" set-poziom-jezyka="{{ setPoziomJezyka }}"
+            drugi-zajecia-jezykowe="{{ drugiZajeciaJezykowe }}" set-drugi-zajecia-jezykowe="{{ setDrugiZajeciaJezykowe }}"
+            trzeci-kierunek-enabled="{{ trzeciKierunekEnabled }}" set-trzeci-kierunek-enabled="{{ setTrzeciKierunekEnabled }}"
+            trzeci-poziom="{{ trzeciPoziom }}" set-trzeci-poziom="{{ setTrzeciPoziom }}"
+            trzeci-jezyk="{{ trzeciJezyk }}" set-trzeci-jezyk="{{ setTrzeciJezyk }}"
+            trzeci-kierunek="{{ trzeciKierunekWybor }}" set-trzeci-kierunek="{{ setTrzeciKierunekWybor }}"
+            trzeci-zajecia-jezykowe="{{ trzeciZajeciaJezykowe }}" set-trzeci-zajecia-jezykowe="{{ setTrzeciZajeciaJezykowe }}"
+            imie="{{ imie }}" drugie-imie="{{ drugieImie }}" nazwisko="{{ nazwisko }}" email="{{ email }}" telefon="{{ telefon }}"
+            obywatelstwo="{{ obywatelstwo }}" is-polish="{{ isPolish }}" posiadam-drugie-obywatelstwo="{{ posiadamDrugieObywatelstwo }}" drugie-obywatelstwo-kraj="{{ drugieObywatelstwoKraj }}" pesel="{{ pesel }}" data-urodzenia="{{ dataUrodzenia }}"
+            ulica="{{ ulica }}" nr-domu="{{ nrDomu }}" nr-mieszkania="{{ nrMieszkania }}" kod-pocztowy="{{ kodPocztowy }}" miasto="{{ miasto }}" wojewodztwo="{{ wojewodztwo }}" kraj="{{ kraj }}"
+            korespondencyjne-inne="{{ korespondencyjneInne }}" kor-ulica="{{ korUlica }}" kor-nr-domu="{{ korNrDomu }}" kor-nr-mieszkania="{{ korNrMieszkania }}" kor-kod-pocztowy="{{ korKodPocztowy }}" kor-miasto="{{ korMiasto }}" kor-wojewodztwo="{{ korWojewodztwo }}" kor-kraj="{{ korKraj }}"
+            rodzaj-dokumentu-toz="{{ rodzajDokumentuToz }}" seria-numer-dokumentu="{{ seriaNumerDokumentu }}" kraj-wydania-dok="{{ krajWydaniaDok }}" data-wydania-dok="{{ dataWydaniaDok }}"
+            miejsce-urodzenia-kraj="{{ miejsceUrodzeniaKraj }}" miejsce-urodzenia-miasto="{{ miejsceUrodzeniaMiasto }}"
+            set-imie="{{ setImie }}" set-drugie-imie="{{ setDrugieImie }}" set-nazwisko="{{ setNazwisko }}" set-email="{{ setEmail }}" set-telefon="{{ setTelefon }}"
+            set-obywatelstwo="{{ setObywatelstwo }}" set-posiadam-drugie-obywatelstwo="{{ setPosiadamDrugieObywatelstwo }}" set-drugie-obywatelstwo-kraj="{{ setDrugieObywatelstwoKraj }}" set-pesel="{{ setPesel }}" set-data-urodzenia="{{ setDataUrodzenia }}"
+            set-ulica="{{ setUlica }}" set-nr-domu="{{ setNrDomu }}" set-nr-mieszkania="{{ setNrMieszkania }}" set-kod-pocztowy="{{ setKodPocztowy }}" set-miasto="{{ setMiasto }}" set-wojewodztwo="{{ setWojewodztwo }}" set-kraj="{{ setKraj }}"
+            set-korespondencyjne-inne="{{ setKorespondencyjneInne }}" set-kor-ulica="{{ setKorUlica }}" set-kor-nr-domu="{{ setKorNrDomu }}" set-kor-nr-mieszkania="{{ setKorNrMieszkania }}" set-kor-kod-pocztowy="{{ setKorKodPocztowy }}" set-kor-miasto="{{ setKorMiasto }}" set-kor-wojewodztwo="{{ setKorWojewodztwo }}" set-kor-kraj="{{ setKorKraj }}"
+            set-rodzaj-dokumentu-toz="{{ setRodzajDokumentuToz }}" set-seria-numer-dokumentu="{{ setSeriaNumerDokumentu }}" set-kraj-wydania-dok="{{ setKrajWydaniaDok }}" set-data-wydania-dok="{{ setDataWydaniaDok }}"
+            set-miejsce-urodzenia-kraj="{{ setMiejsceUrodzeniaKraj }}" set-miejsce-urodzenia-miasto="{{ setMiejsceUrodzeniaMiasto }}"
+            rodzaj-swiadectwa="{{ rodzajSwiadectwa }}" is-matura="{{ isMatura }}" set-rodzaj-swiadectwa="{{ setRodzajSwiadectwa }}" oczekuje-wyniki="{{ oczekujeWyniki }}" set-oczekuje-wyniki="{{ setOczekujeWyniki }}" results-paid="{{ resultsPaid }}" submit-completed="{{ submitCompleted }}"
+            nazwa-szkoly-polska="{{ nazwaSzkolyPolska }}" set-nazwa-szkoly-polska="{{ setNazwaSzkolyPolska }}"
+            data-swiadectwa-polska="{{ dataSwiadectwaPolska }}" set-data-swiadectwa-polska="{{ setDataSwiadectwaPolska }}"
+            rodzaj-matury="{{ rodzajMatury }}" set-rodzaj-matury="{{ setRodzajMatury }}"
+            okregowa-komisja="{{ okregowaKomisja }}" numer-swiadectwa="{{ numerSwiadectwa }}" swiadectwo-zalaczone="{{ swiadectwoZalaczone }}"
+            set-okregowa-komisja="{{ setOkregowaKomisja }}" set-numer-swiadectwa="{{ setNumerSwiadectwa }}" set-swiadectwo-zalaczone="{{ setSwiadectwoZalaczone }}" dyplom="{{ dyplom }}" set-dyplom="{{ setDyplom }}" podypl="{{ podypl }}" set-podypl="{{ setPodypl }}" cert-english="{{ certEnglish }}" set-cert-english="{{ setCertEnglish }}"
+            kraj-wydania2="{{ krajWydania2 }}" set-kraj-wydania2="{{ setKrajWydania2 }}"
+            typ-matury-zagr="{{ typMaturyZagr }}" set-typ-matury-zagr="{{ setTypMaturyZagr }}"
+            nazwa-szkoly-zagr="{{ nazwaSzkolyZagr }}" set-nazwa-szkoly-zagr="{{ setNazwaSzkolyZagr }}"
+            numer-dokumentu-zagr="{{ numerDokumentuZagr }}" set-numer-dokumentu-zagr="{{ setNumerDokumentuZagr }}"
+            data-swiadectwa-zagr="{{ dataSwiadectwaZagr }}" set-data-swiadectwa-zagr="{{ setDataSwiadectwaZagr }}"
+            tlumaczenie-zalaczone="{{ tlumaczenieZalaczone }}" transkrypt-zalaczone="{{ transkryptZalaczone }}" tlumaczenie-transkryptu-zalaczone="{{ tlumaczenieTranskryptuZalaczone }}"
+            set-tlumaczenie-zalaczone="{{ setTlumaczenieZalaczone }}" set-transkrypt-zalaczone="{{ setTranskryptZalaczone }}" set-tlumaczenie-transkryptu-zalaczone="{{ setTlumaczenieTranskryptuZalaczone }}"
+            achievements-note="{{ achievementsNote }}" set-achievements-note="{{ setAchievementsNote }}" add-achievement="{{ addAchievement }}" achievements="{{ achievements }}"
+            zrodlo-info="{{ zrodloInfo }}" set-zrodlo-info="{{ setZrodloInfo }}" czynnik-decyzyjny="{{ czynnikDecyzyjny }}" set-czynnik-decyzyjny="{{ setCzynnikDecyzyjny }}"
+            summary-sections="{{ summarySections }}" missing-fields-list="{{ missingFieldsList }}" all-complete="{{ allComplete }}"
+            platnosc-metoda="{{ platnoscMetoda }}" set-platnosc-metoda="{{ setPlatnoscMetoda }}" app-number="{{ appNumber }}"
+            matura-podst="{{ maturaPodst }}" set-matura-podst-polski="{{ setMaturaPodstPolski }}" set-matura-podst-matematyka="{{ setMaturaPodstMatematyka }}" set-matura-podst-jezyk="{{ setMaturaPodstJezyk }}"
+            matura-rozsz="{{ maturaRozsz }}" add-matura-rozsz="{{ addMaturaRozsz }}" matura-dwuj="{{ maturaDwuj }}" add-matura-dwuj="{{ addMaturaDwuj }}" matura-wybor="{{ maturaWybor }}" show-profile-updated-info="{{ profileDirty }}"
+            hint-size="100%,600px"></dc-import>
+        <sc-if value="{{ previewMode }}" hint-placeholder-val="{{ false }}"><div style="height:150px"></div></sc-if>
+      </div>
+
+      <div style="position:absolute;right:14px;bottom:14px;z-index:30">
+        <sc-if value="{{ contactOpen }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;bottom:56px;right:0;width:250px;background:#fff;border-radius:10px;box-shadow:0 12px 40px rgba(3,9,40,0.2);padding:18px">
+            <div style="font:600 12px var(--font-ui);color:var(--alk-deep-waters);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.03em">Biuro Rekrutacji</div>
+            <div style="font:13px/1.7 var(--font-form);color:var(--text-primary)"><div>Tel: 22 519 21 88</div><div>rekrutacja@kozminski.edu.pl</div><div>Pn–Pt, 8:00–16:00</div></div>
+          </div>
+        </sc-if>
+        <button type="button" aria-label="Pomoc i kontakt Biura Rekrutacji" onClick="{{ toggleContact }}" style="width:46px;height:46px;border-radius:50%;background:var(--alk-deep-waters,#030928);border:none;cursor:pointer;color:#fff;font:700 16px var(--font-ui);box-shadow:0 4px 12px rgba(3,9,40,0.3)">?</button>
+      </div>
+
+
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ cancelModalOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeCancelModal }}" onKeyDown="{{ onCancelModalKey }}" tabindex="-1" style="position:fixed;inset:0;background:rgba(3,9,40,0.55);display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;z-index:200">
+      <div onClick="{{ stopProp }}" role="dialog" aria-modal="true" aria-labelledby="cancel-modal-title" style="background:#fff;max-width:400px;width:100%;box-sizing:border-box;padding:28px 24px;box-shadow:0 12px 40px rgba(3,9,40,0.25)">
+        <h3 id="cancel-modal-title" style="font:600 18px/1.35 var(--font-ui);color:var(--alk-deep-waters);margin:0 0 12px">Anulować aplikację?</h3>
+        <p style="font:14px/1.65 var(--font-form);color:var(--text-primary);margin:0 0 8px">Czy na pewno chcesz anulować tę aplikację? <strong>Wprowadzone dane zostaną utracone</strong>, a rekrutacja nie zostanie złożona.</p>
+        <p style="font:13px/1.6 var(--font-form);color:var(--text-muted);margin:0 0 24px">Tej operacji nie można cofnąć.</p>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="primary" size="small" showIcon="{{ false }}" fullWidth="{{ true }}" autoFocus="{{ true }}" onClick="{{ confirmCancelApp }}" hint-size="100%,48px">ANULUJ APLIKACJĘ</x-import>
+          <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="secondary" size="small" showIcon="{{ false }}" fullWidth="{{ true }}" onClick="{{ closeCancelModal }}" hint-size="100%,48px">WRÓĆ DO FORMULARZA</x-import>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ previewMode }}" hint-placeholder-val="{{ false }}">
+    <div style="position:absolute;left:12px;right:12px;bottom:16px;z-index:110;background:var(--alk-deep-waters,#030928);color:#fff;padding:14px 16px;border-radius:10px;box-shadow:0 12px 40px rgba(3,9,40,0.35)">
+      <div style="font:600 13px var(--font-ui);margin-bottom:4px">Tryb podglądu — formularz wysłany</div>
+      <div style="font:12px/1.5 var(--font-form);color:rgba(255,255,255,0.85);margin-bottom:12px">Edycja pól jest niedostępna. Aby wprowadzić zmiany, skontaktuj się z Biurem Rekrutacji: rekrutacja@kozminski.edu.pl · 22 519 21 88 (Pn–Pt, 8:00–16:00).</div>
+      <button type="button" onClick="{{ closePreview }}" style="width:100%;background:var(--alk-crimson,#A00332);color:#fff;border:none;padding:11px;cursor:pointer;font:700 12px var(--font-ui);letter-spacing:0.02em;text-transform:uppercase;border-radius:6px">Zamknij podgląd</button>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:430,&quot;height&quot;:900},&quot;variant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;d&quot;,&quot;options&quot;:[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;],&quot;tsType&quot;:&quot;'a'|'b'|'c'|'d'&quot;}}">
+class Component extends DCLogic {
+  state = Component.initial();
+  static initial() { return {
+    started: false,
+    submitted: false,
+    previewMode: false,
+    home: false,
+    previewFrom: 'done',
+    resultsPaid: false, awaitingScreen: false, finalSubmitted: false,
+    activeMain: 0,
+    activeSub: 0,
+    visited: {},
+    expanded: {},
+    summaryExpanded: { studia: true, osobowe: false, wyksztalcenie: false, osiagniecia: false, dodatkowe: false },
+    contactOpen: false,
+    mobileNav: false,
+    studia: { jezyk: 'Zajęcia w języku polskim', poziom: 'Studia I stopnia', kierunek: 'Informatyka', forma: 'stacjonarne', zakres: 'Data Science', zajeciaJezykowe: 'Angielski', poziomJezyka: 'B2 — wyższy średni' },
+    drugiKierunek: { enabled: false, poziom: '', jezyk: '', kierunek: '', zajeciaJezykowe: '' },
+    trzeciKierunek: { enabled: false, poziom: '', jezyk: '', kierunek: '', zajeciaJezykowe: '' },
+    osobowe: {
+      imie: 'Jan', drugieImie: 'Piotr', nazwisko: 'Kowalski', email: 'jan.kowalski@gmail.com', telefon: '+48 601 234 567', zdjecie: 'zdjecie-jan-kowalski.jpg',
+      obywatelstwo: 'Polskie', posiadamDrugieObywatelstwo: false, drugieObywatelstwoKraj: '',
+      pesel: '05230112345', dataUrodzenia: '2005-03-01',
+      ulica: 'ul. Jagiellońska', nrDomu: '57', nrMieszkania: '12', kodPocztowy: '03-301', miasto: 'Warszawa', wojewodztwo: 'mazowieckie', kraj: 'Polska',
+      korespondencyjneInne: false,
+      korUlica: '', korNrDomu: '', korNrMieszkania: '', korKodPocztowy: '', korMiasto: '', korWojewodztwo: '', korKraj: '',
+      rodzajDokumentuToz: 'Dowód osobisty',
+      seriaNumerDokumentu: 'ABC 123456', krajWydaniaDok: 'Polska', dataWydaniaDok: '2021-06-15',
+      miejsceUrodzeniaKraj: 'Polska', miejsceUrodzeniaMiasto: 'Warszawa',
+    },
+    wyksztalcenie: {
+      rodzaj: 'matura',
+      oczekujeWyniki: false,
+      nazwaSzkolyPolska: 'XIV LO im. Stanisława Staszica w Warszawie', dataSwiadectwaPolska: '2024-06-28', rodzajMatury: 'Nowa matura od 2005',
+      okregowaKomisja: 'OKE Warszawa', numerSwiadectwa: 'M/123456/24', swiadectwoZalaczone: 'swiadectwo-dojrzalosci.pdf',
+      typMaturyZagr: '', nazwaSzkolyZagr: '', numerDokumentuZagr: '', dataSwiadectwaZagr: '',
+      krajWydania2: '', tlumaczenieZalaczone: false, transkryptZalaczone: false, tlumaczenieTranskryptuZalaczone: false,
+    },
+    dodatkowe: { zrodloInfo: 'Strona internetowa uczelni', czynnikDecyzyjny: 'Ranking i renoma uczelni' },
+    maturaPodst: { polski: '82', matematyka: '90', jezyk: '95' },
+    maturaRozsz: [{ id: 1, przedmiot: '', wynik: '' }],
+    maturaDwuj: [{ id: 1, przedmiot: '', wynik: '' }],
+    maturaWybor: [{ id: 1, przedmiot: '', poziom: '', wynik: '' }, { id: 2, przedmiot: '', poziom: '', wynik: '' }, { id: 3, przedmiot: '', poziom: '', wynik: '' }],
+    touched: { wyksztalcenie: true, platnosc: false },
+    platnosc: { metoda: 'online' },
+    userMenuOpen: false, profil: false, hasSubmittedApp: false, profileDirty: false,
+    achievementsNote: '',
+    achievements: [],
+  }; }
+
+  setField(group, key, val) {
+    const profileGroups = ['osobowe', 'wyksztalcenie', 'maturaPodst'];
+    this.setState(s => ({ [group]: { ...s[group], [key]: val }, ...(profileGroups.includes(group) && s.hasSubmittedApp && !s.resultsPaid ? { profileDirty: true } : {}) }));
+  }
+
+  toggleExpand(id) {
+    this.setState(s => ({ expanded: { ...s.expanded, [id]: !s.expanded[id] } }));
+  }
+
+  toggleSummary(id) {
+    this.setState(s => ({ summaryExpanded: { ...s.summaryExpanded, [id]: !s.summaryExpanded[id] } }));
+  }
+
+  goMain(i, sub) {
+    this.setState(s => ({ activeMain: i, activeSub: sub || 0, visited: { ...s.visited, [s.activeMain]: true }, mobileNav: false, touched: { ...s.touched, ...(i === 2 ? { wyksztalcenie: true } : {}), ...(i === 6 ? { platnosc: true } : {}) } }));
+    requestAnimationFrame(() => document.querySelectorAll('[data-step-scroll]').forEach(el => { el.scrollTop = 0; }));
+  }
+
+  addAchievement() {
+    this.setState(s => ({ achievements: [...s.achievements, {
+      id: Date.now() + Math.random(), typ: '', jezyk: '', przedmiot: '', poziom: '', wynik: '',
+      dziedzina: '', zawody: '', miejsce: '', opis: '', plik: '',
+    }] }));
+  }
+
+  updateAchievement(id, key, val) {
+    this.setState(s => ({ achievements: s.achievements.map(a => a.id === id ? { ...a, [key]: val } : a), ...(s.hasSubmittedApp ? { profileDirty: true } : {}) }));
+  }
+
+  removeAchievement(id) {
+    this.setState(s => ({ achievements: s.achievements.filter(a => a.id !== id) }));
+  }
+
+  addMaturaRow(group) {
+    this.setState(s => ({ [group]: [...s[group], { id: Date.now() + Math.random(), przedmiot: '', wynik: '' }] }));
+  }
+
+  updateMaturaRow(group, id, key, val) {
+    this.setState(s => ({ [group]: s[group].map(r => r.id === id ? { ...r, [key]: val } : r), ...(s.hasSubmittedApp && !s.resultsPaid ? { profileDirty: true } : {}) }));
+  }
+
+  removeMaturaRow(group, id) {
+    this.setState(s => ({ [group]: s[group].filter(r => r.id !== id) }));
+  }
+
+  renderVals() {
+    const variant = this.props.variant || 'a';
+    const s = this.state;
+    const st = s.studia;
+    const ob = s.osobowe;
+    const wy = s.wyksztalcenie;
+    const dd = s.dodatkowe;
+    const awaiting = wy.oczekujeWyniki && !s.finalSubmitted;
+
+    const studiaFields = [st.jezyk, st.poziom, st.kierunek, st.forma];
+    const studiaFilled = studiaFields.filter(Boolean).length;
+    const studiaStatus = studiaFilled === 4 ? 'done' : studiaFilled > 0 ? 'partial' : 'empty';
+
+    const isPolishCitizen = ob.obywatelstwo === 'Polskie';
+    const subDane = isPolishCitizen
+      ? !!(ob.imie && ob.nazwisko && ob.pesel && ob.dataUrodzenia)
+      : !!(ob.imie && ob.nazwisko);
+    const subZdjecie = !!ob.zdjecie;
+    const subKontakt = !!(ob.email && ob.telefon);
+    const subAdres = !!(ob.ulica && ob.nrDomu && ob.kodPocztowy && ob.miasto && ob.kraj)
+      && (!ob.korespondencyjneInne || !!(ob.korUlica && ob.korNrDomu && ob.korKodPocztowy && ob.korMiasto && ob.korKraj));
+    const subDokument = !!(ob.seriaNumerDokumentu && ob.krajWydaniaDok && ob.dataWydaniaDok && ob.miejsceUrodzeniaKraj && ob.miejsceUrodzeniaMiasto);
+    const osoboweSubsDone = [subDane, subKontakt, subAdres, subDokument, subZdjecie].filter(Boolean).length;
+    const init0 = Component.initial();
+    const changed = (grp, key) => JSON.stringify(grp) !== JSON.stringify(init0[key]);
+    const osoboweStatus = osoboweSubsDone === 5 ? 'done' : (osoboweSubsDone > 0 || changed(ob, 'osobowe')) ? 'partial' : 'empty';
+
+    const isMatura = wy.rodzaj === 'matura';
+    const awaitingResults = !!wy.oczekujeWyniki && !s.finalSubmitted;
+    const subTyp = !!wy.rodzaj;
+    const subDaneSwiad = awaitingResults
+      ? !!(wy.nazwaSzkolyPolska && wy.dataSwiadectwaPolska && wy.rodzajMatury)
+      : isMatura
+      ? !!(wy.nazwaSzkolyPolska && wy.dataSwiadectwaPolska && wy.rodzajMatury && wy.okregowaKomisja && wy.numerSwiadectwa)
+      : !!(wy.typMaturyZagr && wy.nazwaSzkolyZagr && wy.numerDokumentuZagr && wy.dataSwiadectwaZagr && wy.krajWydania2);
+    const subDokumentyWy = awaitingResults ? true : isMatura ? !!wy.swiadectwoZalaczone : !!(wy.tlumaczenieZalaczone && wy.transkryptZalaczone && wy.tlumaczenieTranskryptuZalaczone);
+    const nowaMatura = isMatura && wy.rodzajMatury === 'Nowa matura od 2005';
+    const subWyniki = awaitingResults ? true : nowaMatura
+      ? !!(s.maturaPodst.polski && s.maturaPodst.matematyka && s.maturaPodst.jezyk)
+      : s.maturaWybor.every(r => r.przedmiot && r.poziom && r.wynik);
+    const wyksztSubsDone = [subTyp, subDaneSwiad, subWyniki, subDokumentyWy].filter(Boolean).length;
+    const wyksztChanged = changed(wy, 'wyksztalcenie') || changed(s.maturaPodst, 'maturaPodst') || changed(s.maturaRozsz, 'maturaRozsz') || changed(s.maturaDwuj, 'maturaDwuj') || changed(s.maturaWybor, 'maturaWybor');
+    const wyksztStatus = (s.touched.wyksztalcenie && wyksztSubsDone === 4) ? 'done' : (wyksztChanged || (s.touched.wyksztalcenie && wyksztSubsDone > 0)) ? 'partial' : 'empty';
+
+    const statusIcon = { done: '✓', partial: '◐', empty: '○' };
+    const statusColor = { done: '#4ADE80', partial: 'var(--accent-warm,#B4865E)', empty: 'rgba(255,255,255,0.4)' };
+    const statusColorLight = { done: '#17B530', partial: '#91653F', empty: '#89898A' };
+
+    // --- Informacyjna walidacja: brakujące wymagane pola per krok ---
+    const miss0 = [];
+    if (!st.poziom) miss0.push('Poziom studiów');
+    if (!st.kierunek) miss0.push('Kierunek');
+    if (!st.forma) miss0.push('Forma studiów');
+    if (!st.jezyk) miss0.push('Język studiów');
+
+    const miss1 = [];
+    if (!ob.imie) miss1.push('Imię');
+    if (!ob.nazwisko) miss1.push('Nazwisko');
+    if (isPolishCitizen && !ob.pesel) miss1.push('PESEL');
+    if (isPolishCitizen && !ob.dataUrodzenia) miss1.push('Data urodzenia');
+    if (!ob.email) miss1.push('E-mail');
+    if (!ob.telefon) miss1.push('Numer telefonu');
+    if (!ob.ulica) miss1.push('Ulica');
+    if (!ob.nrDomu) miss1.push('Nr domu');
+    if (!ob.kodPocztowy) miss1.push('Kod pocztowy');
+    if (!ob.miasto) miss1.push('Miasto');
+    if (!ob.kraj) miss1.push('Kraj');
+    if (ob.korespondencyjneInne) {
+      if (!ob.korUlica) miss1.push('Adres korespondencyjny — ulica');
+      if (!ob.korNrDomu) miss1.push('Adres korespondencyjny — nr domu');
+      if (!ob.korKodPocztowy) miss1.push('Adres korespondencyjny — kod pocztowy');
+      if (!ob.korMiasto) miss1.push('Adres korespondencyjny — miasto');
+      if (!ob.korKraj) miss1.push('Adres korespondencyjny — kraj');
+    }
+    if (!ob.seriaNumerDokumentu) miss1.push('Seria i numer dokumentu tożsamości');
+    if (!ob.krajWydaniaDok) miss1.push('Kraj wydania dokumentu');
+    if (!ob.dataWydaniaDok) miss1.push('Data wydania dokumentu');
+    if (!ob.miejsceUrodzeniaKraj) miss1.push('Kraj urodzenia');
+    if (!ob.miejsceUrodzeniaMiasto) miss1.push('Miejscowość urodzenia');
+    if (!ob.zdjecie) miss1.push('Zdjęcie do dokumentów');
+
+    const miss2 = [];
+    if (isMatura) {
+      if (!wy.rodzajMatury) miss2.push('Rodzaj matury');
+      if (!wy.nazwaSzkolyPolska) miss2.push('Nazwa szkoły średniej');
+      if (!awaitingResults && !wy.okregowaKomisja) miss2.push('Okręgowa komisja egzaminacyjna');
+      if (!awaitingResults && !wy.numerSwiadectwa) miss2.push('Numer świadectwa');
+      if (!wy.dataSwiadectwaPolska) miss2.push('Data wydania świadectwa');
+      if (!awaitingResults && !wy.swiadectwoZalaczone) miss2.push('Skan świadectwa');
+    } else {
+      if (!wy.typMaturyZagr) miss2.push('Typ świadectwa');
+      if (!wy.nazwaSzkolyZagr) miss2.push('Nazwa szkoły średniej');
+      if (!wy.numerDokumentuZagr) miss2.push('Numer dokumentu');
+      if (!wy.dataSwiadectwaZagr) miss2.push('Data świadectwa');
+      if (!wy.krajWydania2) miss2.push('Kraj wydania');
+      if (!wy.tlumaczenieZalaczone) miss2.push('Tłumaczenie świadectwa');
+      if (!wy.transkryptZalaczone) miss2.push('Transkrypt ocen');
+      if (!wy.tlumaczenieTranskryptuZalaczone) miss2.push('Tłumaczenie transkryptu');
+    }
+    if (!awaitingResults && !subWyniki) miss2.push('Wyniki uzyskane na świadectwie');
+    const stepMissingMap = { 0: miss0, 1: miss1, 2: miss2 };
+    const stepAttention = i => !!s.visited[i] && (stepMissingMap[i] || []).length > 0;
+    const stepMissing = stepMissingMap[s.activeMain] || [];
+
+    // --- Podsumowanie: compressed summary + missing-fields list ---
+    const dash = v => (v === true ? 'Tak' : v ? v : '—');
+    const summarySections = [
+      { id: 'studia', label: 'Wybrane studia', main: 0, sub: 0, complete: studiaStatus === 'done', rows: [
+        { label: 'Poziom studiów', value: dash(st.poziom) },
+        { label: 'Kierunek', value: dash(st.kierunek) },
+        { label: 'Forma studiów', value: dash(st.forma) },
+        { label: 'Zajęcia językowe', value: dash(st.zajeciaJezykowe) },
+        { label: 'Zakres/specjalizacja', value: dash(st.zakres) },
+        ...(s.drugiKierunek.enabled ? [{ label: 'II wybór — kierunek', value: dash(s.drugiKierunek.kierunek) }] : []),
+        ...(s.trzeciKierunek.enabled ? [{ label: 'III wybór — kierunek', value: dash(s.trzeciKierunek.kierunek) }] : []),
+      ] },
+      { id: 'osobowe', label: 'Informacje podstawowe', main: 1, sub: 0, complete: osoboweStatus === 'done', rows: [
+        { label: 'Imię i nazwisko', value: dash([ob.imie, ob.drugieImie, ob.nazwisko].filter(Boolean).join(' ')) },
+        { label: 'Obywatelstwo', value: dash(ob.obywatelstwo) },
+        { label: 'Zdjęcie do dokumentów', value: dash(ob.zdjecie) },
+        ...(isPolishCitizen ? [{ label: 'PESEL', value: dash(ob.pesel) }, { label: 'Data urodzenia', value: dash(ob.dataUrodzenia) }] : []),
+        { label: 'E-mail', value: dash(ob.email) },
+        { label: 'Telefon', value: dash(ob.telefon) },
+        { label: 'Adres zamieszkania', value: dash([ob.ulica, ob.nrDomu && (ob.nrDomu + (ob.nrMieszkania ? '/' + ob.nrMieszkania : '')), ob.kodPocztowy, ob.miasto, ob.wojewodztwo, ob.kraj].filter(Boolean).join(', ')) },
+        { label: 'Dokument tożsamości', value: dash(ob.rodzajDokumentuToz && ob.seriaNumerDokumentu ? (ob.rodzajDokumentuToz + ' ' + ob.seriaNumerDokumentu) : '') },
+      ] },
+      { id: 'wyksztalcenie', label: 'Wykształcenie', main: 2, sub: 0, complete: wyksztStatus === 'done', rows: isMatura ? [
+        { label: 'Typ świadectwa', value: 'Polska matura' },
+        { label: 'Rodzaj matury', value: dash(wy.rodzajMatury) },
+        { label: 'Szkoła średnia', value: dash(wy.nazwaSzkolyPolska) },
+        { label: 'Komisja egzaminacyjna', value: dash(wy.okregowaKomisja) },
+        { label: 'Numer świadectwa', value: dash(wy.numerSwiadectwa) },
+        { label: 'Data świadectwa', value: dash(wy.dataSwiadectwaPolska) },
+      ] : [
+        { label: 'Typ świadectwa', value: dash(wy.typMaturyZagr) || 'Świadectwo zagraniczne' },
+        { label: 'Szkoła średnia', value: dash(wy.nazwaSzkolyZagr) },
+        { label: 'Numer dokumentu', value: dash(wy.numerDokumentuZagr) },
+        { label: 'Data świadectwa', value: dash(wy.dataSwiadectwaZagr) },
+        { label: 'Kraj wydania', value: dash(wy.krajWydania2) },
+      ] },
+      { id: 'osiagniecia', label: 'Osiągnięcia i dokumenty dodatkowe', main: 3, sub: 0, complete: true, rows:
+        s.achievements.length > 0
+          ? s.achievements.map((a, idx) => ({ label: 'Osiągnięcie ' + (idx + 1), value: dash(a.typ) + (a.wynik ? ' — ' + a.wynik : '') }))
+          : [{ label: 'Osiągnięcia', value: 'Brak dodanych' }] },
+      { id: 'dodatkowe', label: 'Informacje dodatkowe', main: 4, sub: 0, complete: true, rows: [
+        { label: 'Źródło informacji o Uczelni', value: dash(dd.zrodloInfo) },
+        { label: 'Główny czynnik decyzyjny', value: dash(dd.czynnikDecyzyjny) },
+      ] },
+    ].map(sec => ({
+      ...sec,
+      expanded: s.summaryExpanded[sec.id],
+      onToggle: () => this.toggleSummary(sec.id),
+      onEdit: () => this.goMain(sec.main, sec.sub),
+      chevron: s.summaryExpanded[sec.id] ? '▼' : '▶',
+    }));
+
+    const missingList = [];
+    if (studiaStatus !== 'done') missingList.push({ label: 'Wybrane studia — uzupełnij poziom, kierunek i formę studiów', main: 0, sub: 0 });
+    if (!subDane) missingList.push({ label: 'Informacje podstawowe — imię, nazwisko' + (isPolishCitizen ? ', PESEL, data urodzenia' : ''), main: 1, sub: 0 });
+    if (!subKontakt) missingList.push({ label: 'Dane kontaktowe — numer telefonu', main: 1, sub: 1 });
+    if (!subAdres) missingList.push({ label: 'Adres zamieszkania', main: 1, sub: 2 });
+    if (!subDokument) missingList.push({ label: 'Dokument tożsamości', main: 1, sub: 3 });
+    if (!subZdjecie) missingList.push({ label: 'Zdjęcie do dokumentów', main: 1, sub: 4 });
+    if (!subTyp) missingList.push({ label: 'Wykształcenie — typ świadectwa', main: 2, sub: 0 });
+    if (!subDaneSwiad) missingList.push({ label: 'Wykształcenie — dane świadectwa', main: 2, sub: 1 });
+    if (!subWyniki) missingList.push({ label: 'Wykształcenie — wyniki uzyskane na świadectwie', main: 2, sub: 2 });
+    if (!subDokumentyWy) missingList.push({ label: 'Wykształcenie — brakujące dokumenty', main: 2, sub: 3 });
+    const missingFieldsList = missingList.map(m => ({ ...m, onJump: () => this.goMain(m.main, m.sub) }));
+    const allComplete = missingFieldsList.length === 0;
+
+    const raw = [
+      { id: 'studia', label: 'Twoje studia', shortLabel: 'Studia', initial: 'S', disabled: false, status: stepAttention(0) ? 'partial' : studiaStatus, attention: stepAttention(0),
+        statusText: stepAttention(0) ? ('Uzupełnij ' + miss0.length + ' wymaganych pól') : studiaStatus === 'done' ? 'ukończono' : studiaStatus === 'partial' ? (studiaFilled + ' z 4 pól uzupełnionych') : 'nie rozpoczęto',
+        substeps: [{ label: 'Wybrane studia', done: studiaStatus === 'done' }] },
+      { id: 'osobowe', label: 'Informacje podstawowe', shortLabel: 'Informacje', initial: 'I', disabled: false, status: stepAttention(1) ? 'partial' : osoboweStatus, attention: stepAttention(1),
+        statusText: stepAttention(1) ? ('Uzupełnij ' + miss1.length + ' wymaganych pól') : osoboweStatus === 'done' ? 'ukończono' : (osoboweSubsDone + ' z 5 podsekcji uzupełnionych'),
+        substeps: [
+          { label: 'Informacje podstawowe', done: subDane },
+          { label: 'Dane kontaktowe', done: subKontakt },
+          { label: 'Adres zamieszkania', done: subAdres },
+          { label: 'Dokument tożsamości', done: subDokument },
+          { label: 'Zdjęcie do dokumentów', done: subZdjecie },
+        ] },
+      { id: 'wyksztalcenie', label: 'Wykształcenie', shortLabel: 'Wykszt.', initial: 'W', disabled: false, status: stepAttention(2) ? 'partial' : wyksztStatus, attention: stepAttention(2),
+        statusText: stepAttention(2) ? ('Uzupełnij ' + miss2.length + ' wymaganych pól') : wyksztStatus === 'done' ? 'ukończono' : wyksztStatus === 'empty' ? 'nie rozpoczęto' : (wyksztSubsDone + ' z 4 podsekcji uzupełnionych'),
+        substeps: [
+          { label: 'Typ świadectwa', done: subTyp },
+          { label: 'Dane świadectwa', done: subDaneSwiad },
+          { label: 'Wyniki uzyskane na świadectwie', done: subWyniki },
+          { label: 'Dokumenty', done: subDokumentyWy },
+        ] },
+      { id: 'osiagniecia', label: 'Osiągnięcia i dokumenty dodatkowe', shortLabel: 'Osiągn.', initial: 'O', disabled: false,
+        status: s.achievements.length > 0 ? (s.achievements.every(a => a.typ) ? 'done' : 'partial') : 'empty',
+        statusText: s.achievements.length > 0 ? (s.achievements.every(a => a.typ) ? (s.achievements.length + ' dodanych') : 'uzupełnij rodzaj osiągnięcia') : 'opcjonalne',
+        substeps: [{ label: 'Osiągnięcia i dokumenty dodatkowe', done: s.achievements.length > 0 && s.achievements.every(a => a.typ) }] },
+      { id: 'dodatkowe', label: 'Informacje dodatkowe', shortLabel: 'Info', initial: 'I', disabled: false,
+        status: (s.dodatkowe.zrodloInfo && s.dodatkowe.czynnikDecyzyjny) ? 'done' : ([s.dodatkowe.zrodloInfo, s.dodatkowe.czynnikDecyzyjny].filter(Boolean).length > 0 ? 'partial' : 'empty'),
+        statusText: (s.dodatkowe.zrodloInfo && s.dodatkowe.czynnikDecyzyjny) ? 'ukończono' : ([s.dodatkowe.zrodloInfo, s.dodatkowe.czynnikDecyzyjny].filter(Boolean).length + ' z 2 pól uzupełnionych'),
+        substeps: [{ label: 'Informacje dodatkowe', done: !!(s.dodatkowe.zrodloInfo && s.dodatkowe.czynnikDecyzyjny) }] },
+      { id: 'podsumowanie', label: 'Podsumowanie', shortLabel: 'Podsum.', initial: 'P', disabled: false, status: 'empty', statusText: 'w trakcie', substeps: [] },
+      { id: 'platnosc', label: 'Płatność', shortLabel: 'Płatność', initial: '£', disabled: !allComplete && !s.previewMode, status: (s.touched.platnosc && s.platnosc.metoda) ? 'done' : 'empty', statusText: (s.touched.platnosc && s.platnosc.metoda) ? 'wybrano metodę' : 'oczekuje', substeps: [] },
+    ];
+
+    const mainSections = raw.map((sec, i) => {
+      const active = i === s.activeMain;
+      const expanded = !!s.expanded[sec.id];
+      const hasSubsteps = sec.substeps.length > 1;
+      const showSubsteps = hasSubsteps && expanded && !sec.disabled;
+
+      const rowStyle = {
+        display: 'flex', alignItems: 'center', gap: 10, padding: '10px 20px',
+        cursor: sec.disabled ? 'not-allowed' : 'pointer',
+        backgroundColor: active ? 'rgba(255,255,255,0.08)' : 'transparent',
+        opacity: sec.disabled ? 0.45 : 1,
+        boxShadow: (!active && sec.status === 'partial') ? 'inset 3px 0 0 var(--accent-warm,#B4865E)' : 'none',
+      };
+      const labelStyle = { flex: 1, font: (active ? '600' : '500') + ' 14px var(--font-ui)', color: '#fff' };
+      const iconStyle = { fontSize: 13, color: statusColor[sec.status], flexShrink: 0 };
+      const numberBadgeStyle = {
+        display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 20, height: 20,
+        borderRadius: '50%', fontSize: 11, fontWeight: 700, flexShrink: 0,
+        backgroundColor: active ? 'var(--accent-warm,#B4865E)' : sec.status === 'partial' ? 'rgba(180,134,94,0.35)' : 'rgba(255,255,255,0.15)', color: '#fff',
+      };
+
+      const pillActive = active;
+      const pillStyle = {
+        display: 'flex', alignItems: 'center', gap: 8, padding: '8px 16px', borderRadius: 999,
+        border: pillActive ? 'none' : '1px solid var(--alk-border-subtle,#e2e2e6)',
+        backgroundColor: pillActive ? 'var(--alk-alumni,#162447)' : '#fff',
+        color: pillActive ? '#fff' : 'var(--text-primary)',
+        font: (pillActive ? '600' : '500') + ' 13px var(--font-ui)',
+        cursor: sec.disabled ? 'not-allowed' : 'pointer', opacity: sec.disabled ? 0.5 : 1, flexShrink: 0,
+        whiteSpace: 'nowrap',
+      };
+      const pillDotStyle = { fontSize: 12, color: pillActive ? statusColor[sec.status] : statusColorLight[sec.status] };
+
+      const bigDotStyle = {
+        width: 36, height: 36, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
+        fontSize: 15, fontWeight: 700,
+        backgroundColor: active ? 'var(--alk-alumni,#162447)' : sec.status === 'done' ? '#17B530' : sec.status === 'partial' ? '#FDF4EC' : '#fff',
+        color: active ? '#fff' : sec.status === 'done' ? '#fff' : sec.status === 'partial' ? 'var(--accent-warm,#91653F)' : 'var(--text-muted)',
+        border: active ? 'none' : sec.status === 'done' ? 'none' : sec.status === 'partial' ? '2px solid var(--accent-warm,#B4865E)' : '1.5px solid var(--alk-border-subtle,#d8d8da)',
+        boxShadow: (!active && sec.status === 'partial') ? '0 0 0 3px rgba(180,134,94,0.15)' : 'none',
+      };
+      const bigLabelStyle = { font: (active || sec.status === 'partial' ? '700' : '500') + ' 11.5px var(--font-ui)', color: active ? 'var(--alk-deep-waters)' : sec.status === 'partial' ? 'var(--accent-warm,#91653F)' : 'var(--text-muted)', whiteSpace: 'nowrap' };
+      const connectorStyle = { flex: 1, height: 2, backgroundColor: sec.status === 'done' ? '#17B530' : 'var(--alk-border-subtle,#e2e2e6)', margin: '0 8px' };
+
+      const railDotStyle = {
+        width: 36, height: 36, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
+        fontSize: 13, fontWeight: 700, cursor: 'pointer', border: 'none',
+        backgroundColor: active ? 'var(--accent-warm,#B4865E)' : 'rgba(255,255,255,0.12)',
+        color: '#fff', opacity: sec.disabled ? 0.4 : 1,
+      };
+
+      const substepsRendered = (sec.substeps.length > 1 ? sec.substeps : []).map((sub, j) => {
+        const subActive = active && j === s.activeSub;
+        return {
+          ...sub,
+          rowStyle: {
+            padding: '8px 20px 8px 44px', fontSize: 13, cursor: 'pointer',
+            color: subActive ? '#fff' : 'rgba(255,255,255,0.65)',
+            fontWeight: subActive ? 600 : 400,
+            backgroundColor: subActive ? 'rgba(255,255,255,0.06)' : 'transparent',
+          },
+          flyoutRowStyle: {
+            padding: '8px 10px', fontSize: 13, borderRadius: 5, cursor: 'pointer',
+            color: subActive ? 'var(--alk-blue-label,#3252B5)' : 'var(--text-primary)',
+            fontWeight: subActive ? 600 : 400,
+            backgroundColor: subActive ? 'var(--alk-surface-subtle,#f2f4fa)' : 'transparent',
+          },
+          mobileSubRowStyle: {
+            padding: '9px 10px 9px 46px', fontSize: 13, cursor: 'pointer', borderRadius: 6,
+            color: subActive ? 'var(--alk-blue-label,#3252B5)' : 'var(--text-primary)',
+            fontWeight: subActive ? 600 : 400,
+            backgroundColor: subActive ? 'var(--alk-surface-subtle,#f2f4fa)' : 'transparent',
+            display: 'flex', alignItems: 'center', gap: 8,
+          },
+          mobileSubMark: sub.done ? '✓' : '',
+          mobileSubMarkStyle: { fontSize: 12, color: '#17B530', flexShrink: 0 },
+          onSelect: () => this.goMain(i, j),
+        };
+      });
+
+      return {
+        ...sec, active, expanded, hasSubsteps, showSubsteps,
+        statusIcon: statusIcon[sec.status], number: i + 1,
+        rowStyle, labelStyle, iconStyle, numberBadgeStyle, pillStyle, pillDotStyle,
+        bigDotStyle, bigLabelStyle, connectorStyle, railDotStyle,
+        hasConnector: i < raw.length - 1,
+        mobileRowStyle: { display: 'flex', alignItems: 'center', gap: 12, padding: '14px 6px', borderBottom: '1px solid var(--alk-border-subtle,#eee)', cursor: sec.disabled ? 'not-allowed' : 'pointer', opacity: sec.disabled ? 0.45 : 1, backgroundColor: active ? 'var(--alk-space,#F2F5FF)' : 'transparent' },
+        mobileRowClick: hasSubsteps ? (() => this.toggleExpand(sec.id)) : (() => { if (!sec.disabled) this.goMain(i, 0); }),
+        mobileChevronStyle: { fontSize: 11, color: 'var(--text-muted)', width: 14, flexShrink: 0, textAlign: 'center' },
+        mobileNumStyle: { display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 26, height: 26, borderRadius: '50%', fontSize: 12, fontWeight: 700, flexShrink: 0, backgroundColor: active ? 'var(--accent-warm,#B4865E)' : sec.status === 'done' ? 'var(--alk-deep-waters,#030928)' : sec.status === 'partial' ? '#FDF4EC' : '#EEF0F5', color: (active || sec.status === 'done') ? '#fff' : sec.status === 'partial' ? 'var(--accent-warm,#91653F)' : 'var(--text-muted)' },
+        mobileIconStyle: { fontSize: 14, color: statusColorLight[sec.status], flexShrink: 0 },
+        chevron: expanded ? '▼' : '▶',
+        onToggle: () => this.toggleExpand(sec.id),
+        onSelect: () => { if (!sec.disabled) this.goMain(i, 0); },
+        substepsRendered,
+      };
+    });
+
+    const kierunekLabel = st.kierunek || 'Kierunek nie wybrany';
+    const jezykLabel = st.jezyk ? (st.jezyk.indexOf('polski') !== -1 ? 'w j. polskim' : 'w j. angielskim') : '';
+    const appSubLabel = [kierunekLabel, [st.poziom, jezykLabel].filter(Boolean).join(' ')].filter(Boolean).join(' · ');
+    const appKierunek = kierunekLabel;
+    const appSubDetail = [st.poziom, jezykLabel].filter(Boolean).join(' ');
+
+    return {
+      appNumber: 'APP-123981',
+      appSubLabel,
+      appKierunek,
+      appSubDetail,
+      variant,
+      showStart: !s.started && !s.submitted && !s.profil && !s.home && !s.awaitingScreen,
+      goHome: () => this.setState({ home: true, profil: false, previewMode: false, started: false, userMenuOpen: false }),
+      showDone: s.submitted && !s.previewMode && !s.home && !s.profil,
+      showAwaiting: s.awaitingScreen && !s.home && !s.profil && !s.previewMode,
+      resumeForm: () => this.setState({ awaitingScreen: false, home: false, profil: false, previewMode: false, started: true, mobileNav: false, activeMain: 2, activeSub: 0 }),
+      goMojeRekrutacje: () => this.setState({ home: true, awaitingScreen: false, started: false, previewMode: false, profil: false, userMenuOpen: false, mobileNav: false }),
+      showHome: s.home && !s.previewMode && !s.profil,
+      showProfil: s.profil,
+      profileDirty: s.profileDirty,
+      userMenuOpen: s.userMenuOpen,
+      toggleUserMenu: () => this.setState({ userMenuOpen: !this.state.userMenuOpen }),
+      openProfil: () => this.setState({ profil: true, userMenuOpen: false }),
+      closeProfil: () => this.setState({ profil: false }),
+      wyloguj: () => this.setState(Component.initial()),
+      cancelModalOpen: this.state.cancelModalOpen,
+      openCancelModal: () => this.setState({ cancelModalOpen: true, mobileNav: false }),
+      closeCancelModal: () => this.setState({ cancelModalOpen: false }),
+      onCancelModalKey: e => { if (e.key === 'Escape') this.setState({ cancelModalOpen: false }); },
+      confirmCancelApp: () => { const init = Component.initial(); this.setState({ ...init, home: true, cancelModalOpen: false }); },
+      stopProp: e => e.stopPropagation(),
+      startNewApplication: () => { const init = Component.initial(); this.setState({ started: false, submitted: false, home: false, previewMode: false, profil: false, activeMain: 0, activeSub: 0, studia: init.studia, drugiKierunek: init.drugiKierunek, trzeciKierunek: init.trzeciKierunek, platnosc: init.platnosc, touched: init.touched, profileDirty: false }); },
+      onPay: () => {
+        if (wy.oczekujeWyniki && !s.resultsPaid) {
+          this.setState({ awaitingScreen: true, resultsPaid: true, started: false, previewMode: false, home: false, hasSubmittedApp: true, profileDirty: false });
+        } else {
+          this.setState({ submitted: true, previewMode: false, home: false, hasSubmittedApp: true, profileDirty: false });
+        }
+      },
+      submitCompleted: () => this.setState({ submitted: true, finalSubmitted: true, resultsPaid: false, awaitingScreen: false, started: false, previewMode: false, home: false }),
+      doneOnline: s.platnosc.metoda !== 'przelew',
+      donePrzelew: s.platnosc.metoda === 'przelew',
+      przelewTytul: ['Opłata rekrutacyjna', 'APP-123981', [ob.imie, ob.nazwisko].filter(Boolean).join(' ')].filter(Boolean).join(' — '),
+      previewMode: s.previewMode,
+      openPreview: () => this.setState({ previewMode: true, previewFrom: 'done', started: true, home: false, profil: false, activeMain: 0, activeSub: 0 }),
+      openPreviewFromHome: () => this.setState({ previewMode: true, previewFrom: 'home', started: true, home: false, profil: false, activeMain: 0, activeSub: 0 }),
+      closePreview: () => this.setState({ previewMode: false, home: this.state.previewFrom === 'home' }),
+      homeCardTitle: st.kierunek || 'Kierunek nie wybrany',
+      homeHasApp: s.hasSubmittedApp || s.submitted,
+      homeNoApp: !(s.hasSubmittedApp || s.submitted),
+      homeStatusLabel: s.resultsPaid ? 'Zapisana — oczekuje na wyniki matury' : s.platnosc.metoda === 'przelew' ? 'Złożona — oczekuje na potwierdzenie płatności' : 'Złożona — oczekuje na wyniki',
+      homeMeta: [
+        { icon: 'check-circle', label: st.poziom || '—' },
+        { icon: 'clock', label: st.forma || '—' },
+        { icon: 'information-circle', label: jezykLabel || '—' },
+      ],
+      startRekrutacje: () => this.setState({ started: true, activeMain: 0, activeSub: 0 }),
+      resetRecruitment: () => { const init = Component.initial(); ['osobowe', 'wyksztalcenie', 'maturaPodst', 'maturaRozsz', 'maturaDwuj', 'maturaWybor', 'achievements', 'achievementsNote', 'hasSubmittedApp', 'profileDirty'].forEach(k => { init[k] = this.state[k]; }); this.setState(init); },
+      startPoziomOptions: ['Studia I stopnia', 'Studia II stopnia', 'Jednolite studia magisterskie'],
+      startKierunekOptions: ['Informatyka', 'Finanse i rachunkowość', 'Zarządzanie', 'Prawo', 'Psychologia', 'Zarządzanie i socjologia w biznesie i mediach'],
+      startFormaOptions: ['stacjonarne', 'niestacjonarne'],
+      startZakresOptions: ['Data Science', 'Cyberbezpieczeństwo', 'Sztuczna inteligencja', 'Bez specjalizacji'],
+      startJezykOptions: ['Zajęcia w języku polskim', 'Zajęcia w języku angielskim'],
+      startProcessSteps: [
+        { title: 'Uzupełnienie formularza', desc: 'Dane osobowe, wykształcenie i wymagane dokumenty.' },
+        { title: 'Opłata rekrutacyjna', desc: '85,00 zł — płatność online na końcu formularza.' },
+        { title: 'Oczekiwanie na przyjęcie na studia', desc: 'Decyzję otrzymasz e-mailem.' },
+        { title: 'Dokończenie procedur i podpisanie umowy', desc: 'Skontaktujemy się mailowo w sprawie kolejnych kroków.' },
+      ].map((p, i, arr) => ({ ...p, nr: i + 1, hasLine: i < arr.length - 1 })),
+      showFormMobile: !s.profil && s.started && (!s.submitted || s.previewMode), mobileNavOpen: s.mobileNav, toggleMobileNav: () => this.setState(p => ({ mobileNav: !p.mobileNav })), closeMobileNav: () => this.setState({ mobileNav: false }), progressPct: Math.round((s.activeMain + 1) / 7 * 100) + '%', navChevron: s.mobileNav ? '▲' : '▼',
+      isA: !s.profil && s.started && (!s.submitted || s.previewMode) && variant === 'a', isB: !s.profil && s.started && (!s.submitted || s.previewMode) && variant === 'b', isC: !s.profil && s.started && (!s.submitted || s.previewMode) && variant === 'c', isD: !s.profil && s.started && (!s.submitted || s.previewMode) && variant === 'd', isNotD: !s.profil && s.started && (!s.submitted || s.previewMode) && variant !== 'd',
+      activeMain: s.activeMain, activeSub: s.activeSub,
+      mainSections,
+      stepMissing,
+      stepMissingCount: stepMissing.length,
+      showStepMissing: stepMissing.length > 0,
+      activeSectionLabel: mainSections[s.activeMain].label,
+      stepNumberLabel: s.activeMain + 1,
+      contactOpen: s.contactOpen,
+      contactRailOffset: s.contactOpen ? '64px' : '-260px',
+      toggleContact: () => this.setState(prev => ({ contactOpen: !prev.contactOpen })),
+      goPrev: () => { this.setState(prev => ({ activeMain: Math.max(0, prev.activeMain - 1), activeSub: 0, visited: { ...prev.visited, [prev.activeMain]: true } })); requestAnimationFrame(() => document.querySelectorAll('[data-step-scroll]').forEach(el => { el.scrollTop = 0; })); },
+      goNext: () => this.goMain(Math.min(6, s.activeMain + 1), 0),
+      setActiveSub: sub => this.setState({ activeSub: sub }),
+
+      jezyk: st.jezyk, poziom: st.poziom, kierunek: st.kierunek, forma: st.forma, zakres: st.zakres,
+      setJezyk: v => this.setField('studia', 'jezyk', v),
+      setPoziom: v => this.setField('studia', 'poziom', v),
+      setKierunek: v => this.setField('studia', 'kierunek', v),
+      setForma: v => this.setField('studia', 'forma', v),
+      setZakres: v => this.setField('studia', 'zakres', v),
+      zajeciaJezykowe: st.zajeciaJezykowe,
+      setZajeciaJezykowe: v => this.setField('studia', 'zajeciaJezykowe', v),
+      poziomJezyka: st.poziomJezyka,
+      setPoziomJezyka: v => this.setField('studia', 'poziomJezyka', v),
+
+      drugiKierunekEnabled: s.drugiKierunek.enabled,
+      setDrugiKierunekEnabled: v => this.setField('drugiKierunek', 'enabled', v),
+      drugiPoziom: s.drugiKierunek.poziom,
+      setDrugiPoziom: v => this.setField('drugiKierunek', 'poziom', v),
+      drugiJezyk: s.drugiKierunek.jezyk,
+      setDrugiJezyk: v => this.setField('drugiKierunek', 'jezyk', v),
+      drugiKierunekWybor: s.drugiKierunek.kierunek,
+      setDrugiKierunekWybor: v => this.setField('drugiKierunek', 'kierunek', v),
+      drugiZajeciaJezykowe: s.drugiKierunek.zajeciaJezykowe,
+      setDrugiZajeciaJezykowe: v => this.setField('drugiKierunek', 'zajeciaJezykowe', v),
+
+      trzeciKierunekEnabled: s.trzeciKierunek.enabled,
+      setTrzeciKierunekEnabled: v => this.setField('trzeciKierunek', 'enabled', v),
+      trzeciPoziom: s.trzeciKierunek.poziom,
+      setTrzeciPoziom: v => this.setField('trzeciKierunek', 'poziom', v),
+      trzeciJezyk: s.trzeciKierunek.jezyk,
+      setTrzeciJezyk: v => this.setField('trzeciKierunek', 'jezyk', v),
+      trzeciKierunekWybor: s.trzeciKierunek.kierunek,
+      setTrzeciKierunekWybor: v => this.setField('trzeciKierunek', 'kierunek', v),
+      trzeciZajeciaJezykowe: s.trzeciKierunek.zajeciaJezykowe,
+      setTrzeciZajeciaJezykowe: v => this.setField('trzeciKierunek', 'zajeciaJezykowe', v),
+
+      imie: ob.imie, drugieImie: ob.drugieImie, nazwisko: ob.nazwisko, email: ob.email, telefon: ob.telefon,
+      obywatelstwo: ob.obywatelstwo, isPolish: isPolishCitizen,
+      posiadamDrugieObywatelstwo: ob.posiadamDrugieObywatelstwo, drugieObywatelstwoKraj: ob.drugieObywatelstwoKraj,
+      pesel: ob.pesel, dataUrodzenia: ob.dataUrodzenia,
+      ulica: ob.ulica, nrDomu: ob.nrDomu, nrMieszkania: ob.nrMieszkania, kodPocztowy: ob.kodPocztowy, miasto: ob.miasto, wojewodztwo: ob.wojewodztwo, kraj: ob.kraj,
+      korespondencyjneInne: ob.korespondencyjneInne,
+      korUlica: ob.korUlica, korNrDomu: ob.korNrDomu, korNrMieszkania: ob.korNrMieszkania, korKodPocztowy: ob.korKodPocztowy, korMiasto: ob.korMiasto, korWojewodztwo: ob.korWojewodztwo, korKraj: ob.korKraj,
+      rodzajDokumentuToz: ob.rodzajDokumentuToz,
+      seriaNumerDokumentu: ob.seriaNumerDokumentu, krajWydaniaDok: ob.krajWydaniaDok, dataWydaniaDok: ob.dataWydaniaDok,
+      miejsceUrodzeniaKraj: ob.miejsceUrodzeniaKraj, miejsceUrodzeniaMiasto: ob.miejsceUrodzeniaMiasto,
+      setImie: e => this.setField('osobowe', 'imie', e.target.value),
+      setDrugieImie: e => this.setField('osobowe', 'drugieImie', e.target.value),
+      setNazwisko: e => this.setField('osobowe', 'nazwisko', e.target.value),
+      setEmail: e => this.setField('osobowe', 'email', e.target.value),
+      setTelefon: e => this.setField('osobowe', 'telefon', e.target.value),
+      zdjecie: ob.zdjecie,
+      zdjecieUrl: ob.zdjecieUrl,
+      setZdjecie: e => { const f = e.target.files && e.target.files[0]; this.setState(s => ({ osobowe: { ...s.osobowe, zdjecie: (f && f.name) || '', zdjecieUrl: f ? URL.createObjectURL(f) : '' } })); },
+      removeZdjecie: () => this.setState(s => ({ osobowe: { ...s.osobowe, zdjecie: '', zdjecieUrl: '' } })),
+      setObywatelstwo: v => {
+        this.setField('osobowe', 'obywatelstwo', v);
+        this.setField('osobowe', 'rodzajDokumentuToz', v === 'Polskie' ? 'Dowód osobisty' : 'Paszport');
+      },
+      setPosiadamDrugieObywatelstwo: v => this.setField('osobowe', 'posiadamDrugieObywatelstwo', v),
+      setDrugieObywatelstwoKraj: v => this.setField('osobowe', 'drugieObywatelstwoKraj', v),
+      setPesel: e => this.setField('osobowe', 'pesel', e.target.value),
+      setDataUrodzenia: e => this.setField('osobowe', 'dataUrodzenia', e.target.value),
+      setUlica: e => this.setField('osobowe', 'ulica', e.target.value),
+      setNrDomu: e => this.setField('osobowe', 'nrDomu', e.target.value),
+      setNrMieszkania: e => this.setField('osobowe', 'nrMieszkania', e.target.value),
+      setKodPocztowy: e => this.setField('osobowe', 'kodPocztowy', e.target.value),
+      setMiasto: e => this.setField('osobowe', 'miasto', e.target.value),
+      setWojewodztwo: v => this.setField('osobowe', 'wojewodztwo', v),
+      setKraj: v => this.setField('osobowe', 'kraj', v),
+      setKorespondencyjneInne: v => this.setField('osobowe', 'korespondencyjneInne', v),
+      setKorUlica: e => this.setField('osobowe', 'korUlica', e.target.value),
+      setKorNrDomu: e => this.setField('osobowe', 'korNrDomu', e.target.value),
+      setKorNrMieszkania: e => this.setField('osobowe', 'korNrMieszkania', e.target.value),
+      setKorKodPocztowy: e => this.setField('osobowe', 'korKodPocztowy', e.target.value),
+      setKorMiasto: e => this.setField('osobowe', 'korMiasto', e.target.value),
+      setKorWojewodztwo: v => this.setField('osobowe', 'korWojewodztwo', v),
+      setKorKraj: v => this.setField('osobowe', 'korKraj', v),
+      setRodzajDokumentuToz: v => this.setField('osobowe', 'rodzajDokumentuToz', v),
+      setSeriaNumerDokumentu: e => this.setField('osobowe', 'seriaNumerDokumentu', e.target.value),
+      setKrajWydaniaDok: e => this.setField('osobowe', 'krajWydaniaDok', e.target.value),
+      setDataWydaniaDok: e => this.setField('osobowe', 'dataWydaniaDok', e.target.value),
+      setMiejsceUrodzeniaKraj: e => this.setField('osobowe', 'miejsceUrodzeniaKraj', e.target.value),
+      setMiejsceUrodzeniaMiasto: e => this.setField('osobowe', 'miejsceUrodzeniaMiasto', e.target.value),
+
+      rodzajSwiadectwa: wy.rodzaj, isMatura,
+      oczekujeWyniki: wy.oczekujeWyniki, setOczekujeWyniki: v => this.setField('wyksztalcenie', 'oczekujeWyniki', v), resultsPaid: s.resultsPaid,
+      setRodzajSwiadectwa: v => this.setField('wyksztalcenie', 'rodzaj', v),
+      nazwaSzkolyPolska: wy.nazwaSzkolyPolska, dataSwiadectwaPolska: wy.dataSwiadectwaPolska, rodzajMatury: wy.rodzajMatury,
+      setNazwaSzkolyPolska: v => this.setField('wyksztalcenie', 'nazwaSzkolyPolska', v && v.target ? v.target.value : v),
+      setDataSwiadectwaPolska: e => this.setField('wyksztalcenie', 'dataSwiadectwaPolska', e.target.value),
+      setRodzajMatury: v => this.setField('wyksztalcenie', 'rodzajMatury', v),
+      okregowaKomisja: wy.okregowaKomisja, numerSwiadectwa: wy.numerSwiadectwa,
+      swiadectwoZalaczone: wy.swiadectwoZalaczone,
+      setOkregowaKomisja: v => this.setField('wyksztalcenie', 'okregowaKomisja', v),
+      setNumerSwiadectwa: e => this.setField('wyksztalcenie', 'numerSwiadectwa', e.target.value),
+      dyplom: wy.dyplom || { dodany: false },
+      setDyplom: (k, v) => this.setField('wyksztalcenie', 'dyplom', { ...(this.state.wyksztalcenie.dyplom || {}), [k]: v }),
+      podypl: wy.podypl || { dodany: false },
+      setPodypl: (k, v) => this.setField('wyksztalcenie', 'podypl', { ...(this.state.wyksztalcenie.podypl || {}), [k]: v }),
+      certEnglish: wy.certEnglish,
+      setCertEnglish: v => this.setField('wyksztalcenie', 'certEnglish', v),
+      setSwiadectwoZalaczone: e => this.setField('wyksztalcenie', 'swiadectwoZalaczone', (e.target.files && e.target.files[0] && e.target.files[0].name) || ''),
+      krajWydania2: wy.krajWydania2,
+      setKrajWydania2: e => this.setField('wyksztalcenie', 'krajWydania2', e.target.value),
+      typMaturyZagr: wy.typMaturyZagr, nazwaSzkolyZagr: wy.nazwaSzkolyZagr, numerDokumentuZagr: wy.numerDokumentuZagr, dataSwiadectwaZagr: wy.dataSwiadectwaZagr,
+      setTypMaturyZagr: v => this.setField('wyksztalcenie', 'typMaturyZagr', v),
+      setNazwaSzkolyZagr: e => this.setField('wyksztalcenie', 'nazwaSzkolyZagr', e.target.value),
+      setNumerDokumentuZagr: e => this.setField('wyksztalcenie', 'numerDokumentuZagr', e.target.value),
+      setDataSwiadectwaZagr: e => this.setField('wyksztalcenie', 'dataSwiadectwaZagr', e.target.value),
+      tlumaczenieZalaczone: wy.tlumaczenieZalaczone,
+      transkryptZalaczone: wy.transkryptZalaczone,
+      tlumaczenieTranskryptuZalaczone: wy.tlumaczenieTranskryptuZalaczone,
+      setTlumaczenieZalaczone: e => this.setField('wyksztalcenie', 'tlumaczenieZalaczone', (e.target.files && e.target.files[0] && e.target.files[0].name) || ''),
+      setTranskryptZalaczone: e => this.setField('wyksztalcenie', 'transkryptZalaczone', (e.target.files && e.target.files[0] && e.target.files[0].name) || ''),
+      setTlumaczenieTranskryptuZalaczone: e => this.setField('wyksztalcenie', 'tlumaczenieTranskryptuZalaczone', (e.target.files && e.target.files[0] && e.target.files[0].name) || ''),
+
+      achievementsNote: s.achievementsNote,
+      setAchievementsNote: e => this.setState({ achievementsNote: e.target.value }),
+      addAchievement: () => this.addAchievement(),
+      maturaPodst: s.maturaPodst,
+      setMaturaPodstPolski: e => this.setField('maturaPodst', 'polski', e.target.value),
+      setMaturaPodstMatematyka: e => this.setField('maturaPodst', 'matematyka', e.target.value),
+      setMaturaPodstJezyk: e => this.setField('maturaPodst', 'jezyk', e.target.value),
+      maturaRozsz: s.maturaRozsz.map(r => ({ ...r,
+        setPrzedmiot: v => this.updateMaturaRow('maturaRozsz', r.id, 'przedmiot', v),
+        setWynik: e => this.updateMaturaRow('maturaRozsz', r.id, 'wynik', e.target.value),
+        onRemove: () => this.removeMaturaRow('maturaRozsz', r.id),
+      })),
+      maturaDwuj: s.maturaDwuj.map(r => ({ ...r,
+        setPrzedmiot: v => this.updateMaturaRow('maturaDwuj', r.id, 'przedmiot', v),
+        setWynik: e => this.updateMaturaRow('maturaDwuj', r.id, 'wynik', e.target.value),
+        onRemove: () => this.removeMaturaRow('maturaDwuj', r.id),
+      })),
+      addMaturaRozsz: () => this.addMaturaRow('maturaRozsz'),
+      addMaturaDwuj: () => this.addMaturaRow('maturaDwuj'),
+      maturaWybor: s.maturaWybor.map(r => ({ ...r,
+        setPrzedmiot: v => this.updateMaturaRow('maturaWybor', r.id, 'przedmiot', v),
+        setPoziom: v => this.updateMaturaRow('maturaWybor', r.id, 'poziom', v),
+        setWynik: e => this.updateMaturaRow('maturaWybor', r.id, 'wynik', e.target.value),
+      })),
+      zrodloInfo: dd.zrodloInfo, setZrodloInfo: v => this.setField('dodatkowe', 'zrodloInfo', v),
+      czynnikDecyzyjny: dd.czynnikDecyzyjny, setCzynnikDecyzyjny: v => this.setField('dodatkowe', 'czynnikDecyzyjny', v),
+
+      summarySections, missingFieldsList, allComplete,
+      platnoscMetoda: s.platnosc.metoda, setPlatnoscMetoda: v => this.setField('platnosc', 'metoda', v),
+      achievements: s.achievements.map(a => ({
+        ...a,
+        showCert: a.typ === 'Certyfikat językowy', showOlimp: a.typ === 'Olimpiada przedmiotowa', showSport: a.typ === 'Osiągnięcie sportowe', showInne: a.typ === 'Inny dokument',
+        plikLabel: a.plik || 'Brak pliku — dodaj zdjęcie lub PDF',
+        setTyp: v => this.updateAchievement(a.id, 'typ', v),
+        setJezyk: v => this.updateAchievement(a.id, 'jezyk', v),
+        setPrzedmiot: v => this.updateAchievement(a.id, 'przedmiot', v),
+        setPoziom: v => this.updateAchievement(a.id, 'poziom', v),
+        setWynik: e => this.updateAchievement(a.id, 'wynik', e.target.value),
+        setDziedzina: e => this.updateAchievement(a.id, 'dziedzina', e.target.value),
+        setZawody: e => this.updateAchievement(a.id, 'zawody', e.target.value),
+        setMiejsce: e => this.updateAchievement(a.id, 'miejsce', e.target.value),
+        setOpis: e => this.updateAchievement(a.id, 'opis', e.target.value),
+        setPlik: e => this.updateAchievement(a.id, 'plik', (e.target.files && e.target.files[0] && e.target.files[0].name) || ''),
+        onRemove: () => this.removeAchievement(a.id),
+      })),
+    };
+  }
+}
+
+</script>
+</body>
+</html>
