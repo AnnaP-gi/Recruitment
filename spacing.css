@@ -1,0 +1,37 @@
+/* ALK — Spacing, radius, borders, effects
+   Radii pulled verbatim from component specs — deliberately small
+   (sharp-cornered corporate minimalism): button 2px, textarea 4px,
+   input/tag 6px. Do NOT round these to an 8px grid. */
+
+:root {
+  /* Spacing scale (observed 4 / 8 / 10 / 12 / 16 / 24 / 40 / 100) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 10px;
+  --space-4: 12px;
+  --space-5: 16px;
+  --space-6: 24px;
+  --space-8: 40px;
+  --space-section: 100px;   /* header / section inset used in the kit */
+
+  /* Radii */
+  --radius-button: 2px;
+  --radius-textarea: 4px;
+  --radius-input: 6px;
+  --radius-tag: 6px;
+  --radius-none: 0px;
+
+  /* Borders */
+  --border-w: 1px;
+  --border-w-tab: 1.057px;   /* exact tab stroke from source */
+
+  /* Inset ring helper (inputs use inset box-shadow, not border) */
+  --ring-input:        inset 0 0 0 1px var(--border-input);
+  --ring-input-active: inset 0 0 0 1px var(--border-input-active);
+  --ring-input-error:  inset 0 0 0 1px var(--border-input-error);
+
+  /* Motion — subtle micro-interactions on button icons & hovers */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1); /* @kind other */
+  --dur-fast: 120ms; /* @kind other */
+  --dur-base: 180ms; /* @kind other */
+}
