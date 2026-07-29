@@ -311,7 +311,7 @@
             </div>
           </sc-for>
           </div>
-          <div style="padding:16px 24px 4px;border-top:1px solid rgba(255,255,255,0.12)">
+          <div style="padding:16px 24px 4px;border-top:1px solid rgba(255,255,255,0.12);text-align:right">
             <button type="button" onClick="{{ openCancelModal }}" style="background:none;border:none;cursor:pointer;padding:8px 0;font:600 12px var(--font-ui);letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6)" style-hover="color:#F08C9B">Anuluj aplikację</button>
           </div>
         </div>
@@ -602,7 +602,7 @@
               <div style="color:#fff;text-decoration:underline;margin-top:4px">Zobacz FAQ</div>
             </div>
           </div>
-          <div style="padding:0 20px 20px;flex-shrink:0">
+          <div style="padding:0 20px 20px;flex-shrink:0;text-align:right">
             <button type="button" onClick="{{ openCancelModal }}" style="background:none;border:none;cursor:pointer;padding:8px 0;font:600 12px var(--font-ui);letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6)" style-hover="color:#F08C9B">Anuluj aplikację</button>
           </div>
         </div>
@@ -661,13 +661,24 @@
 
   <sc-if value="{{ cancelModalOpen }}" hint-placeholder-val="{{ false }}">
     <div onClick="{{ closeCancelModal }}" onKeyDown="{{ onCancelModalKey }}" tabindex="-1" style="position:fixed;inset:0;background:rgba(3,9,40,0.55);display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;z-index:200">
-      <div onClick="{{ stopProp }}" role="dialog" aria-modal="true" aria-labelledby="cancel-modal-title" style="background:#fff;max-width:440px;width:100%;box-sizing:border-box;padding:32px 36px;box-shadow:0 12px 40px rgba(3,9,40,0.25)">
-        <h3 id="cancel-modal-title" style="font:600 18px/1.35 var(--font-ui);color:var(--alk-deep-waters);margin:0 0 12px">Anulować aplikację?</h3>
+      <div onClick="{{ stopProp }}" role="dialog" aria-modal="true" aria-labelledby="cancel-modal-title" style="position:relative;background:#fff;max-width:600px;width:100%;box-sizing:border-box;padding:32px 36px;box-shadow:0 12px 40px rgba(3,9,40,0.25)">
+        <button type="button" aria-label="Zamknij" onClick="{{ closeCancelModal }}" style="position:absolute;top:16px;right:16px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;color:var(--text-muted);border-radius:4px">
+          <x-import component-from-global-scope="ALKDesignSystem_ae2905.Icon" name="x-mark" size="22" hint-size="22px,22px"></x-import>
+        </button>
+        <h3 id="cancel-modal-title" style="font:600 18px/1.35 var(--font-ui);color:var(--alk-deep-waters);margin:0 40px 12px 0">Anulować aplikację?</h3>
         <p style="font:14px/1.65 var(--font-form);color:var(--text-primary);margin:0 0 8px">Czy na pewno chcesz anulować tę aplikację? <strong>Wprowadzone dane zostaną utracone</strong>, a rekrutacja nie zostanie złożona.</p>
-        <p style="font:13px/1.6 var(--font-form);color:var(--text-muted);margin:0 0 28px">Tej operacji nie można cofnąć.</p>
-        <div style="display:flex;justify-content:flex-end;gap:12px;flex-wrap:wrap">
-          <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="secondary" size="small" showIcon="{{ false }}" onClick="{{ closeCancelModal }}" hint-size="auto,48px">WRÓĆ DO FORMULARZA</x-import>
-          <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="primary" size="small" showIcon="{{ false }}" autoFocus="{{ true }}" onClick="{{ confirmCancelApp }}" hint-size="auto,48px">ANULUJ APLIKACJĘ</x-import>
+        <p style="font:13px/1.6 var(--font-form);color:var(--text-muted);margin:0 0 20px">Tej operacji nie można cofnąć.</p>
+        <div style="margin:0 0 20px">
+          <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Powód anulowania aplikacji" required="{{ true }}" placeholder="Wybierz powód" options="{{ cancelReasonOptions }}" value="{{ cancelReason }}" onChange="{{ setCancelReason }}" hint-size="100%,72px"></x-import>
+        </div>
+        <sc-if value="{{ cancelReasonIsOther }}" hint-placeholder-val="{{ false }}">
+          <div style="margin:0 0 20px">
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.InputTextArea" label="Podaj powód" required="{{ true }}" placeholder="Opisz powód anulowania aplikacji…" value="{{ cancelReasonOther }}" onChange="{{ setCancelReasonOther }}" hint-size="100%,110px"></x-import>
+          </div>
+        </sc-if>
+        <div style="display:flex;gap:12px;flex-wrap:nowrap">
+          <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="secondary" size="small" showIcon="{{ false }}" fullWidth="{{ true }}" onClick="{{ closeCancelModal }}" style="flex:1.35" hint-size="auto,48px">WRÓĆ DO FORMULARZA</x-import>
+          <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="primary" size="small" showIcon="{{ false }}" fullWidth="{{ true }}" disabled="{{ cancelConfirmDisabled }}" onClick="{{ confirmCancelApp }}" style="flex:1" hint-size="auto,48px">ANULUJ APLIKACJĘ</x-import>
         </div>
       </div>
     </div>
@@ -736,6 +747,7 @@ class Component extends DCLogic {
     userMenuOpen: false, profil: false, hasSubmittedApp: false, profileDirty: false,
     achievementsNote: '',
     achievements: [],
+    cancelReason: '', cancelReasonOther: '',
   }; }
 
   setField(group, key, val) {
@@ -754,6 +766,26 @@ class Component extends DCLogic {
   goMain(i, sub) {
     this.setState(s => ({ activeMain: i, activeSub: sub || 0, visited: { ...s.visited, [s.activeMain]: true }, touched: { ...s.touched, ...(i === 2 ? { wyksztalcenie: true } : {}), ...(i === 6 ? { platnosc: true } : {}) } }));
     requestAnimationFrame(() => document.querySelectorAll('[data-step-scroll]').forEach(el => { el.scrollTop = 0; }));
+  }
+
+  jumpToField(main, sub, field) {
+    this.setState(s => ({ activeSub: sub, visited: { ...s.visited, [main]: true } }));
+    const run = () => {
+      const target = field ? document.querySelector('[data-field="' + field + '"]') : null;
+      const sect = document.querySelector('[data-substep="' + main + '-' + sub + '"]');
+      const anchor = target || sect;
+      if (!anchor) return;
+      const sc = anchor.closest('[data-step-scroll]');
+      if (sc) {
+        const top = anchor.getBoundingClientRect().top - sc.getBoundingClientRect().top + sc.scrollTop - Math.round(sc.clientHeight / 3);
+        sc.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+      }
+      let f = null;
+      if (target) f = target.matches('input,select,textarea,button,[role=combobox]') ? target : target.querySelector('input:not([type=file]),select,textarea,[role=combobox],button');
+      if (!f && sect) { sect.querySelectorAll('input:not([type=file]),select,textarea,[role=combobox],button').forEach(c => { if (!f && c.offsetParent !== null) f = c; }); }
+      if (f) { try { f.focus({ preventScroll: true }); } catch (e) {} }
+    };
+    requestAnimationFrame(() => requestAnimationFrame(run));
   }
 
   addAchievement() {
@@ -833,59 +865,59 @@ class Component extends DCLogic {
 
     // --- Informacyjna walidacja: brakujące wymagane pola per krok ---
     const miss0 = [];
-    if (!st.poziom) miss0.push('Poziom studiów');
-    if (!st.kierunek) miss0.push('Kierunek');
-    if (!st.forma) miss0.push('Forma studiów');
-    if (!st.jezyk) miss0.push('Język studiów');
+    if (!st.poziom) miss0.push({ label: 'Poziom studiów', sub: 0 });
+    if (!st.kierunek) miss0.push({ label: 'Kierunek', sub: 0 });
+    if (!st.forma) miss0.push({ label: 'Forma studiów', sub: 0 });
+    if (!st.jezyk) miss0.push({ label: 'Język studiów', sub: 0 });
 
     const miss1 = [];
-    if (!ob.imie) miss1.push('Imię');
-    if (!ob.nazwisko) miss1.push('Nazwisko');
-    if (isPolishCitizen && !ob.pesel) miss1.push('PESEL');
-    if (isPolishCitizen && !ob.dataUrodzenia) miss1.push('Data urodzenia');
-    if (!ob.email) miss1.push('E-mail');
-    if (!ob.telefon) miss1.push('Numer telefonu');
-    if (!ob.ulica) miss1.push('Ulica');
-    if (!ob.nrDomu) miss1.push('Nr domu');
-    if (!ob.kodPocztowy) miss1.push('Kod pocztowy');
-    if (!ob.miasto) miss1.push('Miasto');
-    if (!ob.kraj) miss1.push('Kraj');
+    if (!ob.imie) miss1.push({ label: 'Imię', sub: 0, field: 'imie' });
+    if (!ob.nazwisko) miss1.push({ label: 'Nazwisko', sub: 0, field: 'nazwisko' });
+    if (isPolishCitizen && !ob.pesel) miss1.push({ label: 'PESEL', sub: 0, field: 'pesel' });
+    if (isPolishCitizen && !ob.dataUrodzenia) miss1.push({ label: 'Data urodzenia', sub: 0, field: 'dataUrodzenia' });
+    if (!ob.email) miss1.push({ label: 'E-mail', sub: 1 });
+    if (!ob.telefon) miss1.push({ label: 'Numer telefonu', sub: 1, field: 'telefon' });
+    if (!ob.ulica) miss1.push({ label: 'Ulica', sub: 2, field: 'ulica' });
+    if (!ob.nrDomu) miss1.push({ label: 'Nr domu', sub: 2, field: 'nrDomu' });
+    if (!ob.kodPocztowy) miss1.push({ label: 'Kod pocztowy', sub: 2, field: 'kodPocztowy' });
+    if (!ob.miasto) miss1.push({ label: 'Miasto', sub: 2, field: 'miasto' });
+    if (!ob.kraj) miss1.push({ label: 'Kraj', sub: 2, field: 'kraj' });
     if (ob.korespondencyjneInne) {
-      if (!ob.korUlica) miss1.push('Adres korespondencyjny — ulica');
-      if (!ob.korNrDomu) miss1.push('Adres korespondencyjny — nr domu');
-      if (!ob.korKodPocztowy) miss1.push('Adres korespondencyjny — kod pocztowy');
-      if (!ob.korMiasto) miss1.push('Adres korespondencyjny — miasto');
-      if (!ob.korKraj) miss1.push('Adres korespondencyjny — kraj');
+      if (!ob.korUlica) miss1.push({ label: 'Adres korespondencyjny — ulica', sub: 2, field: 'korUlica' });
+      if (!ob.korNrDomu) miss1.push({ label: 'Adres korespondencyjny — nr domu', sub: 2, field: 'korNrDomu' });
+      if (!ob.korKodPocztowy) miss1.push({ label: 'Adres korespondencyjny — kod pocztowy', sub: 2, field: 'korKodPocztowy' });
+      if (!ob.korMiasto) miss1.push({ label: 'Adres korespondencyjny — miasto', sub: 2, field: 'korMiasto' });
+      if (!ob.korKraj) miss1.push({ label: 'Adres korespondencyjny — kraj', sub: 2, field: 'korKraj' });
     }
-    if (!ob.seriaNumerDokumentu) miss1.push('Seria i numer dokumentu tożsamości');
-    if (!ob.krajWydaniaDok) miss1.push('Kraj wydania dokumentu');
-    if (!ob.dataWydaniaDok) miss1.push('Data wydania dokumentu');
-    if (!ob.miejsceUrodzeniaKraj) miss1.push('Kraj urodzenia');
-    if (!ob.miejsceUrodzeniaMiasto) miss1.push('Miejscowość urodzenia');
-    if (!ob.zdjecie) miss1.push('Zdjęcie do dokumentów');
+    if (!ob.seriaNumerDokumentu) miss1.push({ label: 'Seria i numer dokumentu tożsamości', sub: 3, field: 'seriaNumerDokumentu' });
+    if (!ob.krajWydaniaDok) miss1.push({ label: 'Kraj wydania dokumentu', sub: 3, field: 'krajWydaniaDok' });
+    if (!ob.dataWydaniaDok) miss1.push({ label: 'Data wydania dokumentu', sub: 3, field: 'dataWydaniaDok' });
+    if (!ob.miejsceUrodzeniaKraj) miss1.push({ label: 'Kraj urodzenia', sub: 3, field: 'miejsceUrodzeniaKraj' });
+    if (!ob.miejsceUrodzeniaMiasto) miss1.push({ label: 'Miejscowość urodzenia', sub: 3, field: 'miejsceUrodzeniaMiasto' });
+    if (!ob.zdjecie) miss1.push({ label: 'Zdjęcie do dokumentów', sub: 4 });
 
     const miss2 = [];
     if (isMatura) {
-      if (!wy.rodzajMatury) miss2.push('Rodzaj matury');
-      if (!wy.nazwaSzkolyPolska) miss2.push('Nazwa szkoły średniej');
-      if (!awaitingResults && !wy.okregowaKomisja) miss2.push('Okręgowa komisja egzaminacyjna');
-      if (!awaitingResults && !wy.numerSwiadectwa) miss2.push('Numer świadectwa');
-      if (!wy.dataSwiadectwaPolska) miss2.push('Data wydania świadectwa');
-      if (!awaitingResults && !wy.swiadectwoZalaczone) miss2.push('Skan świadectwa');
+      if (!wy.rodzajMatury) miss2.push({ label: 'Rodzaj matury', sub: 1, field: 'rodzajMatury' });
+      if (!wy.nazwaSzkolyPolska) miss2.push({ label: 'Nazwa szkoły średniej', sub: 1, field: 'nazwaSzkolyPolska' });
+      if (!awaitingResults && !wy.okregowaKomisja) miss2.push({ label: 'Okręgowa komisja egzaminacyjna', sub: 1, field: 'okregowaKomisja' });
+      if (!awaitingResults && !wy.numerSwiadectwa) miss2.push({ label: 'Numer świadectwa', sub: 1, field: 'numerSwiadectwa' });
+      if (!wy.dataSwiadectwaPolska) miss2.push({ label: 'Data wydania świadectwa', sub: 1, field: 'dataSwiadectwaPolska' });
+      if (!awaitingResults && !wy.swiadectwoZalaczone) miss2.push({ label: 'Skan świadectwa', sub: 3 });
     } else {
-      if (!wy.typMaturyZagr) miss2.push('Typ świadectwa');
-      if (!wy.nazwaSzkolyZagr) miss2.push('Nazwa szkoły średniej');
-      if (!wy.numerDokumentuZagr) miss2.push('Numer dokumentu');
-      if (!wy.dataSwiadectwaZagr) miss2.push('Data świadectwa');
-      if (!wy.krajWydania2) miss2.push('Kraj wydania');
-      if (!wy.tlumaczenieZalaczone) miss2.push('Tłumaczenie świadectwa');
-      if (!wy.transkryptZalaczone) miss2.push('Transkrypt ocen');
-      if (!wy.tlumaczenieTranskryptuZalaczone) miss2.push('Tłumaczenie transkryptu');
+      if (!wy.typMaturyZagr) miss2.push({ label: 'Typ świadectwa', sub: 1, field: 'typMaturyZagr' });
+      if (!wy.nazwaSzkolyZagr) miss2.push({ label: 'Nazwa szkoły średniej', sub: 1, field: 'nazwaSzkolyZagr' });
+      if (!wy.numerDokumentuZagr) miss2.push({ label: 'Numer dokumentu', sub: 1, field: 'numerDokumentuZagr' });
+      if (!wy.dataSwiadectwaZagr) miss2.push({ label: 'Data świadectwa', sub: 1, field: 'dataSwiadectwaZagr' });
+      if (!wy.krajWydania2) miss2.push({ label: 'Kraj wydania', sub: 1, field: 'krajWydania2' });
+      if (!wy.tlumaczenieZalaczone) miss2.push({ label: 'Tłumaczenie świadectwa', sub: 3 });
+      if (!wy.transkryptZalaczone) miss2.push({ label: 'Transkrypt ocen', sub: 3 });
+      if (!wy.tlumaczenieTranskryptuZalaczone) miss2.push({ label: 'Tłumaczenie transkryptu', sub: 3 });
     }
-    if (!awaitingResults && !subWyniki) miss2.push('Wyniki uzyskane na świadectwie');
+    if (!awaitingResults && !subWyniki) miss2.push({ label: 'Wyniki uzyskane na świadectwie', sub: 2 });
     const stepMissingMap = { 0: miss0, 1: miss1, 2: miss2 };
     const stepAttention = i => !!s.visited[i] && (stepMissingMap[i] || []).length > 0;
-    const stepMissing = stepMissingMap[s.activeMain] || [];
+    const stepMissing = (stepMissingMap[s.activeMain] || []).map(m => ({ label: m.label, onJump: () => this.jumpToField(s.activeMain, m.sub, m.field) }));
 
     // --- Podsumowanie: compressed summary + missing-fields list ---
     const dash = v => (v === true ? 'Tak' : v ? v : '—');
@@ -1097,10 +1129,17 @@ class Component extends DCLogic {
       closeProfil: () => this.setState({ profil: false }),
       wyloguj: () => this.setState(Component.initial()),
       cancelModalOpen: this.state.cancelModalOpen,
-      openCancelModal: () => this.setState({ cancelModalOpen: true }),
+      openCancelModal: () => this.setState({ cancelModalOpen: true, cancelReason: '', cancelReasonOther: '' }),
       closeCancelModal: () => this.setState({ cancelModalOpen: false }),
       onCancelModalKey: e => { if (e.key === 'Escape') this.setState({ cancelModalOpen: false }); },
-      confirmCancelApp: () => { const init = Component.initial(); this.setState({ ...init, home: true, cancelModalOpen: false }); },
+      cancelReasonOptions: ['Sytuacja osobista', 'Sytuacja finansowa', 'Sytuacja zawodowa', 'Sytuacja formalno-prawna (np. brak wizy, brak dokumentów)', 'Wybór innej uczelni', 'Zmiana programu studiów', 'Zmiana języka studiów', 'Nieuruchomienie wybranego kierunku studiów', 'Inny powód'],
+      cancelReason: this.state.cancelReason,
+      cancelReasonOther: this.state.cancelReasonOther,
+      cancelReasonIsOther: this.state.cancelReason === 'Inny powód',
+      setCancelReason: v => this.setState({ cancelReason: v }),
+      setCancelReasonOther: e => this.setState({ cancelReasonOther: e.target.value }),
+      cancelConfirmDisabled: !this.state.cancelReason || (this.state.cancelReason === 'Inny powód' && !this.state.cancelReasonOther.trim()),
+      confirmCancelApp: () => { if (!this.state.cancelReason || (this.state.cancelReason === 'Inny powód' && !this.state.cancelReasonOther.trim())) return; const init = Component.initial(); this.setState({ ...init, home: true, cancelModalOpen: false }); },
       stopProp: e => e.stopPropagation(),
       startNewApplication: () => { const init = Component.initial(); this.setState({ started: false, submitted: false, home: false, previewMode: false, profil: false, activeMain: 0, activeSub: 0, studia: init.studia, drugiKierunek: init.drugiKierunek, trzeciKierunek: init.trzeciKierunek, platnosc: init.platnosc, touched: init.touched, profileDirty: false }); },
       onPay: () => {

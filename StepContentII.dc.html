@@ -25,7 +25,7 @@
   </sc-if>
 
   <sc-if value="{{ showStudia }}" hint-placeholder-val="{{ true }}">
-    <div>
+    <div data-substep="0-0">
       <h2 style="font:600 22px/1.3 var(--font-ui);color:var(--alk-deep-waters);margin:0 0 4px">Twoje studia</h2>
       <p style="font:14px/1.5 var(--font-ui);color:var(--text-muted);margin:0 0 28px">Nabór odbywa się na podstawie wskazanego wcześniej kierunku. Poniżej znajdziesz szczegóły swojego zgłoszenia.</p>
 
@@ -89,20 +89,20 @@
       <div style="{{ osoboweLockStyle }}">
 
       <div style="display:flex;flex-direction:column;gap:20px;padding-bottom:32px;margin-bottom:32px;border-bottom:1px solid var(--alk-border-subtle,#eee)">
-        <div style="{{ hlDane }}" onFocus="{{ focusDane }}" onClick="{{ focusDane }}">
+        <div style="{{ hlDane }}" data-substep="1-0" onFocus="{{ focusDane }}" onClick="{{ focusDane }}">
           <h3 style="font:600 13px/1.4 var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--alk-blue-label,#3252B5);margin:0 0 20px">Dane osobowe</h3>
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-bottom:16px">
-            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Imię" required="{{ true }}" placeholder="Jan" value="{{ imie }}" onChange="{{ setImie }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Imię" required="{{ true }}" placeholder="Jan" data-field="imie" value="{{ imie }}" onChange="{{ setImie }}" hint-size="100%,64px"></x-import>
             <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Drugie imię" placeholder="(opcjonalnie)" value="{{ drugieImie }}" onChange="{{ setDrugieImie }}" hint-size="100%,64px"></x-import>
-            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Nazwisko" required="{{ true }}" placeholder="Kowalski" value="{{ nazwisko }}" onChange="{{ setNazwisko }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Nazwisko" required="{{ true }}" placeholder="Kowalski" data-field="nazwisko" value="{{ nazwisko }}" onChange="{{ setNazwisko }}" hint-size="100%,64px"></x-import>
           </div>
           <div style="max-width:213px;margin-bottom:16px">
             <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Obywatelstwo" required="{{ true }}" options="{{ obywatelstwoOptions }}" value="{{ obywatelstwo }}" onChange="{{ setObywatelstwo }}" hint-size="100%,64px"></x-import>
           </div>
           <sc-if value="{{ isPolish }}" hint-placeholder-val="{{ true }}">
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:16px">
-              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Numer PESEL" required="{{ true }}" placeholder="00000000000" value="{{ pesel }}" onChange="{{ setPesel }}" hint-size="100%,64px"></x-import>
-              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Data urodzenia" required="{{ true }}" type="date" value="{{ dataUrodzenia }}" onChange="{{ setDataUrodzenia }}" hint-size="100%,64px"></x-import>
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Numer PESEL" required="{{ true }}" placeholder="00000000000" data-field="pesel" value="{{ pesel }}" onChange="{{ setPesel }}" hint-size="100%,64px"></x-import>
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Data urodzenia" required="{{ true }}" type="date" data-field="dataUrodzenia" value="{{ dataUrodzenia }}" onChange="{{ setDataUrodzenia }}" hint-size="100%,64px"></x-import>
             </div>
           </sc-if>
           <x-import component-from-global-scope="ALKDesignSystem_ae2905.Checkbox" label="Posiadam drugie obywatelstwo" checked="{{ posiadamDrugieObywatelstwo }}" onChange="{{ setPosiadamDrugieObywatelstwo }}" hint-size="auto,24px"></x-import>
@@ -115,43 +115,43 @@
       </div>
 
       <div style="display:flex;flex-direction:column;gap:20px;padding-bottom:32px;margin-bottom:32px;border-bottom:1px solid var(--alk-border-subtle,#eee)">
-        <div style="{{ hlKontakt }}" onFocus="{{ focusKontakt }}" onClick="{{ focusKontakt }}">
+        <div style="{{ hlKontakt }}" data-substep="1-1" onFocus="{{ focusKontakt }}" onClick="{{ focusKontakt }}">
           <h3 style="font:600 13px/1.4 var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--alk-blue-label,#3252B5);margin:0 0 20px">Dane kontaktowe</h3>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
             <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Adres e-mail" required="{{ true }}" type="email" disabled="{{ true }}" message="Uzupełniony automatycznie podczas zakładania konta" value="{{ email }}" hint-size="100%,64px"></x-import>
-            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Telefon" required="{{ true }}" type="tel" placeholder="+48 600 000 000" value="{{ telefon }}" onChange="{{ setTelefon }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Telefon" required="{{ true }}" type="tel" placeholder="+48 600 000 000" data-field="telefon" value="{{ telefon }}" onChange="{{ setTelefon }}" hint-size="100%,64px"></x-import>
           </div>
         </div>
       </div>
 
       <div style="display:flex;flex-direction:column;gap:20px;padding-bottom:32px;margin-bottom:32px;border-bottom:1px solid var(--alk-border-subtle,#eee)">
-        <div style="{{ hlAdres }}" onFocus="{{ focusAdres }}" onClick="{{ focusAdres }}">
+        <div style="{{ hlAdres }}" data-substep="1-2" onFocus="{{ focusAdres }}" onClick="{{ focusAdres }}">
           <h3 style="font:600 13px/1.4 var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--alk-blue-label,#3252B5);margin:0 0 20px">Adres zamieszkania</h3>
           <div style="max-width:330px;margin-bottom:16px">
-            <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Kraj" required="{{ true }}" placeholder="Wybierz kraj" options="{{ krajOptions }}" value="{{ kraj }}" onChange="{{ setKraj }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Kraj" required="{{ true }}" placeholder="Wybierz kraj" options="{{ krajOptions }}" data-field="kraj" value="{{ kraj }}" onChange="{{ setKraj }}" hint-size="100%,64px"></x-import>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:16px">
-            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Kod pocztowy" required="{{ true }}" placeholder="03-301" value="{{ kodPocztowy }}" onChange="{{ setKodPocztowy }}" hint-size="100%,64px"></x-import>
-            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Miasto" required="{{ true }}" placeholder="Warszawa" value="{{ miasto }}" onChange="{{ setMiasto }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Kod pocztowy" required="{{ true }}" placeholder="03-301" data-field="kodPocztowy" value="{{ kodPocztowy }}" onChange="{{ setKodPocztowy }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Miasto" required="{{ true }}" placeholder="Warszawa" data-field="miasto" value="{{ miasto }}" onChange="{{ setMiasto }}" hint-size="100%,64px"></x-import>
           </div>
           <div style="display:grid;grid-template-columns:330px 1fr 1fr;gap:20px;margin-bottom:16px">
-            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Ulica" required="{{ true }}" placeholder="ul. Jagiellońska" value="{{ ulica }}" onChange="{{ setUlica }}" hint-size="100%,64px"></x-import>
-            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Nr domu" required="{{ true }}" placeholder="57" value="{{ nrDomu }}" onChange="{{ setNrDomu }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Ulica" required="{{ true }}" placeholder="ul. Jagiellońska" data-field="ulica" value="{{ ulica }}" onChange="{{ setUlica }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Nr domu" required="{{ true }}" placeholder="57" data-field="nrDomu" value="{{ nrDomu }}" onChange="{{ setNrDomu }}" hint-size="100%,64px"></x-import>
             <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Nr mieszkania" placeholder="12" value="{{ nrMieszkania }}" onChange="{{ setNrMieszkania }}" hint-size="100%,64px"></x-import>
           </div>
           <x-import component-from-global-scope="ALKDesignSystem_ae2905.Checkbox" label="Dane korespondencyjne są różne od miejsca zamieszkania" checked="{{ korespondencyjneInne }}" onChange="{{ setKorespondencyjneInne }}" hint-size="auto,24px"></x-import>
           <sc-if value="{{ korespondencyjneInne }}" hint-placeholder-val="{{ false }}">
             <div style="margin-top:16px;padding:16px 20px;background:var(--alk-surface-subtle,#F8F9FB);border-radius:6px">
               <div style="max-width:330px;margin-bottom:16px">
-                <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Kraj" required="{{ true }}" placeholder="Wybierz kraj" options="{{ krajOptions }}" value="{{ korKraj }}" onChange="{{ setKorKraj }}" hint-size="100%,64px"></x-import>
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Kraj" required="{{ true }}" placeholder="Wybierz kraj" options="{{ krajOptions }}" data-field="korKraj" value="{{ korKraj }}" onChange="{{ setKorKraj }}" hint-size="100%,64px"></x-import>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:16px">
-                <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Kod pocztowy" required="{{ true }}" placeholder="03-301" value="{{ korKodPocztowy }}" onChange="{{ setKorKodPocztowy }}" hint-size="100%,64px"></x-import>
-                <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Miasto" required="{{ true }}" placeholder="Warszawa" value="{{ korMiasto }}" onChange="{{ setKorMiasto }}" hint-size="100%,64px"></x-import>
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Kod pocztowy" required="{{ true }}" placeholder="03-301" data-field="korKodPocztowy" value="{{ korKodPocztowy }}" onChange="{{ setKorKodPocztowy }}" hint-size="100%,64px"></x-import>
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Miasto" required="{{ true }}" placeholder="Warszawa" data-field="korMiasto" value="{{ korMiasto }}" onChange="{{ setKorMiasto }}" hint-size="100%,64px"></x-import>
               </div>
               <div style="display:grid;grid-template-columns:330px 1fr 1fr;gap:20px">
-                <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Ulica" required="{{ true }}" placeholder="ul. Jagiellońska" value="{{ korUlica }}" onChange="{{ setKorUlica }}" hint-size="100%,64px"></x-import>
-                <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Nr domu" required="{{ true }}" placeholder="57" value="{{ korNrDomu }}" onChange="{{ setKorNrDomu }}" hint-size="100%,64px"></x-import>
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Ulica" required="{{ true }}" placeholder="ul. Jagiellońska" data-field="korUlica" value="{{ korUlica }}" onChange="{{ setKorUlica }}" hint-size="100%,64px"></x-import>
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Nr domu" required="{{ true }}" placeholder="57" data-field="korNrDomu" value="{{ korNrDomu }}" onChange="{{ setKorNrDomu }}" hint-size="100%,64px"></x-import>
                 <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Nr mieszkania" placeholder="12" value="{{ korNrMieszkania }}" onChange="{{ setKorNrMieszkania }}" hint-size="100%,64px"></x-import>
               </div>
             </div>
@@ -160,25 +160,25 @@
       </div>
 
       <div>
-        <div style="{{ hlDokument }}" onFocus="{{ focusDokument }}" onClick="{{ focusDokument }}">
+        <div style="{{ hlDokument }}" data-substep="1-3" onFocus="{{ focusDokument }}" onClick="{{ focusDokument }}">
           <h3 style="font:600 13px/1.4 var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--alk-blue-label,#3252B5);margin:0 0 20px">Dokument tożsamości</h3>
           <div style="margin-bottom:16px;max-width:360px">
             <x-import component-from-global-scope="ALKDesignSystem_ae2905.Radio.Group" dc-props="{{ radioGroupProps }}" options="{{ rodzajDokumentuTozOptions }}" value="{{ rodzajDokumentuToz }}" onChange="{{ setRodzajDokumentuToz }}" hint-size="100%,32px"></x-import>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:16px">
-            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Seria i numer dokumentu" required="{{ true }}" placeholder="ABC 123456" value="{{ seriaNumerDokumentu }}" onChange="{{ setSeriaNumerDokumentu }}" hint-size="100%,64px"></x-import>
-            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Kraj wydania" required="{{ true }}" placeholder="Polska" value="{{ krajWydaniaDok }}" onChange="{{ setKrajWydaniaDok }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Seria i numer dokumentu" required="{{ true }}" placeholder="ABC 123456" data-field="seriaNumerDokumentu" value="{{ seriaNumerDokumentu }}" onChange="{{ setSeriaNumerDokumentu }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Kraj wydania" required="{{ true }}" placeholder="Polska" data-field="krajWydaniaDok" value="{{ krajWydaniaDok }}" onChange="{{ setKrajWydaniaDok }}" hint-size="100%,64px"></x-import>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px">
-            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Data wydania" required="{{ true }}" type="date" value="{{ dataWydaniaDok }}" onChange="{{ setDataWydaniaDok }}" hint-size="100%,64px"></x-import>
-            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Miejsce urodzenia — kraj" required="{{ true }}" placeholder="Polska" value="{{ miejsceUrodzeniaKraj }}" onChange="{{ setMiejsceUrodzeniaKraj }}" hint-size="100%,64px"></x-import>
-            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Miejsce urodzenia — miasto" required="{{ true }}" placeholder="Warszawa" value="{{ miejsceUrodzeniaMiasto }}" onChange="{{ setMiejsceUrodzeniaMiasto }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Data wydania" required="{{ true }}" type="date" data-field="dataWydaniaDok" value="{{ dataWydaniaDok }}" onChange="{{ setDataWydaniaDok }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Miejsce urodzenia — kraj" required="{{ true }}" placeholder="Polska" data-field="miejsceUrodzeniaKraj" value="{{ miejsceUrodzeniaKraj }}" onChange="{{ setMiejsceUrodzeniaKraj }}" hint-size="100%,64px"></x-import>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Miejsce urodzenia — miasto" required="{{ true }}" placeholder="Warszawa" data-field="miejsceUrodzeniaMiasto" value="{{ miejsceUrodzeniaMiasto }}" onChange="{{ setMiejsceUrodzeniaMiasto }}" hint-size="100%,64px"></x-import>
           </div>
         </div>
       </div>
 
       <div style="margin-top:24px;padding-top:24px;border-top:1px solid var(--alk-border-subtle,#eee)">
-        <div style="{{ hlZdjecie }}" onFocus="{{ focusZdjecie }}" onClick="{{ focusZdjecie }}">
+        <div style="{{ hlZdjecie }}" data-substep="1-4" onFocus="{{ focusZdjecie }}" onClick="{{ focusZdjecie }}">
           <h3 style="font:600 13px/1.4 var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--alk-blue-label,#3252B5);margin:0 0 20px">Zdjęcie do dokumentów</h3>
           <p style="font:13px/1.6 var(--font-form);color:var(--text-muted);margin:0 0 14px">Aktualne zdjęcie jak do dowodu osobistego: en face (na wprost), jednolite jasne tło, twarz zajmuje 70–80% kadru, bez nakrycia głowy i ciemnych okularów. Format JPG lub PNG, min. 500 × 625 px, proporcje 35:45. <span style="color:#F73B3B">*</span></p>
           <label style="display:inline-flex;align-items:center;gap:10px;padding:0 14px;height:38px;width:fit-content;border-radius:6px;box-shadow:inset 0 0 0 1px var(--alk-border,#D8D8DA);cursor:pointer;background:#fff">
@@ -234,7 +234,7 @@
           </sc-if>
         </sc-if>
       </div>
-      <div style="{{ wyksztLockStyle }}">
+      <div style="{{ wyksztLockStyle }}" data-substep="2-0">
       <div style="margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid var(--alk-border-subtle,#eee)">
         <h3 style="font:600 13px/1.4 var(--font-ui);letter-spacing:0.04em;text-transform:uppercase;color:var(--alk-blue-label,#3252B5);margin:0 0 16px">Rodzaj uczelni</h3>
         <p style="font:14px/1.6 var(--font-form);color:var(--text-primary);margin:0 0 16px">Wskaż, czy studia I stopnia ukończyłe(a)ś na uczelni polskiej czy zagranicznej.</p>
@@ -260,21 +260,21 @@
           <p style="font:14px/1.6 var(--font-form);color:var(--text-primary);margin:0 0 20px">Podaj dane dyplomu ukończenia studiów I stopnia (licencjackich lub inżynierskich) uprawniającego do podjęcia studiów II stopnia.</p>
           <div style="display:flex;flex-direction:column;gap:20px">
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
-              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Nazwa uczelni" required="{{ true }}" placeholder="Pełna nazwa uczelni" value="{{ dyplomIUczelnia }}" onChange="{{ setDyplomIUczelnia }}" hint-size="100%,64px"></x-import>
-              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Kierunek studiów" required="{{ true }}" placeholder="np. Zarządzanie" value="{{ dyplomIKierunek }}" onChange="{{ setDyplomIKierunek }}" hint-size="100%,64px"></x-import>
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Nazwa uczelni" required="{{ true }}" placeholder="Pełna nazwa uczelni" data-field="dyplomIUczelnia" value="{{ dyplomIUczelnia }}" onChange="{{ setDyplomIUczelnia }}" hint-size="100%,64px"></x-import>
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Kierunek studiów" required="{{ true }}" placeholder="np. Zarządzanie" data-field="dyplomIKierunek" value="{{ dyplomIKierunek }}" onChange="{{ setDyplomIKierunek }}" hint-size="100%,64px"></x-import>
             </div>
             <sc-if value="{{ dyplomIKrajZagr }}" hint-placeholder-val="{{ false }}">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
-                <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Kraj uczelni" required="{{ true }}" placeholder="np. Niemcy" value="{{ dyplomIKrajUczelni }}" onChange="{{ setDyplomIKrajUczelni }}" hint-size="100%,64px"></x-import>
+                <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Kraj uczelni" required="{{ true }}" placeholder="np. Niemcy" data-field="dyplomIKrajUczelni" value="{{ dyplomIKrajUczelni }}" onChange="{{ setDyplomIKrajUczelni }}" hint-size="100%,64px"></x-import>
               </div>
             </sc-if>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
-              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Numer dyplomu" required="{{ true }}" placeholder="Numer z dyplomu" value="{{ dyplomINumer }}" onChange="{{ setDyplomINumer }}" hint-size="100%,64px"></x-import>
-              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Data wydania dyplomu" required="{{ true }}" type="date" value="{{ dyplomIData }}" onChange="{{ setDyplomIData }}" hint-size="100%,64px"></x-import>
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Numer dyplomu" required="{{ true }}" placeholder="Numer z dyplomu" data-field="dyplomINumer" value="{{ dyplomINumer }}" onChange="{{ setDyplomINumer }}" hint-size="100%,64px"></x-import>
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Data wydania dyplomu" required="{{ true }}" type="date" data-field="dyplomIData" value="{{ dyplomIData }}" onChange="{{ setDyplomIData }}" hint-size="100%,64px"></x-import>
             </div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
-              <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Uzyskany tytuł zawodowy" required="{{ true }}" options="{{ tytulZawodowyOptions }}" value="{{ dyplomITytul }}" onChange="{{ setDyplomITytul }}" hint-size="100%,64px"></x-import>
-              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Data ukończenia uczelni" required="{{ true }}" type="date" value="{{ dyplomIDataUkonczenia }}" onChange="{{ setDyplomIDataUkonczenia }}" hint-size="100%,64px"></x-import>
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Uzyskany tytuł zawodowy" required="{{ true }}" options="{{ tytulZawodowyOptions }}" data-field="dyplomITytul" value="{{ dyplomITytul }}" onChange="{{ setDyplomITytul }}" hint-size="100%,64px"></x-import>
+              <x-import component-from-global-scope="ALKDesignSystem_ae2905.Input" label="Data ukończenia uczelni" required="{{ true }}" type="date" data-field="dyplomIDataUkonczenia" value="{{ dyplomIDataUkonczenia }}" onChange="{{ setDyplomIDataUkonczenia }}" hint-size="100%,64px"></x-import>
             </div>
           </div>
 
@@ -486,10 +486,10 @@
       <x-import component-from-global-scope="ALKDesignSystem_ae2905.Icon" name="information-circle" size="20" style="color:var(--alk-blue-label,#3252B5);flex-shrink:0;margin-top:1px" hint-size="20px,20px"></x-import>
       <div style="flex:1">
         <p style="font:600 14px/1.5 var(--font-ui);color:var(--alk-alumni,#162447);margin:0 0 8px">Ten krok nie jest jeszcze kompletny — możesz przejść dalej i wrócić tu później.</p>
-        <p style="font:13px/1.5 var(--font-form);color:var(--text-muted);margin:0 0 8px">Do uzupełnienia pozostały wymagane pola:</p>
+        <p style="font:13px/1.5 var(--font-form);color:var(--text-muted);margin:0 0 8px">Do uzupełnienia pozostały wymagane pola — kliknij, aby przejść do pola:</p>
         <ul style="margin:0;padding-left:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:3px 24px">
           <sc-for list="{{ stepMissing }}" as="m" hint-placeholder-count="3">
-            <li style="font:13px/1.5 var(--font-form);color:var(--alk-alumni,#162447)">{{ m }}</li>
+            <li style="font:13px/1.5 var(--font-form);color:var(--alk-alumni,#162447)"><a href="#" onClick="{{ m.onJump }}" style="color:var(--alk-blue-label,#3252B5);text-decoration:underline;text-underline-offset:2px">{{ m.label }}</a></li>
           </sc-for>
         </ul>
       </div>
