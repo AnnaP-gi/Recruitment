@@ -37,6 +37,7 @@
     </div>
   </div>
 
+
   <sc-if value="{{ showProfil }}" hint-placeholder-val="{{ false }}">
     <div style="flex:1;overflow-y:auto;background:var(--alk-space,#F2F5FF)">
       <div style="max-width:1100px;margin:0 auto;padding:36px 48px 64px">
@@ -312,7 +313,7 @@
             </div>
           </sc-for>
           </div>
-          <div style="padding:16px 24px 4px;border-top:1px solid rgba(255,255,255,0.12)">
+          <div style="padding:16px 24px 4px;border-top:1px solid rgba(255,255,255,0.12);text-align:right">
             <button type="button" onClick="{{ openCancelModal }}" style="background:none;border:none;cursor:pointer;padding:8px 0;font:600 12px var(--font-ui);letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6)" style-hover="color:#F08C9B">Anuluj aplikację</button>
           </div>
         </div>
@@ -462,7 +463,7 @@
       <div style="padding:22px 40px 26px;background:#fff;border-bottom:1px solid var(--alk-border-subtle,#eee);flex-shrink:0">
         <div style="display:flex;align-items:flex-start">
           <sc-for list="{{ mainSections }}" as="sec" hint-placeholder-count="7">
-            <div style="display:flex;align-items:center;flex:1">
+            <div style="{{ sec.stepItemStyle }}">
               <button type="button" onClick="{{ sec.onSelect }}" style="display:flex;flex-direction:column;align-items:center;gap:8px;background:none;border:none;cursor:pointer;flex-shrink:0">
                 <span style="{{ sec.bigDotStyle }}">{{ sec.statusIcon }}</span>
                 <span style="{{ sec.bigLabelStyle }}">{{ sec.shortLabel }}</span>
@@ -555,7 +556,7 @@
       <div style="padding:22px 40px 26px;background:#fff;border-bottom:1px solid var(--alk-border-subtle,#eee);flex-shrink:0">
         <div style="display:flex;align-items:flex-start">
           <sc-for list="{{ mainSections }}" as="sec" hint-placeholder-count="7">
-            <div style="display:flex;align-items:center;flex:1">
+            <div style="{{ sec.stepItemStyle }}">
               <button type="button" onClick="{{ sec.onSelect }}" style="display:flex;flex-direction:column;align-items:center;gap:8px;background:none;border:none;cursor:pointer;flex-shrink:0">
                 <span style="{{ sec.bigDotStyle }}">{{ sec.statusIcon }}</span>
                 <span style="{{ sec.bigLabelStyle }}">{{ sec.shortLabel }}</span>
@@ -567,12 +568,31 @@
           </sc-for>
         </div>
       </div>
-      <div style="display:flex;padding:20px 0 0 0;flex-shrink:0">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 0 0 0;flex-shrink:0">
         <div style="width:320px;box-sizing:border-box;background:#fff;border-radius:8px;box-shadow:0 8px 28px rgba(3,9,40,0.14);padding:18px 22px;margin-bottom:20px">
           <div style="font:700 14px var(--font-ui);color:var(--alk-deep-waters);letter-spacing:0.01em">{{ appNumber }}</div>
           <div style="font:700 14px var(--font-form);color:var(--alk-deep-waters);margin-top:6px">{{ appKierunek }}</div>
           <div style="font:13px/1.5 var(--font-form);color:var(--text-muted);margin-top:2px">{{ appSubDetail }}</div>
         </div>
+        <sc-if value="{{ showLangSwitcher }}" hint-placeholder-val="{{ false }}">
+        <div style="position:relative;align-self:center">
+          <button type="button" aria-haspopup="listbox" aria-expanded="{{ langOpen }}" aria-label="Zmień język aplikacji" onClick="{{ toggleLang }}" style="display:flex;align-items:center;justify-content:space-between;gap:12px;min-width:150px;background:#fff;box-shadow:inset 0 0 0 1px var(--alk-border,#D8D8DA);border:none;border-radius:6px;padding:9px 12px 9px 16px;cursor:pointer;font:600 13px var(--font-ui);color:var(--text-primary)">
+            <span>{{ langLabel }}</span>
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.Icon" name="chevron-down" size="18" style="color:var(--text-muted);flex-shrink:0" hint-size="18px,18px"></x-import>
+          </button>
+          <sc-if value="{{ langOpen }}" hint-placeholder-val="{{ false }}">
+            <div role="listbox" style="position:absolute;top:calc(100% + 6px);right:0;min-width:210px;background:#fff;box-shadow:0 12px 40px rgba(3,9,40,0.18);border-radius:6px;padding:6px 0;z-index:260">
+              <sc-for list="{{ langOptions }}" as="opt" hint-placeholder-count="2">
+                <button type="button" onClick="{{ opt.onSelect }}" style="{{ opt.rowStyle }}">
+                  <span>{{ opt.label }}</span>
+                  <span style="{{ opt.tagStyle }}">{{ opt.tag }}</span>
+                </button>
+              </sc-for>
+            </div>
+            <div onClick="{{ closeLang }}" style="position:fixed;inset:0;z-index:255"></div>
+          </sc-if>
+        </div>
+        </sc-if>
       </div>
       <div style="display:flex;align-items:stretch">
         <div style="width:320px;flex-shrink:0;background:var(--alk-alumni,#162447);padding:20px 0;display:flex;flex-direction:column">
@@ -606,7 +626,7 @@
               <div style="color:#fff;text-decoration:underline;margin-top:4px">Zobacz FAQ</div>
             </div>
           </div>
-          <div style="padding:0 20px 20px;flex-shrink:0">
+          <div style="padding:0 20px 20px;flex-shrink:0;text-align:right">
             <button type="button" onClick="{{ openCancelModal }}" style="background:none;border:none;cursor:pointer;padding:8px 0;font:600 12px var(--font-ui);letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.6)" style-hover="color:#F08C9B">Anuluj aplikację</button>
           </div>
         </div>
@@ -666,13 +686,24 @@
 
   <sc-if value="{{ cancelModalOpen }}" hint-placeholder-val="{{ false }}">
     <div onClick="{{ closeCancelModal }}" onKeyDown="{{ onCancelModalKey }}" tabindex="-1" style="position:fixed;inset:0;background:rgba(3,9,40,0.55);display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;z-index:200">
-      <div onClick="{{ stopProp }}" role="dialog" aria-modal="true" aria-labelledby="cancel-modal-title" style="background:#fff;max-width:440px;width:100%;box-sizing:border-box;padding:32px 36px;box-shadow:0 12px 40px rgba(3,9,40,0.25)">
-        <h3 id="cancel-modal-title" style="font:600 18px/1.35 var(--font-ui);color:var(--alk-deep-waters);margin:0 0 12px">Anulować aplikację?</h3>
+      <div onClick="{{ stopProp }}" role="dialog" aria-modal="true" aria-labelledby="cancel-modal-title" style="position:relative;background:#fff;max-width:600px;width:100%;box-sizing:border-box;padding:32px 36px;box-shadow:0 12px 40px rgba(3,9,40,0.25)">
+        <button type="button" aria-label="Zamknij" onClick="{{ closeCancelModal }}" style="position:absolute;top:16px;right:16px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:none;border:none;cursor:pointer;color:var(--text-muted);border-radius:4px">
+          <x-import component-from-global-scope="ALKDesignSystem_ae2905.Icon" name="x-mark" size="22" hint-size="22px,22px"></x-import>
+        </button>
+        <h3 id="cancel-modal-title" style="font:600 18px/1.35 var(--font-ui);color:var(--alk-deep-waters);margin:0 40px 12px 0">Anulować aplikację?</h3>
         <p style="font:14px/1.65 var(--font-form);color:var(--text-primary);margin:0 0 8px">Czy na pewno chcesz anulować tę aplikację? <strong>Wprowadzone dane zostaną utracone</strong>, a rekrutacja nie zostanie złożona.</p>
-        <p style="font:13px/1.6 var(--font-form);color:var(--text-muted);margin:0 0 28px">Tej operacji nie można cofnąć.</p>
-        <div style="display:flex;justify-content:flex-end;gap:12px;flex-wrap:wrap">
-          <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="secondary" size="small" showIcon="{{ false }}" onClick="{{ closeCancelModal }}" hint-size="auto,48px">WRÓĆ DO FORMULARZA</x-import>
-          <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="primary" size="small" showIcon="{{ false }}" autoFocus="{{ true }}" onClick="{{ confirmCancelApp }}" hint-size="auto,48px">ANULUJ APLIKACJĘ</x-import>
+        <p style="font:13px/1.6 var(--font-form);color:var(--text-muted);margin:0 0 20px">Tej operacji nie można cofnąć.</p>
+        <div style="margin:0 0 20px">
+          <x-import component-from-global-scope="ALKDesignSystem_ae2905.TagInputDropdown" label="Powód anulowania aplikacji" required="{{ true }}" placeholder="Wybierz powód" options="{{ cancelReasonOptions }}" value="{{ cancelReason }}" onChange="{{ setCancelReason }}" hint-size="100%,72px"></x-import>
+        </div>
+        <sc-if value="{{ cancelReasonIsOther }}" hint-placeholder-val="{{ false }}">
+          <div style="margin:0 0 20px">
+            <x-import component-from-global-scope="ALKDesignSystem_ae2905.InputTextArea" label="Podaj powód" required="{{ true }}" placeholder="Opisz powód anulowania aplikacji…" value="{{ cancelReasonOther }}" onChange="{{ setCancelReasonOther }}" hint-size="100%,110px"></x-import>
+          </div>
+        </sc-if>
+        <div style="display:flex;gap:12px;flex-wrap:nowrap">
+          <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="secondary" size="small" showIcon="{{ false }}" fullWidth="{{ true }}" onClick="{{ closeCancelModal }}" style="flex:1.35" hint-size="auto,48px">WRÓĆ DO FORMULARZA</x-import>
+          <x-import component-from-global-scope="ALKDesignSystem_ae2905.Button" variant="primary" size="small" showIcon="{{ false }}" fullWidth="{{ true }}" disabled="{{ cancelConfirmDisabled }}" onClick="{{ confirmCancelApp }}" style="flex:1" hint-size="auto,48px">ANULUJ APLIKACJĘ</x-import>
         </div>
       </div>
     </div>
@@ -742,6 +773,8 @@ class Component extends DCLogic {
     userMenuOpen: false, profil: false, hasSubmittedApp: false, profileDirty: false,
     achievementsNote: '',
     achievements: [],
+    cancelReason: '', cancelReasonOther: '',
+    lang: 'pl', langOpen: false,
   }; }
 
   setField(group, key, val) {
@@ -768,10 +801,19 @@ class Component extends DCLogic {
       const sect = document.querySelector('[data-substep="' + main + '-' + sub + '"]');
       const anchor = target || sect;
       if (!anchor) return;
-      const sc = anchor.closest('[data-step-scroll]');
-      if (sc) {
+      let sc = anchor.parentElement;
+      while (sc && sc !== document.body) {
+        const oy = getComputedStyle(sc).overflowY;
+        if ((oy === 'auto' || oy === 'scroll') && sc.scrollHeight - sc.clientHeight > 4) break;
+        sc = sc.parentElement;
+      }
+      if (sc && sc !== document.body && sc.scrollHeight - sc.clientHeight > 4) {
         const top = anchor.getBoundingClientRect().top - sc.getBoundingClientRect().top + sc.scrollTop - Math.round(sc.clientHeight / 3);
         sc.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+      } else {
+        const se = document.scrollingElement || document.documentElement;
+        const top = anchor.getBoundingClientRect().top + se.scrollTop - Math.round(se.clientHeight / 3);
+        se.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
       }
       let f = null;
       if (target) f = target.matches('input,select,textarea,button,[role=combobox]') ? target : target.querySelector('input:not([type=file]),select,textarea,[role=combobox],button');
@@ -1036,6 +1078,7 @@ class Component extends DCLogic {
       };
       const bigLabelStyle = { font: (active || sec.status === 'partial' ? '700' : '500') + ' 11.5px var(--font-ui)', color: active ? 'var(--alk-deep-waters)' : sec.status === 'partial' ? 'var(--accent-warm,#91653F)' : 'var(--text-muted)', whiteSpace: 'nowrap' };
       const connectorStyle = { flex: 1, height: 2, backgroundColor: sec.status === 'done' ? '#17B530' : 'var(--alk-border-subtle,#e2e2e6)', margin: '0 8px' };
+      const stepItemStyle = { display: 'flex', alignItems: 'center', flex: i < raw.length - 1 ? '1' : '0 0 auto' };
 
       const railDotStyle = {
         width: 36, height: 36, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -1068,7 +1111,7 @@ class Component extends DCLogic {
         ...sec, active, expanded, hasSubsteps, showSubsteps,
         statusIcon: statusIcon[sec.status], number: i + 1,
         rowStyle, labelStyle, iconStyle, numberBadgeStyle, pillStyle, pillDotStyle,
-        bigDotStyle, bigLabelStyle, connectorStyle, railDotStyle,
+        bigDotStyle, bigLabelStyle, connectorStyle, railDotStyle, stepItemStyle,
         hasConnector: i < raw.length - 1,
         chevron: expanded ? '▼' : '▶',
         onToggle: () => this.toggleExpand(sec.id),
@@ -1085,6 +1128,21 @@ class Component extends DCLogic {
 
     return {
       appNumber: 'APP-123981',
+      showLangSwitcher: !s.profil && s.started && (!s.submitted || s.previewMode),
+      langLabel: ({ pl: 'Polski', en: 'English' })[s.lang] || 'Polski',
+      langOpen: s.langOpen,
+      toggleLang: () => this.setState(p => ({ langOpen: !p.langOpen })),
+      closeLang: () => this.setState({ langOpen: false }),
+      langOptions: [
+        { label: 'Polski', tag: '✓',
+          rowStyle: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, width: '100%', boxSizing: 'border-box', textAlign: 'left', background: 'var(--alk-space,#F2F5FF)', border: 'none', cursor: 'pointer', padding: '10px 16px', font: '600 13px var(--font-ui)', color: 'var(--alk-deep-waters)' },
+          tagStyle: { font: '700 13px var(--font-ui)', color: '#17B530' },
+          onSelect: () => this.setState({ lang: 'pl', langOpen: false }) },
+        { label: 'English', tag: 'Wkrótce',
+          rowStyle: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16, width: '100%', boxSizing: 'border-box', textAlign: 'left', background: 'none', border: 'none', cursor: 'not-allowed', padding: '10px 16px', font: '500 13px var(--font-ui)', color: 'var(--text-muted)' },
+          tagStyle: { font: '600 10px var(--font-ui)', letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-muted)' },
+          onSelect: () => {} },
+      ],
       appSubLabel,
       appKierunek,
       appSubDetail,
@@ -1104,10 +1162,17 @@ class Component extends DCLogic {
       closeProfil: () => this.setState({ profil: false }),
       wyloguj: () => this.setState(Component.initial()),
       cancelModalOpen: this.state.cancelModalOpen,
-      openCancelModal: () => this.setState({ cancelModalOpen: true }),
+      openCancelModal: () => this.setState({ cancelModalOpen: true, cancelReason: '', cancelReasonOther: '' }),
       closeCancelModal: () => this.setState({ cancelModalOpen: false }),
       onCancelModalKey: e => { if (e.key === 'Escape') this.setState({ cancelModalOpen: false }); },
-      confirmCancelApp: () => { const init = Component.initial(); this.setState({ ...init, home: true, cancelModalOpen: false }); },
+      cancelReasonOptions: ['Sytuacja osobista', 'Sytuacja finansowa', 'Sytuacja zawodowa', 'Sytuacja formalno-prawna (np. brak wizy, brak dokumentów)', 'Wybór innej uczelni', 'Zmiana programu studiów', 'Rezygnacja ze studiów', 'Inny powód'],
+      cancelReason: this.state.cancelReason,
+      cancelReasonOther: this.state.cancelReasonOther,
+      cancelReasonIsOther: this.state.cancelReason === 'Inny powód',
+      setCancelReason: v => this.setState({ cancelReason: v }),
+      setCancelReasonOther: e => this.setState({ cancelReasonOther: e.target.value }),
+      cancelConfirmDisabled: !this.state.cancelReason || (this.state.cancelReason === 'Inny powód' && !this.state.cancelReasonOther.trim()),
+      confirmCancelApp: () => { if (!this.state.cancelReason || (this.state.cancelReason === 'Inny powód' && !this.state.cancelReasonOther.trim())) return; const init = Component.initial(); this.setState({ ...init, home: true, cancelModalOpen: false }); },
       stopProp: e => e.stopPropagation(),
       startNewApplication: () => { const init = Component.initial(); this.setState({ started: false, submitted: false, home: false, previewMode: false, profil: false, activeMain: 0, activeSub: 0, studia: init.studia, drugiKierunek: init.drugiKierunek, trzeciKierunek: init.trzeciKierunek, platnosc: init.platnosc, touched: init.touched, profileDirty: false }); },
       onPay: () => {

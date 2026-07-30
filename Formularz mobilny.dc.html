@@ -262,6 +262,14 @@
                 </sc-for>
               </sc-if>
             </sc-for>
+            <div style="margin-top:6px;padding:12px 6px 6px;border-top:1px solid var(--alk-border-subtle,#eef0f5)">
+              <div style="font:700 11px var(--font-ui);color:var(--text-muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px">Język aplikacji</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <sc-for list="{{ langOptions }}" as="opt" hint-placeholder-count="2">
+                  <button type="button" onClick="{{ opt.onSelect }}" style="{{ opt.chipStyle }}"><span>{{ opt.label }}</span><span style="{{ opt.tagStyle }}">{{ opt.tag }}</span></button>
+                </sc-for>
+              </div>
+            </div>
             <div style="margin-top:6px;padding:12px 6px 4px;border-top:1px solid var(--alk-border-subtle,#eef0f5);text-align:right">
               <button type="button" onClick="{{ openCancelModal }}" style="background:none;border:none;cursor:pointer;padding:8px 0;font:600 12px var(--font-ui);letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted)" style-hover="color:var(--text-primary)">Anuluj aplikację</button>
             </div>
@@ -420,6 +428,7 @@ class Component extends DCLogic {
     achievementsNote: '',
     achievements: [],
     cancelReason: '', cancelReasonOther: '',
+    lang: 'pl',
   }; }
 
   setField(group, key, val) {
@@ -796,6 +805,17 @@ class Component extends DCLogic {
 
     return {
       appNumber: 'APP-123981',
+      lang: s.lang,
+      langOptions: [
+        { label: 'Polski', tag: '✓',
+          chipStyle: { display: 'flex', alignItems: 'center', gap: 8, background: 'var(--alk-space,#F2F5FF)', boxShadow: 'inset 0 0 0 1px var(--alk-blue-label,#3252B5)', border: 'none', borderRadius: 6, padding: '9px 14px', cursor: 'pointer', font: '600 13px var(--font-ui)', color: 'var(--alk-deep-waters)' },
+          tagStyle: { font: '700 12px var(--font-ui)', color: '#17B530' },
+          onSelect: () => this.setState({ lang: 'pl' }) },
+        { label: 'English', tag: 'Wkrótce',
+          chipStyle: { display: 'flex', alignItems: 'center', gap: 8, background: '#fff', boxShadow: 'inset 0 0 0 1px var(--alk-border,#D8D8DA)', border: 'none', borderRadius: 6, padding: '9px 14px', cursor: 'not-allowed', font: '500 13px var(--font-ui)', color: 'var(--text-muted)' },
+          tagStyle: { font: '600 9px var(--font-ui)', letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-muted)' },
+          onSelect: () => {} },
+      ],
       appSubLabel,
       appKierunek,
       appSubDetail,
